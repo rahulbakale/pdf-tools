@@ -9,6 +9,7 @@ mvn verify
 ----
 
 == Usage
+=== Encrypt PDF
 [source,sh]
 ----
 docker run -it \
@@ -19,4 +20,4 @@ docker run -it \
 ----
 <1> Container image name
 <2> Command name
-<3> Command arguments
+<3> Command arguments - input PDF file, output PDF file

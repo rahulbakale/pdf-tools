@@ -21,3 +21,16 @@ docker run -it \
 <1> Container image name
 <2> Command name
 <3> Command arguments - input PDF file, output PDF file
+
+=== Convert PDF to image
+[source,sh]
+----
+docker run -it \
+    -v "/tmp/foo:/tmp/bar" \
+    pdf-tools \#<1>
+    PdfToImage \#<2>
+    "/tmp/bar/input.pdf" "/tmp/bar/" "1,2,3" 300 "jpeg" #<3>
+----
+<1> Container image name
+<2> Command name
+<3> Command arguments - input PDF file, output directory, page numbers, DPI, image format.

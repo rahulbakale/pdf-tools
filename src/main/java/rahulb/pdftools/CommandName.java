@@ -2,5 +2,6 @@ package rahulb.pdftools;
 
 enum CommandName {
 
-    EncryptPdf
+    EncryptPdf,
+    PdfToImage
 }

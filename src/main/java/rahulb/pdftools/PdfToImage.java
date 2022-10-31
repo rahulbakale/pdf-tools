@@ -14,6 +14,12 @@ public final class PdfToImage {
         int dpi = 300;
         String imageFormat = "jpeg";
 
+        pdfToImage(inputPdfFile, outputDir, pageNumbers, dpi, imageFormat);
+    }
+
+    static void pdfToImage(File inputPdfFile, File outputDir, IntStream pageNumbers, int dpi, String imageFormat) throws IOException {
+
+        //noinspection ResultOfMethodCallIgnored
         outputDir.mkdirs();
 
         try (PdfPageImageWriter imageWriter = new PdfPageImageWriter(inputPdfFile)) {

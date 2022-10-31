@@ -8,18 +8,9 @@ import java.io.Console;
 import java.io.File;
 import java.io.IOException;
 
-public class EncryptPdf {
+final class EncryptPdf {
 
     //See https://pdfbox.apache.org/2.0/cookbook/encryption.html
-    public static void main(String[] args) throws IOException {
-
-        var inputPdfFile = new File("/tmp/sample-input.pdf");
-        var outputPdfFile = new File("/tmp/sample-output.pdf");
-
-
-        encryptPdf(inputPdfFile, outputPdfFile);
-    }
-
     static void encryptPdf(File inputPdfFile, File outputPdfFile) throws IOException {
 
         Console console = System.console();

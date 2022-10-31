@@ -14,7 +14,7 @@ mvn verify
 docker run -it \
     -v "/tmp/foo:/tmp/bar" \
     pdf-tools \#<1>
-    encrypt-pdf \#<2>
+    EncryptPdf \#<2>
     "/tmp/bar/kay.pdf" "/tmp/bar/encrypted-kay.pdf"#<3>
 ----
 <1> Container image name

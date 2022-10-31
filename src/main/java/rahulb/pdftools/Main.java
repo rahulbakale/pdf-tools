@@ -12,16 +12,15 @@ public class Main {
             throw new IllegalArgumentException("Command not specified");
         }
 
-        switch (command) {
+        switch (CommandName.valueOf(command)) {
 
-            case "encrypt-pdf":
+            case EncryptPdf -> {
                 String inputPdfFile = args[1];
                 String outputPdfFile = args[2];
                 EncryptPdf.encryptPdf(new File(inputPdfFile), new File(outputPdfFile));
-                break;
+            }
 
-            default:
-                throw new IllegalArgumentException(String.format("Invalid command '%s'", command));
+            default -> throw new IllegalArgumentException(String.format("Invalid command '%s'", command));
         }
     }
 }

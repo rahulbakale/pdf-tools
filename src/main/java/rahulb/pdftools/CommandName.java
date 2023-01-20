@@ -3,5 +3,6 @@ package rahulb.pdftools;
 enum CommandName {
 
     EncryptPdf,
-    PdfToImage
+    PdfToImage,
+    RemovePages
 }

@@ -32,6 +32,14 @@ public class Main {
                 PdfToImage.pdfToImage(inputPdfFile, outputDir, pageNumbers, dpi, imageFormat);
             }
 
+            case RemovePages ->  {
+                File inputPdfFile = new File(args[1]);
+                IntStream pageNumbers = Arrays.stream(args[2].split(",")).mapToInt(Integer::parseInt);
+                File outputPdfFile = new File(args[3]);
+
+                RemovePages.removePages(inputPdfFile, pageNumbers, outputPdfFile);
+            }
+
             default -> throw new IllegalArgumentException(String.format("Invalid command '%s'", command));
         }
     }

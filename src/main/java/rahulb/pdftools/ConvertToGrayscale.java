@@ -15,7 +15,7 @@ import java.io.IOException;
 
 final class ConvertToGrayscale {
 
-    static void convertToGrayscale(File inputPdfFile, String outputPageSize, File outputPdfFile) throws IOException, NoSuchFieldException, IllegalAccessException {
+    static void convertToGrayscale(File inputPdfFile, float dpi, String outputPageSize, File outputPdfFile) throws IOException, NoSuchFieldException, IllegalAccessException {
 
         PDRectangle requiredPageSize = (PDRectangle) PDRectangle.class.getField(outputPageSize).get(null);
 
@@ -29,7 +29,7 @@ final class ConvertToGrayscale {
 
             for (int pageIndex = 0; pageIndex < inDoc.getNumberOfPages(); pageIndex++) {
 
-                var pageImage = pdfRenderer.renderImageWithDPI(pageIndex, 300, ImageType.GRAY);
+                var pageImage = pdfRenderer.renderImageWithDPI(pageIndex, dpi, ImageType.GRAY);
 
                 // In one experiment, replacing LosslessFactory with JPEGFactory
                 // reduced file size by about 70%.

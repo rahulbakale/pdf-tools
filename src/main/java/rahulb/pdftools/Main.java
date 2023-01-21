@@ -51,10 +51,11 @@ public class Main {
 
             case ConvertToGrayscale -> {
                 File inputPdfFile = new File(args[1]);
-                String outputPageSize = args[2];
-                File outputPdfFile = new File(args[3]);
+                float dpi = Float.parseFloat(args[2]);
+                String outputPageSize = args[3];
+                File outputPdfFile = new File(args[4]);
 
-                ConvertToGrayscale.convertToGrayscale(inputPdfFile, outputPageSize, outputPdfFile);
+                ConvertToGrayscale.convertToGrayscale(inputPdfFile, dpi, outputPageSize, outputPdfFile);
             }
 
             default -> throw new IllegalArgumentException(String.format("Invalid command '%s'", command));

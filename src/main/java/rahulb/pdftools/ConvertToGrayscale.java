@@ -4,7 +4,7 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
-import org.apache.pdfbox.pdmodel.graphics.image.LosslessFactory;
+import org.apache.pdfbox.pdmodel.graphics.image.JPEGFactory;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 import org.apache.pdfbox.rendering.ImageType;
 import org.apache.pdfbox.rendering.PDFRenderer;
@@ -30,7 +30,10 @@ final class ConvertToGrayscale {
             for (int pageIndex = 0; pageIndex < inDoc.getNumberOfPages(); pageIndex++) {
 
                 var pageImage = pdfRenderer.renderImageWithDPI(pageIndex, 300, ImageType.GRAY);
-                PDImageXObject imageXObject = LosslessFactory.createFromImage(outDoc, pageImage);
+
+                // In one experiment, replacing LosslessFactory with JPEGFactory
+                // reduced file size by about 70%.
+                PDImageXObject imageXObject = JPEGFactory.createFromImage(outDoc, pageImage);
 
                 var outPage = new PDPage(requiredPageSize);
                 outDoc.addPage(outPage);

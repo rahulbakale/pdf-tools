@@ -40,6 +40,15 @@ public class Main {
                 RemovePages.removePages(inputPdfFile, pageNumbers, outputPdfFile);
             }
 
+            case AddWatermark -> {
+                File inputPdfFile = new File(args[1]);
+                String watermarkText = args[2];
+                int fontSize = Integer.parseInt(args[3]);
+                File outputPdfFile = new File(args[4]);
+
+                AddWatermark.addWatermark(inputPdfFile, watermarkText, fontSize, outputPdfFile);
+            }
+
             default -> throw new IllegalArgumentException(String.format("Invalid command '%s'", command));
         }
     }

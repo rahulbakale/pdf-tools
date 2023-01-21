@@ -49,3 +49,17 @@ docker run -it \
 <1> Container image name
 <2> Command name
 <3> Command arguments - input PDF file, page numbers to remove, output PDF file
+
+=== Add watermark to PDF pages
+[source,sh]
+----
+docker run -it \
+    -v "/tmp/foo:/tmp/bar" \
+    pdf-tools \#<1>
+    AddWatermark \#<2>
+    "/tmp/bar/input.pdf" "DUPLICATE" 40 "/tmp/bar/output.pdf" #<3>
+----
+<1> Container image name
+<2> Command name
+<3> Command arguments - input PDF file, watermark text, font size, output PDF file
+

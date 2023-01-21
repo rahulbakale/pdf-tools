@@ -49,6 +49,14 @@ public class Main {
                 AddWatermark.addWatermark(inputPdfFile, watermarkText, fontSize, outputPdfFile);
             }
 
+            case ConvertToGrayscale -> {
+                File inputPdfFile = new File(args[1]);
+                String outputPageSize = args[2];
+                File outputPdfFile = new File(args[3]);
+
+                ConvertToGrayscale.convertToGrayscale(inputPdfFile, outputPageSize, outputPdfFile);
+            }
+
             default -> throw new IllegalArgumentException(String.format("Invalid command '%s'", command));
         }
     }

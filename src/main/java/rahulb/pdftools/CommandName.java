@@ -5,5 +5,6 @@ enum CommandName {
     EncryptPdf,
     PdfToImage,
     RemovePages,
-    AddWatermark
+    AddWatermark,
+    ConvertToGrayscale
 }

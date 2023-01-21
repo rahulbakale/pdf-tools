@@ -63,3 +63,15 @@ docker run -it \
 <2> Command name
 <3> Command arguments - input PDF file, watermark text, font size, output PDF file
 
+=== Convert PDF to grayscale
+[source,sh]
+----
+docker run -it \
+    -v "/tmp/foo:/tmp/bar" \
+    pdf-tools \#<1>
+    ConvertToGrayscale \#<2>
+    "/tmp/bar/input.pdf" "LEGAL" "/tmp/bar/output.pdf" #<3>
+----
+<1> Container image name
+<2> Command name
+<3> Command arguments - input PDF file, output page size, output PDF file

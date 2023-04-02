@@ -11,6 +11,42 @@
 
 
 == Build
+=== Build Windows executable
+==== Prerequisites
+. Install https://www.graalvm.org/[GraalVM] v22.3+.
+
+. Install https://www.graalvm.org/22.3/reference-manual/native-image/[Native Image].
++
+NOTE: On Windows, Native Image requires Visual Studio Code and Microsoft Visual C++(MSVC).
+
+. Install https://maven.apache.org/[Apache Maven]
+
+==== Build
+. Open `Developer Command Prompt for VS 2022` in Windows Terminal.
++
+.Developer Command Prompt for VS 2022
+[source]
+----
+******************************************************
+** Visual Studio 2022 Developer Command Prompt v17.5.3
+** Copyright (c) 2022 Microsoft Corporation
+******************************************************
+
+>
+----
+
+. Run Maven build.
++
+[source,cmd]
+----
+> cd <project-directory>
+
+pdf-tools> set JAVA_HOME=<graalvm-home-directory>
+
+pdf-tools> mvn -Pnative package
+----
+
+
 === Build Docker image
 ==== Prerequisites
 . Install https://docs.docker.com/[Docker].

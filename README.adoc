@@ -27,7 +27,7 @@ sudo service docker start
 +
 [source,cmd]
 ----
-mvn verify
+mvn -Pdocker verify
 ----
 
 

@@ -11,6 +11,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <main.class.name>rahulb.pdftools.Main</main.class.name>
     </properties>
 
     <dependencies>
@@ -42,7 +43,7 @@
                         <image>${project.artifactId}</image>
                     </to>
                     <container>
-                        <mainClass>rahulb.pdftools.Main</mainClass>
+                        <mainClass>${main.class.name}</mainClass>
                     </container>
                 </configuration>
                 <executions>

@@ -133,3 +133,54 @@ docker run -it \
 <1> Container image name
 <2> Command name
 <3> Command arguments - input PDF file, image DPI, output page size, output PDF file
+
+=== Using Windows executable
+==== Encrypt PDF document
+[source,cmd]
+----
+pdf-tools.exe ^
+    EncryptPdf ^#<1>
+    "%TEMP%/foo/kay.pdf" "%TEMP%/foo/encrypted-kay.pdf"#<2>
+----
+<1> Command name
+<2> Command arguments - input PDF file, output PDF file
+
+==== Convert PDF pages to images
+[source,cmd]
+----
+pdf-tools.exe ^
+    PdfToImage ^#<1>
+    "%TEMP%/foo/input.pdf" "%TEMP%/foo/" "1,2,3" 300 "jpeg" #<2>
+----
+<1> Command name
+<2> Command arguments - input PDF file, output directory, page numbers, DPI, image format.
+
+==== Remove pages from PDF document
+[source,cmd]
+----
+pdf-tools.exe ^
+    RemovePages ^#<1>
+    "%TEMP%/foo/input.pdf" "1,3" "%TEMP%/foo/output.pdf" #<2>
+----
+<1> Command name
+<2> Command arguments - input PDF file, page numbers to remove, output PDF file
+
+==== Add watermark to PDF pages
+[source,cmd]
+----
+pdf-tools.exe ^
+    AddWatermark ^#<1>
+    "%TEMP%/foo/input.pdf" "DUPLICATE" 40 "%TEMP%/foo/output.pdf" #<2>
+----
+<1> Command name
+<2> Command arguments - input PDF file, watermark text, font size, output PDF file
+
+==== Convert PDF document to grayscale
+[source,cmd]
+----
+pdf-tools.exe ^
+    ConvertToGrayscale ^#<1>
+    "%TEMP%/foo/input.pdf" 200 "LEGAL" "%TEMP%/foo/output.pdf" #<2>
+----
+<1> Command name
+<2> Command arguments - input PDF file, image DPI, output page size, output PDF file

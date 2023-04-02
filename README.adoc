@@ -1,17 +1,39 @@
 = README
+:experimental:
 :icons: font
+:revdate: 2023-04-02
+:sectnums:
+:sectnumlevels: 5
+:toclevels: 5
 :toc:
 
+:blank: pass:[ +]
+
+
 == Build
-[source,sh]
+=== Build Docker image
+==== Prerequisites
+. Install https://docs.docker.com/[Docker].
+
+. Start Docker Engine.
++
+[source,cmd]
 ----
 sudo service docker start
+----
 
+==== Build
+. Run Maven build.
++
+[source,cmd]
+----
 mvn verify
 ----
 
+
 == Usage
-=== Encrypt PDF
+=== Using Docker container
+==== Encrypt PDF document
 [source,sh]
 ----
 docker run -it \
@@ -24,7 +46,7 @@ docker run -it \
 <2> Command name
 <3> Command arguments - input PDF file, output PDF file
 
-=== Convert PDF to image
+==== Convert PDF pages to images
 [source,sh]
 ----
 docker run -it \
@@ -37,7 +59,7 @@ docker run -it \
 <2> Command name
 <3> Command arguments - input PDF file, output directory, page numbers, DPI, image format.
 
-=== Remove pages from PDF
+==== Remove pages from PDF document
 [source,sh]
 ----
 docker run -it \
@@ -50,7 +72,7 @@ docker run -it \
 <2> Command name
 <3> Command arguments - input PDF file, page numbers to remove, output PDF file
 
-=== Add watermark to PDF pages
+==== Add watermark to PDF pages
 [source,sh]
 ----
 docker run -it \
@@ -63,7 +85,7 @@ docker run -it \
 <2> Command name
 <3> Command arguments - input PDF file, watermark text, font size, output PDF file
 
-=== Convert PDF to grayscale
+==== Convert PDF document to grayscale
 [source,sh]
 ----
 docker run -it \

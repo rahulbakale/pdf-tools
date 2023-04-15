@@ -117,6 +117,9 @@
                                     <accessFilterFiles>
                                         <filterFile>${project.basedir}/src/graalvm-native-image-config/access-filter.json</filterFile>
                                     </accessFilterFiles>
+                                    <callerFilterFiles>
+                                        <filterFile>${project.basedir}/src/graalvm-native-image-config/caller-filter.json</filterFile>
+                                    </callerFilterFiles>
                                 </options>
                                 <metadataCopy>
                                     <disabledStages>

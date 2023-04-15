@@ -13,6 +13,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <main.class.name>rahulb.pdftools.Main</main.class.name>
         <graalvm.native.maven.plugin.version>0.9.20</graalvm.native.maven.plugin.version>
+        <graalvm.native.image.agent.enabled>${agent}</graalvm.native.image.agent.enabled>
     </properties>
 
     <dependencies>
@@ -21,6 +22,18 @@
             <artifactId>pdfbox</artifactId>
             <version>2.0.27</version>
             <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>5.8.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>de.redsix</groupId>
+            <artifactId>pdfcompare</artifactId>
+            <version>1.1.61</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
@@ -93,9 +106,51 @@
                             </execution>
                         </executions>
                         <configuration>
-                            <mainClass>${main.class.name}</mainClass>
+                            <agent>
+                                <!--
+                                Enable the native image agent from Maven POM (in addition to enabling it from CLI)
+                                until the fix for https://github.com/graalvm/native-build-tools/issues/403 is released.
+                                -->
+                                <enabled>${graalvm.native.image.agent.enabled}</enabled>
+
+                                <options>
+                                    <accessFilterFiles>
+                                        <filterFile>${project.basedir}/src/graalvm-native-image-config/access-filter.json</filterFile>
+                                    </accessFilterFiles>
+                                </options>
+                                <metadataCopy>
+                                    <disabledStages>
+                                        <!--
+                                        If `main` stage is not disabled, the plugin doesn't find the output directory for `main` stage,
+                                        and then it refuses to copy the configuration of `test` stage also.
+                                        The plugin prints warning message:
+                                            `[WARNING] Cannot find source directory [REDACTED]\target/native/agent-output/main for metadata copy.
+                                            Please check if you configured agent properly and it generates all necessary directories.
+                                            If you want to skipp copy from some source, please configure metadataCopy with disable stage you want to skipp.`
+                                        This seems to be a defect in the plugin.
+                                        -->
+                                        <stage>main</stage>
+                                    </disabledStages>
+                                    <merge>false</merge>
+                                    <outputDirectory>${project.basedir}/src/main/resources/META-INF/native-image</outputDirectory>
+                                </metadataCopy>
+                            </agent>
                             <fallback>false</fallback>
+                            <mainClass>${main.class.name}</mainClass>
+                            <metadataRepository>
+                                <enabled>true</enabled>
+                            </metadataRepository>
+                            <requiredVersion>22.3.1</requiredVersion>
+                            <verbose>true</verbose>
                         </configuration>
+                        <dependencies>
+                            <dependency>
+                                <!-- https://github.com/graalvm/native-build-tools/issues/418 -->
+                                <groupId>org.codehaus.plexus</groupId>
+                                <artifactId>plexus-utils</artifactId>
+                                <version>3.5.1</version>
+                            </dependency>
+                        </dependencies>
                     </plugin>
                 </plugins>
             </build>

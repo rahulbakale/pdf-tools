@@ -1,0 +1,7 @@
+{
+  "rules": [
+    {"excludeClasses": "org.junit.**"},
+    {"excludeClasses": "org.apache.maven.surefire.**"},
+    {"excludeClasses": "rahulb.pdftools.RemovePagesTest"}
+  ]
+}

@@ -1,7 +1,7 @@
 = README
 :experimental:
 :icons: font
-:revdate: 2023-04-15
+:revdate: 2023-05-20
 :sectnums:
 :sectnumlevels: 5
 :toclevels: 5
@@ -9,6 +9,7 @@
 
 :blank: pass:[ +]
 
+////
 == Development
 === GraalVM native image
 ==== Native image configuration
@@ -39,8 +40,13 @@ NOTE: Until https://github.com/oracle/graal/issues/2602[#2602 - Native image age
 
 . Until https://github.com/oracle/graal/issues/2922[#2922 - Native image/Tracing agent filter: Improve syntax] is resolved, we won't be able to use `{ "excludeClasses": "rahulb.pdftools.**.*Test" }` in `src/graalvm-native-image-config/access-filter.json`.
 
+==== IDE
+. Use GraalVM as the SDK for IntelliJ IDEA project.
+////
+
 
 == Build
+////
 === Build Windows executable
 ==== Prerequisites
 . Install https://www.graalvm.org/[GraalVM] v22.3+.
@@ -75,6 +81,7 @@ pdf-tools> set JAVA_HOME=<graalvm-home-directory>
 
 pdf-tools> mvn -Pnative package
 ----
+////
 
 
 === Build Docker image
@@ -164,6 +171,8 @@ docker run -it \
 <2> Command name
 <3> Command arguments - input PDF file, image DPI, output page size, output PDF file
 
+
+////
 === Using Windows executable
 ==== Encrypt PDF document
 [source,cmd]
@@ -214,3 +223,4 @@ pdf-tools.exe ^
 ----
 <1> Command name
 <2> Command arguments - input PDF file, image DPI, output page size, output PDF file
+////

@@ -46,11 +46,17 @@ NOTE: Until https://github.com/oracle/graal/issues/2602[#2602 - Native image age
 
 
 == Build
-=== Build Java archive (JAR)
+=== Build Java program distribution
 [source,cmd]
 ----
 mvn clean verify
 ----
+
+This will generate two distribution archives:
+
+. `target/pdf-tools-0.1.0-windows.zip`
+. `target/pdf-tools-0.1.0-linux.zip`
+
 
 ////
 === Build Windows executable
@@ -110,8 +116,22 @@ mvn -Pdocker verify
 ----
 
 
+== Installation
+=== Using Java program distribution
+==== Windows
+Unzip `target/pdf-tools-0.1.0-windows.zip`.
+
+==== Linux
+[source,sh]
+----
+unzip target/pdf-tools-0.1.0-linux.zip
+
+chmod u+x pdf-tools-0.1.0/bin/pdf-tools.sh
+----
+
+
 == Usage
-=== Using Windows program
+=== Using Java program on Windows
 ==== Encrypt PDF document
 [source,cmd]
 ----

@@ -111,6 +111,58 @@ mvn -Pdocker verify
 
 
 == Usage
+=== Using Windows program
+==== Encrypt PDF document
+[source,cmd]
+----
+pdf-tools-0.1.0\bin\pdf-tools.bat^
+    EncryptPdf^#<1>
+    "%TEMP%\kay.pdf" "%TEMP%\encrypted-kay.pdf"#<2>
+----
+<1> Command name
+<2> Command arguments - input PDF file, output PDF file
+
+==== Convert PDF pages to images
+[source,sh]
+----
+pdf-tools-0.1.0\bin\pdf-tools.bat^
+    PdfToImage^#<1>
+    "%TEMP%\input.pdf" "%TEMP%" "1,2,3" 300 "jpeg" #<2>
+----
+<1> Command name
+<2> Command arguments - input PDF file, output directory, page numbers, DPI, image format.
+
+==== Remove pages from PDF document
+[source,sh]
+----
+pdf-tools-0.1.0\bin\pdf-tools.bat^
+    RemovePages^#<1>
+    "%TEMP%\input.pdf" "1,3" "%TEMP%\output.pdf" #<2>
+----
+<1> Command name
+<2> Command arguments - input PDF file, page numbers to remove, output PDF file
+
+==== Add watermark to PDF pages
+[source,sh]
+----
+pdf-tools-0.1.0\bin\pdf-tools.bat^
+    AddWatermark^#<1>
+    "%TEMP%\input.pdf" "DUPLICATE" 40 "%TEMP%\output.pdf" #<2>
+----
+<1> Command name
+<2> Command arguments - input PDF file, watermark text, font size, output PDF file
+
+==== Convert PDF document to grayscale
+[source,sh]
+----
+pdf-tools-0.1.0\bin\pdf-tools.bat^
+    ConvertToGrayscale^#<1>
+    "%TEMP%\input.pdf" 200 "LEGAL" "%TEMP%\output.pdf" #<2>
+----
+<1> Command name
+<2> Command arguments - input PDF file, image DPI, output page size, output PDF file
+
+
 === Using Docker container
 ==== Encrypt PDF document
 [source,sh]

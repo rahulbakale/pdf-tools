@@ -75,6 +75,7 @@
                 <configuration>
                     <descriptors>
                         <descriptor>src/assembly/windows.xml</descriptor>
+                        <descriptor>src/assembly/linux.xml</descriptor>
                     </descriptors>
                     <appendAssemblyId>true</appendAssemblyId>
                 </configuration>

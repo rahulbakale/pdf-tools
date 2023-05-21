@@ -163,6 +163,58 @@ pdf-tools-0.1.0\bin\pdf-tools.bat^
 <2> Command arguments - input PDF file, image DPI, output page size, output PDF file
 
 
+=== Using Java program on Linux
+==== Encrypt PDF document
+[source,cmd]
+----
+pdf-tools-0.1.0/bin/pdf-tools.sh \
+    EncryptPdf \#<1>
+    "/tmp/kay.pdf" "/tmp/encrypted-kay.pdf"#<2>
+----
+<1> Command name
+<2> Command arguments - input PDF file, output PDF file
+
+==== Convert PDF pages to images
+[source,sh]
+----
+pdf-tools-0.1.0/bin/pdf-tools.sh \
+    PdfToImage \#<1>
+    "/tmp/input.pdf" "/tmp/" "1,2,3" 300 "jpeg" #<2>
+----
+<1> Command name
+<2> Command arguments - input PDF file, output directory, page numbers, DPI, image format.
+
+==== Remove pages from PDF document
+[source,sh]
+----
+pdf-tools-0.1.0/bin/pdf-tools.sh \
+    RemovePages \#<1>
+    "/tmp/input.pdf" "1,3" "/tmp/output.pdf" #<2>
+----
+<1> Command name
+<2> Command arguments - input PDF file, page numbers to remove, output PDF file
+
+==== Add watermark to PDF pages
+[source,sh]
+----
+pdf-tools-0.1.0/bin/pdf-tools.sh \
+    AddWatermark \#<1>
+    "/tmp/input.pdf" "DUPLICATE" 40 "/tmp/output.pdf" #<2>
+----
+<1> Command name
+<2> Command arguments - input PDF file, watermark text, font size, output PDF file
+
+==== Convert PDF document to grayscale
+[source,sh]
+----
+pdf-tools-0.1.0/bin/pdf-tools.sh \
+    ConvertToGrayscale \#<1>
+    "/tmp/input.pdf" 200 "LEGAL" "/tmp/output.pdf" #<2>
+----
+<1> Command name
+<2> Command arguments - input PDF file, image DPI, output page size, output PDF file
+
+
 === Using Docker container
 ==== Encrypt PDF document
 [source,sh]

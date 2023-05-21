@@ -46,6 +46,12 @@ NOTE: Until https://github.com/oracle/graal/issues/2602[#2602 - Native image age
 
 
 == Build
+=== Build Java archive (JAR)
+[source,cmd]
+----
+mvn clean verify
+----
+
 ////
 === Build Windows executable
 ==== Prerequisites

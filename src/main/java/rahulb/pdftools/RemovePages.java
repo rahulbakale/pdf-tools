@@ -14,17 +14,22 @@ final class RemovePages {
 
         try (var document = PDDocument.load(inputPdfFile)) {
 
-            List<PDPage> pagesToRemove = pageNumbers
-                    .distinct()
-                    .mapToObj(pageNumber -> document.getPage(pageNumber - 1))
-                    .toList();
-
-            pagesToRemove.forEach(document::removePage);
+            removePages(pageNumbers, document);
 
             //noinspection ResultOfMethodCallIgnored
             outputPdfFile.getParentFile().mkdirs();
 
             document.save(outputPdfFile);
         }
+    }
+
+    private static void removePages(IntStream pageNumbers, PDDocument document) {
+
+        List<PDPage> pagesToRemove = pageNumbers
+                .distinct()
+                .mapToObj(pageNumber -> document.getPage(pageNumber - 1))
+                .toList();
+
+        pagesToRemove.forEach(document::removePage);
     }
 }

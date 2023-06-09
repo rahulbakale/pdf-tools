@@ -18,79 +18,84 @@ final class AddWatermark {
 
     static void addWatermark(File inputPdfFile, String watermarkText, int fontSize, File outputPdfFile) throws IOException {
 
-        var font = PDType1Font.HELVETICA_BOLD;
-        var color = Color.LIGHT_GRAY;
-
         try (var document = PDDocument.load(inputPdfFile)) {
 
-            float watermarkTextWidth = (font.getStringWidth(watermarkText) / 1000) * fontSize;
-            float watermarkTextHeight = (font.getFontDescriptor().getCapHeight() / 1000) * fontSize;
-            float watermarkGapX = ((font.getSpaceWidth() / 1000) * fontSize) * 3; /*Gap of three characters*/
-            float watermarkGapY = watermarkTextHeight * 1.5f;
-
-            PDExtendedGraphicsState exGraphicsState;
-            {
-                // Transparency
-
-                //https://issues.apache.org/jira/browse/PDFBOX-1176
-                //https://github.com/TomRoush/PdfBox-Android/issues/73
-
-                exGraphicsState = new PDExtendedGraphicsState();
-                exGraphicsState.setNonStrokingAlphaConstant(0.5f);
-            }
-
-            for (var page : document.getPages()) {
-
-                float pageWidth = page.getMediaBox().getWidth();
-                float pageHeight = page.getMediaBox().getHeight();
-
-                try (var contentStream = new PDPageContentStream(document, page, PDPageContentStream.AppendMode.APPEND, true, true)) {
-
-                    contentStream.setFont(font, fontSize);
-                    contentStream.setNonStrokingColor(color);
-                    contentStream.setGraphicsStateParameters(exGraphicsState); // Transparency
-
-                    float tx = 0;
-                    float ty = 0;
-
-                    while (ty < pageHeight) {
-
-                        contentStream.beginText();
-
-                        Matrix textMatrix = Matrix.getRotateInstance(Math.toRadians(45), tx, ty);
-                        contentStream.setTextMatrix(textMatrix);
-                        contentStream.newLineAtOffset(0, 0);
-                        //contentStream.newLineAtOffset(tx, ty);
-                        contentStream.showText(watermarkText);
-                        contentStream.endText();
-
-                        tx = tx + watermarkTextWidth + watermarkGapX;
-
-                        if (tx > pageWidth) {
-                            ty = ty + watermarkTextHeight + watermarkGapY;
-                            tx = 0;
-                        }
-                    }
-
-                    /*
-                        To place the watermark at the center of the page:
-
-                        float watermarkTextX = (pageWidth - watermarkTextWidth) / 2;
-                        float watermarkTextY = (pageHeight - watermarkTextHeight) / 2;
-                        contentStream.beginText();
-                        contentStream.setFont(font, fontSize);
-                        contentStream.setNonStrokingColor(Color.DARK_GRAY);
-                        contentStream.newLineAtOffset(watermarkTextX, watermarkTextY);
-                        contentStream.showText(watermarkText);
-                        contentStream.endText();
-                    */
-                }
-            }
+            addWatermark(watermarkText, fontSize, document);
 
             //noinspection ResultOfMethodCallIgnored
             outputPdfFile.getParentFile().mkdirs();
 
             document.save(outputPdfFile);
+        }
+    }
+
+    private static void addWatermark(String watermarkText, int fontSize, PDDocument document) throws IOException {
+
+        PDType1Font font = PDType1Font.HELVETICA_BOLD;
+        Color color = Color.LIGHT_GRAY;
+
+        float watermarkTextWidth = (font.getStringWidth(watermarkText) / 1000) * fontSize;
+        float watermarkTextHeight = (font.getFontDescriptor().getCapHeight() / 1000) * fontSize;
+        float watermarkGapX = ((font.getSpaceWidth() / 1000) * fontSize) * 3; /*Gap of three characters*/
+        float watermarkGapY = watermarkTextHeight * 1.5f;
+
+        PDExtendedGraphicsState exGraphicsState;
+        {
+            // Transparency
+
+            //https://issues.apache.org/jira/browse/PDFBOX-1176
+            //https://github.com/TomRoush/PdfBox-Android/issues/73
+
+            exGraphicsState = new PDExtendedGraphicsState();
+            exGraphicsState.setNonStrokingAlphaConstant(0.5f);
+        }
+
+        for (var page : document.getPages()) {
+
+            float pageWidth = page.getMediaBox().getWidth();
+            float pageHeight = page.getMediaBox().getHeight();
+
+            try (var contentStream = new PDPageContentStream(document, page, PDPageContentStream.AppendMode.APPEND, true, true)) {
+
+                contentStream.setFont(font, fontSize);
+                contentStream.setNonStrokingColor(color);
+                contentStream.setGraphicsStateParameters(exGraphicsState); // Transparency
+
+                float tx = 0;
+                float ty = 0;
+
+                while (ty < pageHeight) {
+
+                    contentStream.beginText();
+
+                    Matrix textMatrix = Matrix.getRotateInstance(Math.toRadians(45), tx, ty);
+                    contentStream.setTextMatrix(textMatrix);
+                    contentStream.newLineAtOffset(0, 0);
+                    //contentStream.newLineAtOffset(tx, ty);
+                    contentStream.showText(watermarkText);
+                    contentStream.endText();
+
+                    tx = tx + watermarkTextWidth + watermarkGapX;
+
+                    if (tx > pageWidth) {
+                        ty = ty + watermarkTextHeight + watermarkGapY;
+                        tx = 0;
+                    }
+                }
+
+                /*
+                    To place the watermark at the center of the page:
+
+                    float watermarkTextX = (pageWidth - watermarkTextWidth) / 2;
+                    float watermarkTextY = (pageHeight - watermarkTextHeight) / 2;
+                    contentStream.beginText();
+                    contentStream.setFont(font, fontSize);
+                    contentStream.setNonStrokingColor(Color.DARK_GRAY);
+                    contentStream.newLineAtOffset(watermarkTextX, watermarkTextY);
+                    contentStream.showText(watermarkText);
+                    contentStream.endText();
+                */
+            }
         }
     }
 

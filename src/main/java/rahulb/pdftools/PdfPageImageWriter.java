@@ -11,13 +11,13 @@ import java.io.IOException;
 import java.util.function.IntPredicate;
 import java.util.stream.IntStream;
 
-final class PdfPageImageWriter implements AutoCloseable {
+final class PdfPageImageWriter {
 
     private final PDDocument document;
     private final PDFRenderer renderer;
 
-    PdfPageImageWriter(File pdfFile) throws IOException {
-        this.document = PDDocument.load(pdfFile);
+    PdfPageImageWriter(PDDocument document) {
+        this.document = document;
         this.renderer = new PDFRenderer(document);
     }
 
@@ -60,10 +60,5 @@ final class PdfPageImageWriter implements AutoCloseable {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    @Override
-    public void close() throws IOException {
-        document.close();
     }
 }

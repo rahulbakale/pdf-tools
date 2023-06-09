@@ -1,5 +1,7 @@
 package rahulb.pdftools;
 
+import org.apache.pdfbox.pdmodel.PDDocument;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.stream.IntStream;
@@ -19,11 +21,18 @@ public final class PdfToImage {
 
     static void pdfToImage(File inputPdfFile, File outputDir, IntStream pageNumbers, int dpi, String imageFormat) throws IOException {
 
+        try (var document = PDDocument.load(inputPdfFile)) {
+            pdfToImage(inputPdfFile, outputDir, pageNumbers, dpi, imageFormat, document);
+        }
+    }
+
+    private static void pdfToImage(File inputPdfFile, File outputDir, IntStream pageNumbers, int dpi, String imageFormat, PDDocument document) {
+
         //noinspection ResultOfMethodCallIgnored
         outputDir.mkdirs();
 
-        try (PdfPageImageWriter imageWriter = new PdfPageImageWriter(inputPdfFile)) {
-            imageWriter.writePages(pageNumbers, dpi, imageFormat, outputDir, inputPdfFile.getName());
-        }
+        PdfPageImageWriter imageWriter = new PdfPageImageWriter(document);
+
+        imageWriter.writePages(pageNumbers, dpi, imageFormat, outputDir, inputPdfFile.getName());
     }
 }

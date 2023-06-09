@@ -16,7 +16,17 @@ import java.util.stream.IntStream;
 
 final class AddWatermark {
 
-    static void addWatermark(File inputPdfFile, String watermarkText, int fontSize, File outputPdfFile) throws IOException {
+    static void addWatermark(String... args) throws IOException {
+
+        File inputPdfFile = new File(args[0]);
+        String watermarkText = args[1];
+        int fontSize = Integer.parseInt(args[2]);
+        File outputPdfFile = new File(args[3]);
+
+        addWatermark(inputPdfFile, watermarkText, fontSize, outputPdfFile);
+    }
+
+    private static void addWatermark(File inputPdfFile, String watermarkText, int fontSize, File outputPdfFile) throws IOException {
 
         try (var document = PDDocument.load(inputPdfFile)) {
 

@@ -5,12 +5,22 @@ import org.apache.pdfbox.pdmodel.PDPage;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 
 final class RemovePages {
 
-    static void removePages(File inputPdfFile, IntStream pageNumbers, File outputPdfFile) throws IOException {
+    static void removePages(String... args) throws IOException {
+
+        File inputPdfFile = new File(args[0]);
+        IntStream pageNumbers = Arrays.stream(args[1].split(",")).mapToInt(Integer::parseInt);
+        File outputPdfFile = new File(args[2]);
+
+        removePages(inputPdfFile, pageNumbers, outputPdfFile);
+    }
+
+    private static void removePages(File inputPdfFile, IntStream pageNumbers, File outputPdfFile) throws IOException {
 
         try (var document = PDDocument.load(inputPdfFile)) {
 

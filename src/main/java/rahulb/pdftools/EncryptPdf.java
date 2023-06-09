@@ -10,7 +10,15 @@ import java.io.IOException;
 final class EncryptPdf {
 
     //See https://pdfbox.apache.org/2.0/cookbook/encryption.html
-    static void encryptPdf(File inputPdfFile, File outputPdfFile) throws IOException {
+
+    static void encryptPdf(String... args) throws IOException {
+
+        String inputPdfFile = args[0];
+        String outputPdfFile = args[1];
+
+        encryptPdf(new File(inputPdfFile), new File(outputPdfFile));
+    }
+    private static void encryptPdf(File inputPdfFile, File outputPdfFile) throws IOException {
 
         try (var document = PDDocument.load(inputPdfFile)) {
 

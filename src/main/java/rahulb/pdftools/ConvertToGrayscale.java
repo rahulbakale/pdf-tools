@@ -15,7 +15,17 @@ import java.io.IOException;
 
 final class ConvertToGrayscale {
 
-    static void convertToGrayscale(File inputPdfFile, float dpi, String outputPageSize, File outputPdfFile) throws IOException, NoSuchFieldException, IllegalAccessException {
+    static void convertToGrayscale(String... args) throws IOException, NoSuchFieldException, IllegalAccessException {
+
+        File inputPdfFile = new File(args[0]);
+        float dpi = Float.parseFloat(args[1]);
+        String outputPageSize = args[2];
+        File outputPdfFile = new File(args[3]);
+
+        convertToGrayscale(inputPdfFile, dpi, outputPageSize, outputPdfFile);
+    }
+
+    private static void convertToGrayscale(File inputPdfFile, float dpi, String outputPageSize, File outputPdfFile) throws IOException, NoSuchFieldException, IllegalAccessException {
 
         try (var inDoc = PDDocument.load(inputPdfFile);
              var outDoc = new PDDocument()) {

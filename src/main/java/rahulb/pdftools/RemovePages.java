@@ -66,11 +66,30 @@ final class RemovePages {
 
     private static IntPredicate getPageNumberToRemovePredicate(String pagesToRemove) {
 
-        Set<Integer> pageNumbersToRemove =
-                Arrays.stream(pagesToRemove.split(","))
+        if (pagesToRemove.contains(":")) {
+
+            int index = pagesToRemove.indexOf(":");
+            String predicateType = pagesToRemove.substring(0, index);
+            String pageNumbers = pagesToRemove.substring(index + 1);
+
+            if ("keep".equals(predicateType)) {
+                return createPredicate(pageNumbers).negate();
+            } else {
+                throw new IllegalArgumentException(String.format("Invalid predicate type: '%s'", predicateType));
+            }
+
+        } else {
+            return createPredicate(pagesToRemove);
+        }
+    }
+
+    private static IntPredicate createPredicate(String pageNumbers) {
+
+        Set<Integer> pageNumberSet =
+                Arrays.stream(pageNumbers.split(","))
                         .mapToInt(Integer::parseInt)
                         .collect(HashSet::new, HashSet::add, AbstractCollection::addAll);
 
-        return pageNumbersToRemove::contains;
+        return pageNumberSet::contains;
     }
 }

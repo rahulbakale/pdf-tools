@@ -14,15 +14,22 @@ public class Main {
 
         String[] commandArgs = Arrays.copyOfRange(args, 1, args.length);
 
-        switch (CommandName.valueOf(command)) {
+        if ("Pipeline".equals(command)) {
 
-            case EncryptPdf -> EncryptPdf.encryptPdf(commandArgs);
-            case PdfToImage -> PdfToImage.pdfToImage(commandArgs);
-            case RemovePages -> RemovePages.removePages(commandArgs);
-            case AddWatermark -> AddWatermark.addWatermark(commandArgs);
-            case ConvertToGrayscale -> ConvertToGrayscale.convertToGrayscale(commandArgs);
+            Pipeline.execute(commandArgs);
 
-            default -> throw new IllegalArgumentException(String.format("Invalid command '%s'", command));
+        } else {
+
+            switch (CommandName.valueOf(command)) {
+
+                case EncryptPdf -> EncryptPdf.encryptPdf(commandArgs);
+                case PdfToImage -> PdfToImage.pdfToImage(commandArgs);
+                case RemovePages -> RemovePages.removePages(commandArgs);
+                case AddWatermark -> AddWatermark.addWatermark(commandArgs);
+                case ConvertToGrayscale -> ConvertToGrayscale.convertToGrayscale(commandArgs);
+
+                default -> throw new IllegalArgumentException(String.format("Invalid command '%s'", command));
+            }
         }
     }
 }

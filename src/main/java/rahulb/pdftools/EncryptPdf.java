@@ -6,15 +6,29 @@ import org.apache.pdfbox.pdmodel.encryption.StandardProtectionPolicy;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Map;
 
 final class EncryptPdf {
+
+    private static final String ARG_INPUT_PDF_FILE = "input-pdf-file";
+    private static final String ARG_OUTPUT_PDF_FILE = "output-pdf-file";
 
     //See https://pdfbox.apache.org/2.0/cookbook/encryption.html
 
     static void encryptPdf(String... args) throws IOException {
 
-        String inputPdfFile = args[0];
-        String outputPdfFile = args[1];
+        Map<String, String> argMap = Map.of(
+                ARG_INPUT_PDF_FILE, args[0],
+                ARG_OUTPUT_PDF_FILE, args[1]
+        );
+
+        encryptPdf(argMap);
+    }
+
+    static void encryptPdf(Map<?, ?> args) throws IOException {
+
+        String inputPdfFile = (String) args.get(ARG_INPUT_PDF_FILE);
+        String outputPdfFile = (String) args.get(ARG_OUTPUT_PDF_FILE);
 
         encryptPdf(new File(inputPdfFile), new File(outputPdfFile));
     }

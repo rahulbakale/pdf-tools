@@ -12,15 +12,33 @@ import org.apache.pdfbox.util.Matrix;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Map;
 
 final class ConvertToGrayscale {
 
+    private static final String ARG_INPUT_PDF_FILE = "input-pdf-file";
+    private static final String ARG_DPI = "dpi";
+    private static final String ARG_OUTPUT_PAGE_SIZE = "output-page-size";
+    private static final String ARG_OUTPUT_PDF_FILE = "output-pdf-file";
+
     static void convertToGrayscale(String... args) throws IOException, NoSuchFieldException, IllegalAccessException {
 
-        File inputPdfFile = new File(args[0]);
-        float dpi = Float.parseFloat(args[1]);
-        String outputPageSize = args[2];
-        File outputPdfFile = new File(args[3]);
+        Map<?, ?> argMap = Map.of(
+                ARG_INPUT_PDF_FILE, args[0],
+                ARG_DPI, args[1],
+                ARG_OUTPUT_PAGE_SIZE, args[2],
+                ARG_OUTPUT_PDF_FILE, args[3]
+        );
+
+        convertToGrayscale(argMap);
+    }
+
+    static void convertToGrayscale(Map<?,?> args) throws IOException, NoSuchFieldException, IllegalAccessException {
+
+        File inputPdfFile = new File((String) args.get(ARG_INPUT_PDF_FILE));
+        float dpi = Float.parseFloat((String) args.get(ARG_DPI));
+        String outputPageSize = (String) args.get(ARG_OUTPUT_PAGE_SIZE);
+        File outputPdfFile = new File((String) args.get(ARG_OUTPUT_PDF_FILE));
 
         convertToGrayscale(inputPdfFile, dpi, outputPageSize, outputPdfFile);
     }

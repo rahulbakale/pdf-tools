@@ -16,12 +16,29 @@ import java.util.stream.IntStream;
 
 final class AddWatermark {
 
+    private static final String ARG_INPUT_PDF_FILE = "input-pdf-file";
+    private static final String ARG_WATERMARK_TEXT = "watermark-text";
+    private static final String ARG_WATERMARK_FONT_SIZE = "watermark-font-size";
+    private static final String ARG_OUTPUT_PDF_FILE = "output-pdf-file";
+
     static void addWatermark(String... args) throws IOException {
 
-        File inputPdfFile = new File(args[0]);
-        String watermarkText = args[1];
-        int fontSize = Integer.parseInt(args[2]);
-        File outputPdfFile = new File(args[3]);
+        Map<?, ?> argMap = Map.of(
+                ARG_INPUT_PDF_FILE, args[0],
+                ARG_WATERMARK_TEXT, args[1],
+                ARG_WATERMARK_FONT_SIZE, args[2],
+                ARG_OUTPUT_PDF_FILE, args[3]
+        );
+
+        addWatermark(argMap);
+    }
+
+    static void addWatermark(Map<?,?> args) throws IOException {
+
+        File inputPdfFile = new File((String) args.get(ARG_INPUT_PDF_FILE));
+        String watermarkText = (String) args.get(ARG_WATERMARK_TEXT);
+        int fontSize = Integer.parseInt((String) args.get(ARG_WATERMARK_FONT_SIZE));
+        File outputPdfFile = new File((String) args.get(ARG_OUTPUT_PDF_FILE));
 
         addWatermark(inputPdfFile, watermarkText, fontSize, outputPdfFile);
     }

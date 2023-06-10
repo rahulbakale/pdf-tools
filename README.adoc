@@ -1,7 +1,7 @@
 = README
 :experimental:
 :icons: font
-:revdate: 2023-05-21
+:revdate: 2023-06-10
 :sectnums:
 :sectnumlevels: 5
 :toclevels: 5
@@ -237,6 +237,89 @@ pdf-tools-0.1.0\bin\pdf-tools.bat^
 <1> Command name
 <2> Command arguments - input PDF file, image DPI, output page size, output PDF file
 
+==== Run a transformation pipeline
+===== Windows
+Create a pipeline specification file.
+
+.C:\Users\foo\AppData\Local\Temp\pdf-transformation-pipeline.yaml
+[source,yaml]
+----
+transformations:
+  - type: RemovePages
+    args:
+      input-pdf-file: 'C:\Users\foo\AppData\Local\Temp\input.pdf'
+      pages-to-remove: '1,3'
+      output-pdf-file: 'C:\Users\foo\AppData\Local\Temp\intermediate.pdf'
+
+  - type: ConvertToGrayscale
+    args:
+      input-pdf-file: 'C:\Users\foo\AppData\Local\Temp\intermediate.pdf'
+      dpi: '200.0'
+      output-page-size: 'LEGAL'
+      output-pdf-file: 'C:\Users\foo\AppData\Local\Temp\intermediate.pdf'
+
+  - type: AddWatermark
+    args:
+      input-pdf-file: 'C:\Users\foo\AppData\Local\Temp\intermediate.pdf'
+      watermark-text : 'DUPLICATE'
+      watermark-font-size: '40'
+      output-pdf-file: 'C:\Users\foo\AppData\Local\Temp\intermediate.pdf'
+
+  - type: EncryptPdf
+    args:
+      input-pdf-file: 'C:\Users\foo\AppData\Local\Temp\intermediate.pdf'
+      output-pdf-file: 'C:\Users\foo\AppData\Local\Temp\output.pdf'
+----
+
+Run the pipeline.
+
+[source,cmd]
+----
+pdf-tools-0.1.0\bin\pdf-tools.bat^
+    Pipeline^#<1>
+    "C:\Users\foo\AppData\Local\Temp\pdf-transformation-pipeline.yaml"#<2>
+----
+<1> Command name
+<2> Command arguments - pipeline specification file
+
+===== Linux
+[source,sh]
+----
+cat <<EOF > /tmp/pdf-transformation-pipeline.yaml
+transformations:
+  - type: RemovePages
+    args:
+      input-pdf-file: '/tmp/input.pdf'
+      pages-to-remove: '1,3'
+      output-pdf-file: '/tmp/intermediate.pdf'
+
+  - type: ConvertToGrayscale
+    args:
+      input-pdf-file: '/tmp/intermediate.pdf'
+      dpi: '200.0'
+      output-page-size: 'LEGAL'
+      output-pdf-file: '/tmp/intermediate.pdf'
+
+  - type: AddWatermark
+    args:
+      input-pdf-file: '/tmp/intermediate.pdf'
+      watermark-text : 'DUPLICATE'
+      watermark-font-size: '40'
+      output-pdf-file: '/tmp/intermediate.pdf'
+
+  - type: EncryptPdf
+    args:
+      input-pdf-file: '/tmp/intermediate.pdf'
+      output-pdf-file: '/tmp/output.pdf'
+EOF
+
+pdf-tools-0.1.0/bin/pdf-tools.sh \
+    Pipeline \#<1>
+    "/tmp/pdf-transformation-pipeline.yaml"#<2>
+----
+<1> Command name
+<2> Command arguments - pipeline specification file
+
 
 === Using Docker container
 ==== Encrypt PDF document
@@ -304,6 +387,46 @@ docker run -it \
 <2> Command name
 <3> Command arguments - input PDF file, image DPI, output page size, output PDF file
 
+==== Run a transformation pipeline
+[source,sh]
+----
+cat <<EOF > /tmp/foo/pdf-transformation-pipeline.yaml
+transformations:
+  - type: RemovePages
+    args:
+      input-pdf-file: '/tmp/bar/input.pdf'
+      pages-to-remove: '1,3'
+      output-pdf-file: '/tmp/bar/intermediate.pdf'
+
+  - type: ConvertToGrayscale
+    args:
+      input-pdf-file: '/tmp/bar/intermediate.pdf'
+      dpi: '200.0'
+      output-page-size: 'LEGAL'
+      output-pdf-file: '/tmp/bar/intermediate.pdf'
+
+  - type: AddWatermark
+    args:
+      input-pdf-file: '/tmp/bar/intermediate.pdf'
+      watermark-text : 'DUPLICATE'
+      watermark-font-size: '40'
+      output-pdf-file: '/tmp/bar/intermediate.pdf'
+
+  - type: EncryptPdf
+    args:
+      input-pdf-file: '/tmp/bar/intermediate.pdf'
+      output-pdf-file: '/tmp/bar/output.pdf'
+EOF
+
+docker run -it \
+    -v "/tmp/foo:/tmp/bar" \
+    pdf-tools \#<1>
+    Pipeline \#<2>
+    "/tmp/bar/pdf-transformation-pipeline.yaml"#<3>
+----
+<1> Container image name
+<2> Command name
+<3> Command arguments - pipeline specification file
 
 ////
 === Using Windows executable

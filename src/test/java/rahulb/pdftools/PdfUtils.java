@@ -24,6 +24,14 @@ final class PdfUtils {
         );
     }
 
+    static boolean pdfEquals(byte[] pdf1, byte[] pdf2) throws IOException {
+
+        return pdfEquals(
+                new ByteArrayInputStream(pdf1),
+                new ByteArrayInputStream(pdf2)
+        );
+    }
+
     static boolean pdfEquals(InputStream pdf1, byte[] pdf2) throws IOException {
 
         return pdfEquals(

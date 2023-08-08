@@ -27,6 +27,7 @@ public class Main {
                 case RemovePages -> RemovePages.removePages(commandArgs);
                 case AddWatermark -> AddWatermark.addWatermark(commandArgs);
                 case ConvertToGrayscale -> ConvertToGrayscale.convertToGrayscale(commandArgs);
+                case ImagesToPdf -> ImagesToPdf.imagesToPdf(commandArgs);
 
                 default -> throw new IllegalArgumentException(String.format("Invalid command '%s'", command));
             }

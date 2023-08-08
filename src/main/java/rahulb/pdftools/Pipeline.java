@@ -49,6 +49,7 @@ final class Pipeline {
                     case RemovePages -> RemovePages.removePages(transformationArgs);
                     case AddWatermark -> AddWatermark.addWatermark(transformationArgs);
                     case ConvertToGrayscale -> ConvertToGrayscale.convertToGrayscale(transformationArgs);
+                    case ImagesToPdf -> ImagesToPdf.imagesToPdf(transformationArgs);
 
                     default -> throw new RuntimeException(String.format("Pipeline spec is invalid: Invalid transformation type '%s'", transformationType));
                 }

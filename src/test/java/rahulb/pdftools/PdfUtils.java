@@ -5,6 +5,7 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 
 import java.io.*;
 import java.nio.file.Files;
+import java.nio.file.Path;
 
 final class PdfUtils {
 
@@ -13,6 +14,19 @@ final class PdfUtils {
         try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
             pdfDoc.save(baos);
             return baos.toByteArray();
+        }
+    }
+
+    static boolean pdfEquals(Path pdf1, Path pdf2) {
+
+        try {
+            return pdfEquals(
+                    new ByteArrayInputStream(Files.readAllBytes(pdf1)),
+                    new ByteArrayInputStream(Files.readAllBytes(pdf2))
+            );
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 

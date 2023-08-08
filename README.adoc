@@ -1,7 +1,7 @@
 = README
 :experimental:
 :icons: font
-:revdate: 2023-06-10
+:revdate: 2023-08-06
 :sectnums:
 :sectnumlevels: 5
 :toclevels: 5
@@ -237,6 +237,27 @@ pdf-tools-0.1.0\bin\pdf-tools.bat^
 <1> Command name
 <2> Command arguments - input PDF file, image DPI, output page size, output PDF file
 
+==== Create PDF document from images
+===== Linux
+[source,cmd]
+----
+pdf-tools-0.1.0/bin/pdf-tools.sh \
+    ImagesToPdf \#<1>
+    "/tmp/images/" "A4" "top-left" "standard" "/tmp/output.pdf"#<2>
+----
+<1> Command name
+<2> Command arguments - input images directory, output page size, image position, page margins, output PDF file
+
+===== Windows
+[source,cmd]
+----
+pdf-tools-0.1.0\bin\pdf-tools.bat^
+    ImagesToPdf^#<1>
+    "%TEMP%\images" "A4" "top-left" "standard" "%TEMP%\output.pdf"#<2>
+----
+<1> Command name
+<2> Command arguments - input images directory, output page size, image position, page margins, output PDF file
+
 ==== Run a transformation pipeline
 ===== Windows
 Create a pipeline specification file.
@@ -245,6 +266,14 @@ Create a pipeline specification file.
 [source,yaml]
 ----
 transformations:
+  - type: ImagesToPdf
+    args:
+      input-images-directory: 'C:\Users\foo\AppData\Local\Temp\images'
+      output-page-size: 'A4'
+      image-position: 'top-left'
+      page-margins: 'standard'
+      output-pdf-file: 'C:\Users\foo\AppData\Local\Temp\intermediate.pdf'
+
   - type: RemovePages
     args:
       input-pdf-file: 'C:\Users\foo\AppData\Local\Temp\input.pdf'
@@ -287,6 +316,14 @@ pdf-tools-0.1.0\bin\pdf-tools.bat^
 ----
 cat <<EOF > /tmp/pdf-transformation-pipeline.yaml
 transformations:
+  - type: ImagesToPdf
+    args:
+      input-images-directory: '/tmp/images'
+      output-page-size: 'A4'
+      image-position: 'top-left'
+      page-margins: 'standard'
+      output-pdf-file: '/tmp/intermediate.pdf'
+
   - type: RemovePages
     args:
       input-pdf-file: '/tmp/input.pdf'
@@ -387,11 +424,32 @@ docker run -it \
 <2> Command name
 <3> Command arguments - input PDF file, image DPI, output page size, output PDF file
 
+==== Create PDF document from images
+[source,cmd]
+----
+docker run -it \
+    -v "/tmp/foo:/tmp/bar" \
+    pdf-tools \#<1>
+    ImagesToPdf \#<2>
+    "/tmp/bar/images/" "A4" "top-left" "standard" "/tmp/bar/output.pdf" #<3>
+----
+<1> Container image name
+<2> Command name
+<3> Command arguments - input images directory, output page size, image position, page margins, output PDF file
+
 ==== Run a transformation pipeline
 [source,sh]
 ----
 cat <<EOF > /tmp/foo/pdf-transformation-pipeline.yaml
 transformations:
+  - type: ImagesToPdf
+    args:
+      input-images-directory: '/tmp/bar/images'
+      output-page-size: 'A4'
+      image-position: 'top-left'
+      page-margins: 'standard'
+      output-pdf-file: '/tmp/bar/intermediate.pdf'
+
   - type: RemovePages
     args:
       input-pdf-file: '/tmp/bar/input.pdf'

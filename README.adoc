@@ -1,7 +1,7 @@
 = README
 :experimental:
 :icons: font
-:revdate: 2023-08-06
+:revdate: 2023-08-09
 :sectnums:
 :sectnumlevels: 5
 :toclevels: 5
@@ -153,6 +153,27 @@ pdf-tools-0.1.0\bin\pdf-tools.bat^
 <1> Command name
 <2> Command arguments - input PDF file, output PDF file
 
+==== Decrypt PDF documents
+===== Linux
+[source,sh]
+----
+pdf-tools-0.1.0/bin/pdf-tools.sh \
+    DecryptPdfs \#<1>
+    "/tmp/encrypyed-pdfs-dir" "/tmp/decrypyed-pdfs-dir"#<2>
+----
+<1> Command name
+<2> Command arguments - input (encrypted) PDFs directory, output (decrypted) PDFs directory
+
+===== Windows
+[source,cmd]
+----
+pdf-tools-0.1.0\bin\pdf-tools.bat^
+    DecryptPdfs^#<1>
+    "%TEMP%\encrypyed-pdfs-dir" "%TEMP%\decrypyed-pdfs-dir"#<2>
+----
+<1> Command name
+<2> Command arguments - input (encrypted) PDFs directory, output (decrypted) PDFs directory
+
 ==== Convert PDF pages to images
 ===== Linux
 [source,sh]
@@ -297,7 +318,12 @@ transformations:
   - type: EncryptPdf
     args:
       input-pdf-file: 'C:\Users\foo\AppData\Local\Temp\intermediate.pdf'
-      output-pdf-file: 'C:\Users\foo\AppData\Local\Temp\output.pdf'
+      output-pdf-file: 'C:\Users\foo\AppData\Local\Temp\encrypted\output.pdf'
+
+  - type: DecryptPdfs
+    args:
+      input-pdfs-directory: 'C:\Users\foo\AppData\Local\Temp\encrypted'
+      output-pdfs-directory: 'C:\Users\foo\AppData\Local\Temp\decrypted'
 ----
 
 Run the pipeline.
@@ -347,7 +373,13 @@ transformations:
   - type: EncryptPdf
     args:
       input-pdf-file: '/tmp/intermediate.pdf'
-      output-pdf-file: '/tmp/output.pdf'
+      output-pdf-file: '/tmp/encrypted/output.pdf'
+
+  - type: DecryptPdfs
+    args:
+      input-pdfs-directory: '/tmp/encrypted'
+      output-pdfs-directory: '/tmp/decrypted'
+
 EOF
 
 pdf-tools-0.1.0/bin/pdf-tools.sh \
@@ -371,6 +403,19 @@ docker run -it \
 <1> Container image name
 <2> Command name
 <3> Command arguments - input PDF file, output PDF file
+
+==== Decrypt PDF documents
+[source,sh]
+----
+docker run -it \
+    -v "/tmp/foo:/tmp/bar" \
+    pdf-tools \#<1>
+    DecryptPdfs \#<2>
+    "/tmp/bar/encrypyed-pdfs" "/tmp/bar/decrypyed-pdfs"#<3>
+----
+<1> Container image name
+<2> Command name
+<3> Command arguments - input (encrypted) PDFs directory, output (decrypted) PDFs directory
 
 ==== Convert PDF pages to images
 [source,sh]
@@ -474,6 +519,12 @@ transformations:
     args:
       input-pdf-file: '/tmp/bar/intermediate.pdf'
       output-pdf-file: '/tmp/bar/output.pdf'
+
+  - type: DecryptPdfs
+    args:
+      input-pdfs-directory: '/tmp/bar'
+      output-pdfs-directory: '/tmp/baz'
+
 EOF
 
 docker run -it \

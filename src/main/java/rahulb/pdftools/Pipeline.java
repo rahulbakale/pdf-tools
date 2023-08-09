@@ -45,6 +45,7 @@ final class Pipeline {
                 switch (CommandName.valueOf(transformationType)) {
 
                     case EncryptPdf -> EncryptPdf.encryptPdf(transformationArgs);
+                    case DecryptPdfs -> DecryptPdfs.decryptPdfs(transformationArgs);
                     case PdfToImage -> PdfToImage.pdfToImage(transformationArgs);
                     case RemovePages -> RemovePages.removePages(transformationArgs);
                     case AddWatermark -> AddWatermark.addWatermark(transformationArgs);

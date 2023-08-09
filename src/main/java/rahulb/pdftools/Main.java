@@ -23,6 +23,7 @@ public class Main {
             switch (CommandName.valueOf(command)) {
 
                 case EncryptPdf -> EncryptPdf.encryptPdf(commandArgs);
+                case DecryptPdfs -> DecryptPdfs.decryptPdfs(commandArgs);
                 case PdfToImage -> PdfToImage.pdfToImage(commandArgs);
                 case RemovePages -> RemovePages.removePages(commandArgs);
                 case AddWatermark -> AddWatermark.addWatermark(commandArgs);

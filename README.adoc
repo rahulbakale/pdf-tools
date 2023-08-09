@@ -134,7 +134,7 @@ chmod u+x pdf-tools-0.1.0/bin/pdf-tools.sh
 === Using Java program
 ==== Encrypt PDF document
 ===== Linux
-[source,cmd]
+[source,sh]
 ----
 pdf-tools-0.1.0/bin/pdf-tools.sh \
     EncryptPdf \#<1>
@@ -186,7 +186,7 @@ pdf-tools-0.1.0/bin/pdf-tools.sh \
 <2> Command arguments - input PDF file, output directory, page numbers, DPI, image format.
 
 ===== Windows
-[source,sh]
+[source,cmd]
 ----
 pdf-tools-0.1.0\bin\pdf-tools.bat^
     PdfToImage^#<1>
@@ -207,7 +207,7 @@ pdf-tools-0.1.0/bin/pdf-tools.sh \
 <2> Command arguments - input PDF file, page numbers to remove, output PDF file
 
 ===== Windows
-[source,sh]
+[source,cmd]
 ----
 pdf-tools-0.1.0\bin\pdf-tools.bat^
     RemovePages^#<1>
@@ -228,7 +228,7 @@ pdf-tools-0.1.0/bin/pdf-tools.sh \
 <2> Command arguments - input PDF file, watermark text, font size, output PDF file
 
 ===== Windows
-[source,sh]
+[source,cmd]
 ----
 pdf-tools-0.1.0\bin\pdf-tools.bat^
     AddWatermark^#<1>
@@ -249,7 +249,7 @@ pdf-tools-0.1.0/bin/pdf-tools.sh \
 <2> Command arguments - input PDF file, image DPI, output page size, output PDF file
 
 ===== Windows
-[source,sh]
+[source,cmd]
 ----
 pdf-tools-0.1.0\bin\pdf-tools.bat^
     ConvertToGrayscale^#<1>
@@ -260,7 +260,7 @@ pdf-tools-0.1.0\bin\pdf-tools.bat^
 
 ==== Create PDF document from images
 ===== Linux
-[source,cmd]
+[source,sh]
 ----
 pdf-tools-0.1.0/bin/pdf-tools.sh \
     ImagesToPdf \#<1>
@@ -470,7 +470,7 @@ docker run -it \
 <3> Command arguments - input PDF file, image DPI, output page size, output PDF file
 
 ==== Create PDF document from images
-[source,cmd]
+[source,sh]
 ----
 docker run -it \
     -v "/tmp/foo:/tmp/bar" \

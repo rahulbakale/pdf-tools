@@ -21,6 +21,8 @@ final class AddWatermark {
     private static final String ARG_WATERMARK_FONT_SIZE = "watermark-font-size";
     private static final String ARG_OUTPUT_PDF_FILE = "output-pdf-file";
 
+    private AddWatermark() {}
+
     static void addWatermark(String... args) throws IOException {
 
         Map<?, ?> argMap = Map.of(

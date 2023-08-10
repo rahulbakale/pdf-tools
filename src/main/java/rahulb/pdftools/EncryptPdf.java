@@ -13,6 +13,8 @@ final class EncryptPdf {
     private static final String ARG_INPUT_PDF_FILE = "input-pdf-file";
     private static final String ARG_OUTPUT_PDF_FILE = "output-pdf-file";
 
+    private EncryptPdf() {}
+
     //See https://pdfbox.apache.org/2.0/cookbook/encryption.html
 
     static void encryptPdf(String... args) throws IOException {

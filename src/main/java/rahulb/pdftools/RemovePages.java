@@ -14,6 +14,8 @@ final class RemovePages {
     private static final String ARG_PAGES_TO_REMOVE = "pages-to-remove";
     private static final String ARG_OUTPUT_PDF_FILE_PATH = "output-pdf-file";
 
+    private RemovePages() {}
+
     static void removePages(String... args) throws IOException {
 
         Map<?, ?> argMap = Map.of(

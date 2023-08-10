@@ -2,6 +2,7 @@ package rahulb.pdftools;
 
 import org.yaml.snakeyaml.Yaml;
 
+import java.io.IOException;
 import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -13,12 +14,14 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 
 final class Pipeline {
 
+    private Pipeline() {}
+
     static void execute(String... args) throws Exception {
 
         execute(Paths.get(args[0]));
     }
 
-    private static void execute(Path pipelineSpecFile) throws Exception {
+    private static void execute(Path pipelineSpecFile) throws IOException, ReflectiveOperationException {
 
         try (Reader reader = Files.newBufferedReader(pipelineSpecFile, UTF_8)) {
 

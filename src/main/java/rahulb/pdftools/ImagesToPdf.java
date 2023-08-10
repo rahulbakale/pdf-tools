@@ -30,6 +30,8 @@ public final class ImagesToPdf {
     /** User space units per millimeter. See org.apache.pdfbox.pdmodel.common.PDRectangle. */
     //private static final float POINTS_PER_MM = 1 / (10 * 2.54f) * POINTS_PER_INCH;
 
+    private ImagesToPdf() {}
+
     static void imagesToPdf(String... args) throws IOException, ReflectiveOperationException {
 
         Map<?, ?> argMap = Map.of(
@@ -80,7 +82,10 @@ public final class ImagesToPdf {
         try {
             var imageObj = PDImageXObject.createFromFile(file.getAbsolutePath(), outDoc);
 
-            float topMargin, rightMargin, bottomMargin, leftMargin;
+            float topMargin;
+            float rightMargin;
+            float bottomMargin;
+            float leftMargin;
 
             switch (pageMargins) {
                 case "none" -> {
@@ -120,7 +125,8 @@ public final class ImagesToPdf {
             float finalImageWidth = Math.min(imageObj.getWidth(), pageWidthWithoutMargins);
             float finalImageHeight = Math.min(imageObj.getHeight(), pageHeightWithoutMargins);
 
-            float x, y;
+            float x;
+            float y;
 
             switch (imagePosition) {
                 case "center" -> {

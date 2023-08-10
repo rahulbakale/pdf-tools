@@ -21,6 +21,8 @@ final class ConvertToGrayscale {
     private static final String ARG_OUTPUT_PAGE_SIZE = "output-page-size";
     private static final String ARG_OUTPUT_PDF_FILE = "output-pdf-file";
 
+    private ConvertToGrayscale() {}
+
     static void convertToGrayscale(String... args) throws IOException, NoSuchFieldException, IllegalAccessException {
 
         Map<?, ?> argMap = Map.of(

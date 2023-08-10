@@ -16,6 +16,8 @@ final class DecryptPdfs {
     private static final String ARG_INPUT_PDFS_DIRECTORY = "input-pdfs-directory";
     private static final String ARG_OUTPUT_PDFS_DIRECTORY = "output-pdfs-directory";
 
+    private DecryptPdfs() {}
+
     static void decryptPdfs(String... args) {
 
         Map<String, String> argMap = Map.of(

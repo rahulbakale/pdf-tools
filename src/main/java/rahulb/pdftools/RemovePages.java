@@ -1,97 +1,97 @@
 package rahulb.pdftools;
 
-import org.apache.pdfbox.pdmodel.PDDocument;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
 import java.util.function.IntPredicate;
 import java.util.stream.IntStream;
+import org.apache.pdfbox.pdmodel.PDDocument;
 
 final class RemovePages {
 
-    private static final String ARG_INPUT_PDF_FILE_PATH = "input-pdf-file";
-    private static final String ARG_PAGES_TO_REMOVE = "pages-to-remove";
-    private static final String ARG_OUTPUT_PDF_FILE_PATH = "output-pdf-file";
+  private static final String ARG_INPUT_PDF_FILE_PATH = "input-pdf-file";
+  private static final String ARG_PAGES_TO_REMOVE = "pages-to-remove";
+  private static final String ARG_OUTPUT_PDF_FILE_PATH = "output-pdf-file";
 
-    private RemovePages() {}
+  private RemovePages() {}
 
-    static void removePages(String... args) throws IOException {
+  static void removePages(String... args) throws IOException {
 
-        Map<?, ?> argMap = Map.of(
-                ARG_INPUT_PDF_FILE_PATH, args[0],
-                ARG_PAGES_TO_REMOVE, args[1],
-                ARG_OUTPUT_PDF_FILE_PATH, args[2]
-        );
+    Map<?, ?> argMap =
+        Map.of(
+            ARG_INPUT_PDF_FILE_PATH, args[0],
+            ARG_PAGES_TO_REMOVE, args[1],
+            ARG_OUTPUT_PDF_FILE_PATH, args[2]);
 
-        removePages(argMap);
+    removePages(argMap);
+  }
+
+  static void removePages(Map<?, ?> args) throws IOException {
+
+    String inputPdfFilePath = (String) args.get(ARG_INPUT_PDF_FILE_PATH);
+    String pagesToRemove = (String) args.get(ARG_PAGES_TO_REMOVE);
+    String outputPdfFilePath = (String) args.get(ARG_OUTPUT_PDF_FILE_PATH);
+
+    removePages(inputPdfFilePath, pagesToRemove, outputPdfFilePath);
+  }
+
+  private static void removePages(
+      String inputPdfFilePath, String pagesToRemove, String outputPdfFilePath) throws IOException {
+
+    try (var document = PDDocument.load(new File(inputPdfFilePath))) {
+
+      removePages(document, pagesToRemove);
+
+      //noinspection ResultOfMethodCallIgnored
+      new File(outputPdfFilePath).getParentFile().mkdirs();
+
+      document.save(outputPdfFilePath);
     }
+  }
 
-    static void removePages(Map<?,?> args) throws IOException {
+  static void removePages(PDDocument document, String pagesToRemove) {
 
-        String inputPdfFilePath = (String) args.get(ARG_INPUT_PDF_FILE_PATH);
-        String pagesToRemove = (String) args.get(ARG_PAGES_TO_REMOVE);
-        String outputPdfFilePath = (String) args.get(ARG_OUTPUT_PDF_FILE_PATH);
+    IntPredicate shouldRemovePageNumber = getPageNumberToRemovePredicate(pagesToRemove);
 
-        removePages(inputPdfFilePath, pagesToRemove, outputPdfFilePath);
+    int numberOfPages = document.getNumberOfPages();
+
+    int[] pgsToRemove =
+        IntStream.range(1, numberOfPages + 1).filter(shouldRemovePageNumber).toArray();
+
+    for (int i = 0; i < pgsToRemove.length; i++) {
+      int originalPageNumber = pgsToRemove[i];
+      int pageIndexToRemove = originalPageNumber - (i + 1);
+      document.removePage(pageIndexToRemove);
     }
+  }
 
-    private static void removePages(String inputPdfFilePath, String pagesToRemove, String outputPdfFilePath) throws IOException {
+  private static IntPredicate getPageNumberToRemovePredicate(String pagesToRemove) {
 
-        try (var document = PDDocument.load(new File(inputPdfFilePath))) {
+    if (pagesToRemove.contains(":")) {
 
-            removePages(document, pagesToRemove);
+      int index = pagesToRemove.indexOf(":");
+      String predicateType = pagesToRemove.substring(0, index);
+      String pageNumbers = pagesToRemove.substring(index + 1);
 
-            //noinspection ResultOfMethodCallIgnored
-            new File(outputPdfFilePath).getParentFile().mkdirs();
+      if ("keep".equals(predicateType)) {
+        return createPredicate(pageNumbers).negate();
+      } else {
+        throw new IllegalArgumentException(
+            String.format("Invalid predicate type: '%s'", predicateType));
+      }
 
-            document.save(outputPdfFilePath);
-        }
+    } else {
+      return createPredicate(pagesToRemove);
     }
+  }
 
-    static void removePages(PDDocument document, String pagesToRemove) {
+  private static IntPredicate createPredicate(String pageNumbers) {
 
-        IntPredicate shouldRemovePageNumber = getPageNumberToRemovePredicate(pagesToRemove);
+    Set<Integer> pageNumberSet =
+        Arrays.stream(pageNumbers.split(","))
+            .mapToInt(Integer::parseInt)
+            .collect(HashSet::new, HashSet::add, AbstractCollection::addAll);
 
-        int numberOfPages = document.getNumberOfPages();
-
-        int[] pgsToRemove = IntStream.range(1, numberOfPages + 1)
-                .filter(shouldRemovePageNumber)
-                .toArray();
-
-        for (int i = 0; i < pgsToRemove.length; i++) {
-            int originalPageNumber = pgsToRemove[i];
-            int pageIndexToRemove = originalPageNumber - (i + 1);
-            document.removePage(pageIndexToRemove);
-        }
-    }
-
-    private static IntPredicate getPageNumberToRemovePredicate(String pagesToRemove) {
-
-        if (pagesToRemove.contains(":")) {
-
-            int index = pagesToRemove.indexOf(":");
-            String predicateType = pagesToRemove.substring(0, index);
-            String pageNumbers = pagesToRemove.substring(index + 1);
-
-            if ("keep".equals(predicateType)) {
-                return createPredicate(pageNumbers).negate();
-            } else {
-                throw new IllegalArgumentException(String.format("Invalid predicate type: '%s'", predicateType));
-            }
-
-        } else {
-            return createPredicate(pagesToRemove);
-        }
-    }
-
-    private static IntPredicate createPredicate(String pageNumbers) {
-
-        Set<Integer> pageNumberSet =
-                Arrays.stream(pageNumbers.split(","))
-                        .mapToInt(Integer::parseInt)
-                        .collect(HashSet::new, HashSet::add, AbstractCollection::addAll);
-
-        return pageNumberSet::contains;
-    }
+    return pageNumberSet::contains;
+  }
 }

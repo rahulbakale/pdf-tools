@@ -1,12 +1,11 @@
 package rahulb.pdftools;
 
 enum CommandName {
-
-    EncryptPdf,
-    DecryptPdfs,
-    PdfToImage,
-    RemovePages,
-    AddWatermark,
-    ConvertToGrayscale,
-    ImagesToPdf
+  EncryptPdf,
+  DecryptPdfs,
+  PdfToImage,
+  RemovePages,
+  AddWatermark,
+  ConvertToGrayscale,
+  ImagesToPdf
 }

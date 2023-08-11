@@ -1,108 +1,116 @@
 package rahulb.pdftools;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.Map;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.encryption.AccessPermission;
 import org.apache.pdfbox.pdmodel.encryption.StandardProtectionPolicy;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Map;
-
 final class EncryptPdf {
 
-    private static final String ARG_INPUT_PDF_FILE = "input-pdf-file";
-    private static final String ARG_OUTPUT_PDF_FILE = "output-pdf-file";
+  private static final String ARG_INPUT_PDF_FILE = "input-pdf-file";
+  private static final String ARG_OUTPUT_PDF_FILE = "output-pdf-file";
 
-    private EncryptPdf() {}
+  private EncryptPdf() {}
 
-    //See https://pdfbox.apache.org/2.0/cookbook/encryption.html
+  // See https://pdfbox.apache.org/2.0/cookbook/encryption.html
 
-    static void encryptPdf(String... args) throws IOException {
+  static void encryptPdf(String... args) throws IOException {
 
-        Map<String, String> argMap = Map.of(
-                ARG_INPUT_PDF_FILE, args[0],
-                ARG_OUTPUT_PDF_FILE, args[1]
-        );
+    Map<String, String> argMap =
+        Map.of(
+            ARG_INPUT_PDF_FILE, args[0],
+            ARG_OUTPUT_PDF_FILE, args[1]);
 
-        encryptPdf(argMap);
+    encryptPdf(argMap);
+  }
+
+  static void encryptPdf(Map<?, ?> args) throws IOException {
+
+    String inputPdfFile = (String) args.get(ARG_INPUT_PDF_FILE);
+    String outputPdfFile = (String) args.get(ARG_OUTPUT_PDF_FILE);
+
+    encryptPdf(new File(inputPdfFile), new File(outputPdfFile));
+  }
+
+  private static void encryptPdf(File inputPdfFile, File outputPdfFile) throws IOException {
+
+    try (var document = PDDocument.load(inputPdfFile)) {
+
+      encryptPdf(document);
+
+      //noinspection ResultOfMethodCallIgnored
+      outputPdfFile.getParentFile().mkdirs();
+
+      document.save(outputPdfFile);
     }
+  }
 
-    static void encryptPdf(Map<?, ?> args) throws IOException {
+  private static void encryptPdf(PDDocument document) throws IOException {
 
-        String inputPdfFile = (String) args.get(ARG_INPUT_PDF_FILE);
-        String outputPdfFile = (String) args.get(ARG_OUTPUT_PDF_FILE);
+    StandardProtectionPolicy protectionPolicy = prepareProtectionPolicy();
 
-        encryptPdf(new File(inputPdfFile), new File(outputPdfFile));
-    }
-    private static void encryptPdf(File inputPdfFile, File outputPdfFile) throws IOException {
+    document.protect(protectionPolicy);
+  }
 
-        try (var document = PDDocument.load(inputPdfFile)) {
+  private static StandardProtectionPolicy prepareProtectionPolicy() {
 
-            encryptPdf(document);
+    var console = System.console();
+    char[] docOpenPassword =
+        console.readPassword("Enter the password required to open the document:");
+    char[] permissionsChangePassword =
+        console.readPassword(
+            "Enter the password required to change the accessPermission of the document:");
 
-            //noinspection ResultOfMethodCallIgnored
-            outputPdfFile.getParentFile().mkdirs();
+    var accessPermission = prepareAccessPermission();
+    var protectionPolicy =
+        new StandardProtectionPolicy(
+            String.valueOf(permissionsChangePassword),
+            String.valueOf(docOpenPassword),
+            accessPermission);
 
-            document.save(outputPdfFile);
-        }
-    }
+    // The following parameters are based on Adobe Acrobat documentation.
+    // https://helpx.adobe.com/in/acrobat/using/securing-pdfs-passwords.html
+    protectionPolicy.setPreferAES(true);
+    protectionPolicy.setEncryptionKeyLength(256);
 
-    private static void encryptPdf(PDDocument document) throws IOException {
+    return protectionPolicy;
+  }
 
-        StandardProtectionPolicy protectionPolicy = prepareProtectionPolicy();
+  private static AccessPermission prepareAccessPermission() {
 
-        document.protect(protectionPolicy);
-    }
+    AccessPermission permissions = new AccessPermission();
 
-    private static StandardProtectionPolicy prepareProtectionPolicy() {
+    // insert/rotate/delete pages
+    permissions.setCanAssembleDocument(false);
 
-        var console = System.console();
-        char[] docOpenPassword = console.readPassword("Enter the password required to open the document:");
-        char[] permissionsChangePassword = console.readPassword("Enter the password required to change the accessPermission of the document:");
+    // extract content from the document
+    permissions.setCanExtractContent(false);
 
-        var accessPermission = prepareAccessPermission();
-        var protectionPolicy = new StandardProtectionPolicy(String.valueOf(permissionsChangePassword), String.valueOf(docOpenPassword), accessPermission);
+    // extract content from the document for accessibility purposes
+    permissions.setCanExtractForAccessibility(false);
 
-        //The following parameters are based on Adobe Acrobat documentation.
-        // https://helpx.adobe.com/in/acrobat/using/securing-pdfs-passwords.html
-        protectionPolicy.setPreferAES(true);
-        protectionPolicy.setEncryptionKeyLength(256);
+    // fill in interactive form fields (including signature fields)
+    permissions.setCanFillInForm(false);
 
-        return protectionPolicy;
-    }
+    // modify the document
+    permissions.setCanModify(false);
 
-    private static AccessPermission prepareAccessPermission() {
+    // add or modify text annotations and fill in interactive forms fields and,
+    // if canModify() returns true, create or modify interactive form fields (including signature
+    // fields)
+    permissions.setCanModifyAnnotations(false);
 
-        AccessPermission permissions = new AccessPermission();
+    // print the document
+    permissions.setCanPrint(true);
 
-        //insert/rotate/delete pages
-        permissions.setCanAssembleDocument(false);
+    // print the document in a faithful format
+    permissions.setCanPrintFaithful(true);
 
-        //extract content from the document
-        permissions.setCanExtractContent(false);
+    // Locks the access permission read only
+    permissions.setReadOnly();
 
-        //extract content from the document for accessibility purposes
-        permissions.setCanExtractForAccessibility(false);
-
-        //fill in interactive form fields (including signature fields)
-        permissions.setCanFillInForm(false);
-
-        //modify the document
-        permissions.setCanModify(false);
-
-        //add or modify text annotations and fill in interactive forms fields and,
-        // if canModify() returns true, create or modify interactive form fields (including signature fields)
-        permissions.setCanModifyAnnotations(false);
-
-        //print the document
-        permissions.setCanPrint(true);
-
-        //print the document in a faithful format
-        permissions.setCanPrintFaithful(true);
-
-        //Locks the access permission read only
-        permissions.setReadOnly();
-
-        return permissions;
-    }
+    return permissions;
+  }
 }

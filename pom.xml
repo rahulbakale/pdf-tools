@@ -127,6 +127,36 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.owasp</groupId>
+                <artifactId>dependency-check-maven</artifactId>
+                <version>8.3.1</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                        <configuration>
+                            <autoUpdate>true</autoUpdate>
+                            <formats>
+                                <format>HTML</format>
+                                <format>JSON</format>
+                            </formats>
+                            <prettyPrint>true</prettyPrint>
+                            <failBuildOnCVSS>7</failBuildOnCVSS>
+                            <outputDirectory>target/dependency-check-cve</outputDirectory>
+                            <scanDependencies>true</scanDependencies>
+                            <scanPlugins>false</scanPlugins>
+                            <skipProvidedScope>false</skipProvidedScope>
+                            <skipRuntimeScope>false</skipRuntimeScope>
+                            <skipSystemScope>false</skipSystemScope>
+                            <skipTestScope>false</skipTestScope>
+                            <skipDependencyManagement>true</skipDependencyManagement>
+                            <versionCheckEnabled>true</versionCheckEnabled>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 

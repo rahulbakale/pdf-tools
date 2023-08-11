@@ -16,6 +16,14 @@
         </license>
     </licenses>
 
+    <developers>
+        <developer>
+            <id>rahulbakale</id>
+            <name>Rahul Bakale</name>
+            <url>https://github.com/rahulbakale</url>
+        </developer>
+    </developers>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <main.class.name>rahulb.pdftools.Main</main.class.name>

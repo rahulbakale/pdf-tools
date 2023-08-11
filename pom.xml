@@ -123,27 +123,6 @@
                 </configuration>
             </plugin>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <version>3.6.0</version>
-                <configuration>
-                    <descriptors>
-                        <descriptor>src/assembly/windows.xml</descriptor>
-                        <descriptor>src/assembly/linux.xml</descriptor>
-                    </descriptors>
-                    <appendAssemblyId>true</appendAssemblyId>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>create-archive</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>single</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
                 <!-- Report vulnerabilities in dependencies -->
                 <groupId>org.owasp</groupId>
                 <artifactId>dependency-check-maven</artifactId>
@@ -198,6 +177,27 @@
                         <phase>package</phase>
                         <goals>
                             <goal>makeAggregateBom</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>3.6.0</version>
+                <configuration>
+                    <descriptors>
+                        <descriptor>src/assembly/windows.xml</descriptor>
+                        <descriptor>src/assembly/linux.xml</descriptor>
+                    </descriptors>
+                    <appendAssemblyId>true</appendAssemblyId>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>create-archive</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
                         </goals>
                     </execution>
                 </executions>

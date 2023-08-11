@@ -140,7 +140,6 @@
                             <autoUpdate>true</autoUpdate>
                             <formats>
                                 <format>HTML</format>
-                                <format>JSON</format>
                             </formats>
                             <prettyPrint>true</prettyPrint>
                             <failBuildOnCVSS>7</failBuildOnCVSS>

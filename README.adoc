@@ -130,6 +130,10 @@ chmod u+x pdf-tools-0.1.0/bin/pdf-tools.sh
 ----
 
 
+== Software Bill of Materials (SBOM)
+See generated artifact `+pdf-tools-${VERSION}-cyclonedx.json+`
+
+
 == Usage
 === Using Java program
 ==== Encrypt PDF document

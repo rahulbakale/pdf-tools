@@ -9,6 +9,13 @@
     <version>0.1.0</version>
     <name>pdf-tools</name>
 
+    <licenses>
+        <license>
+            <name>MIT</name>
+            <url>https://opensource.org/license/mit/</url>
+        </license>
+    </licenses>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <main.class.name>rahulb.pdftools.Main</main.class.name>

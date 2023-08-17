@@ -1,2 +1,43 @@
 <FindBugsFilter>
+    <Match>
+        <Bug pattern="PATH_TRAVERSAL_IN"/>
+        <Or>
+            <And>
+                <Class name="rahulb.pdftools.AddWatermark"/>
+                <Method name="addWatermark" params="java.util.Map"/>
+            </And>
+            <And>
+                <Class name="rahulb.pdftools.ConvertToGrayscale"/>
+                <Method name="convertToGrayscale" params="java.util.Map"/>
+            </And>
+            <And>
+                <Class name="rahulb.pdftools.DecryptPdfs"/>
+                <Method name="decryptPdfs" params="java.util.Map"/>
+            </And>
+            <And>
+                <Class name="rahulb.pdftools.EncryptPdf"/>
+                <Method name="encryptPdf" params="java.util.Map"/>
+            </And>
+            <And>
+                <Class name="rahulb.pdftools.ImagesToPdf"/>
+                <Method name="imagesToPdf" params="java.util.Map"/>
+            </And>
+            <And>
+                <Class name="rahulb.pdftools.PdfPageImageWriter"/>
+                <Method name="createPageImage" params="org.apache.pdfbox.rendering.PDFRenderer,int,float,java.lang.String,java.io.File,java.lang.String"/>
+            </And>
+            <And>
+                <Class name="rahulb.pdftools.PdfToImage"/>
+                <Method name="pdfToImage" params="java.util.Map"/>
+            </And>
+            <And>
+                <Class name="rahulb.pdftools.RemovePages"/>
+                <Method name="removePages" params="java.lang.String, java.lang.String, java.lang.String"/>
+            </And>
+            <And>
+                <Class name="rahulb.pdftools.Pipeline"/>
+                <Method name="execute"/>
+            </And>
+        </Or>
+    </Match>
 </FindBugsFilter>

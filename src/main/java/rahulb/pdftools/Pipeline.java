@@ -17,10 +17,10 @@ final class Pipeline {
 
   static void execute(String... args) throws Exception {
 
-    execute(Paths.get(args[0]));
+    executePipeline(Paths.get(args[0]));
   }
 
-  private static void execute(Path pipelineSpecFile)
+  private static void executePipeline(Path pipelineSpecFile)
       throws IOException, ReflectiveOperationException {
 
     try (Reader reader = Files.newBufferedReader(pipelineSpecFile, UTF_8)) {

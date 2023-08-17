@@ -32,7 +32,7 @@
             </And>
             <And>
                 <Class name="rahulb.pdftools.RemovePages"/>
-                <Method name="removePages" params="java.lang.String, java.lang.String, java.lang.String"/>
+                <Method name="executeInternal" params="java.util.Map"/>
             </And>
             <And>
                 <Class name="rahulb.pdftools.Pipeline"/>

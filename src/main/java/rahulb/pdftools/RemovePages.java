@@ -30,21 +30,21 @@ final class RemovePages extends AbstractCommandHandler {
   @Override
   void executeInternal(Map<?, ?> args) throws Exception {
 
-    String inputPdfFilePath = (String) args.get(ARG_INPUT_PDF_FILE_PATH);
+    File inputPdfFile = new File((String) args.get(ARG_INPUT_PDF_FILE_PATH));
     String pagesToRemove = (String) args.get(ARG_PAGES_TO_REMOVE);
-    String outputPdfFilePath = (String) args.get(ARG_OUTPUT_PDF_FILE_PATH);
+    File outputPdfFile = new File((String) args.get(ARG_OUTPUT_PDF_FILE_PATH));
 
-    removePages(inputPdfFilePath, pagesToRemove, outputPdfFilePath);
+    removePages(inputPdfFile, pagesToRemove, outputPdfFile);
   }
 
-  private static void removePages(
-      String inputPdfFilePath, String pagesToRemove, String outputPdfFilePath) throws IOException {
+  private static void removePages(File inputPdfFile, String pagesToRemove, File outputPdfFile)
+      throws IOException {
 
-    try (var document = PDDocument.load(new File(inputPdfFilePath))) {
+    try (var document = PDDocument.load(inputPdfFile)) {
 
       removePages(document, pagesToRemove);
 
-      Utils.saveDocument(document, new File(outputPdfFilePath));
+      Utils.saveDocument(document, outputPdfFile);
     }
   }
 

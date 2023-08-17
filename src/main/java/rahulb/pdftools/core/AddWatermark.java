@@ -3,10 +3,6 @@ package rahulb.pdftools.core;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
-import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-import org.apache.pdfbox.multipdf.Overlay;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
@@ -41,13 +37,11 @@ public final class AddWatermark {
         ((font.getSpaceWidth() / 1000) * fontSize) * 3; /*Gap of three characters*/
     float watermarkGapY = watermarkTextHeight * 1.5f;
 
-
     // Transparency
     // https://issues.apache.org/jira/browse/PDFBOX-1176
     // https://github.com/TomRoush/PdfBox-Android/issues/73
     PDExtendedGraphicsState exGraphicsState = new PDExtendedGraphicsState();
     exGraphicsState.setNonStrokingAlphaConstant(0.5f);
-
 
     for (var page : document.getPages()) {
 
@@ -100,7 +94,7 @@ public final class AddWatermark {
   }
 
   // TODO - Provide a command line interface for this capability
-  static void addWatermark(File inputPdfFile, File watermarkPdfFile, File outputPdfFile)
+  /*static void addWatermark(File inputPdfFile, File watermarkPdfFile, File outputPdfFile)
       throws IOException {
 
     try (var overlayDoc = PDDocument.load(watermarkPdfFile);
@@ -117,5 +111,5 @@ public final class AddWatermark {
         overlay.overlayDocuments(overlayDocs).save(outputPdfFile);
       }
     }
-  }
+  }*/
 }

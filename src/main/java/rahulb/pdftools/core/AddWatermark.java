@@ -41,16 +41,13 @@ public final class AddWatermark {
         ((font.getSpaceWidth() / 1000) * fontSize) * 3; /*Gap of three characters*/
     float watermarkGapY = watermarkTextHeight * 1.5f;
 
-    PDExtendedGraphicsState exGraphicsState;
-    {
-      // Transparency
 
-      // https://issues.apache.org/jira/browse/PDFBOX-1176
-      // https://github.com/TomRoush/PdfBox-Android/issues/73
+    // Transparency
+    // https://issues.apache.org/jira/browse/PDFBOX-1176
+    // https://github.com/TomRoush/PdfBox-Android/issues/73
+    PDExtendedGraphicsState exGraphicsState = new PDExtendedGraphicsState();
+    exGraphicsState.setNonStrokingAlphaConstant(0.5f);
 
-      exGraphicsState = new PDExtendedGraphicsState();
-      exGraphicsState.setNonStrokingAlphaConstant(0.5f);
-    }
 
     for (var page : document.getPages()) {
 
@@ -75,7 +72,6 @@ public final class AddWatermark {
           Matrix textMatrix = Matrix.getRotateInstance(Math.toRadians(45), tx, ty);
           contentStream.setTextMatrix(textMatrix);
           contentStream.newLineAtOffset(0, 0);
-          // contentStream.newLineAtOffset(tx, ty);
           contentStream.showText(watermarkText);
           contentStream.endText();
 

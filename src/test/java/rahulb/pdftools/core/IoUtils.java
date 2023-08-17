@@ -1,4 +1,4 @@
-package rahulb.pdftools;
+package rahulb.pdftools.core;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;

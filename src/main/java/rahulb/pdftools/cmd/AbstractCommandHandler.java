@@ -1,4 +1,4 @@
-package rahulb.pdftools;
+package rahulb.pdftools.cmd;
 
 import java.util.Map;
 

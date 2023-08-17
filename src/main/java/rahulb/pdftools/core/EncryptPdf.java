@@ -1,42 +1,18 @@
-package rahulb.pdftools;
+package rahulb.pdftools.core;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Map;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.encryption.AccessPermission;
 import org.apache.pdfbox.pdmodel.encryption.StandardProtectionPolicy;
 
-final class EncryptPdf extends AbstractCommandHandler {
+public final class EncryptPdf {
 
-  private static final String ARG_INPUT_PDF_FILE = "input-pdf-file";
-  private static final String ARG_OUTPUT_PDF_FILE = "output-pdf-file";
-
-  EncryptPdf() {}
+  private EncryptPdf() {}
 
   // See https://pdfbox.apache.org/2.0/cookbook/encryption.html
 
-  @Override
-  void executeInternal(String... args) throws Exception {
-
-    Map<String, String> argMap =
-        Map.of(
-            ARG_INPUT_PDF_FILE, args[0],
-            ARG_OUTPUT_PDF_FILE, args[1]);
-
-    executeInternal(argMap);
-  }
-
-  @Override
-  void executeInternal(Map<?, ?> args) throws Exception {
-
-    String inputPdfFile = (String) args.get(ARG_INPUT_PDF_FILE);
-    String outputPdfFile = (String) args.get(ARG_OUTPUT_PDF_FILE);
-
-    encryptPdf(new File(inputPdfFile), new File(outputPdfFile));
-  }
-
-  private static void encryptPdf(File inputPdfFile, File outputPdfFile) throws IOException {
+  public static void encryptPdf(File inputPdfFile, File outputPdfFile) throws IOException {
 
     try (var document = PDDocument.load(inputPdfFile)) {
 

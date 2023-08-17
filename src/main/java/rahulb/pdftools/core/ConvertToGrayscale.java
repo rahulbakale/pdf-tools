@@ -1,8 +1,7 @@
-package rahulb.pdftools;
+package rahulb.pdftools.core;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Map;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
@@ -13,40 +12,11 @@ import org.apache.pdfbox.rendering.ImageType;
 import org.apache.pdfbox.rendering.PDFRenderer;
 import org.apache.pdfbox.util.Matrix;
 
-final class ConvertToGrayscale extends AbstractCommandHandler {
+public final class ConvertToGrayscale {
 
-  private static final String ARG_INPUT_PDF_FILE = "input-pdf-file";
-  private static final String ARG_DPI = "dpi";
-  private static final String ARG_OUTPUT_PAGE_SIZE = "output-page-size";
-  private static final String ARG_OUTPUT_PDF_FILE = "output-pdf-file";
+  private ConvertToGrayscale() {}
 
-  ConvertToGrayscale() {}
-
-  @Override
-  void executeInternal(String... args) throws Exception {
-
-    Map<?, ?> argMap =
-        Map.of(
-            ARG_INPUT_PDF_FILE, args[0],
-            ARG_DPI, args[1],
-            ARG_OUTPUT_PAGE_SIZE, args[2],
-            ARG_OUTPUT_PDF_FILE, args[3]);
-
-    executeInternal(argMap);
-  }
-
-  @Override
-  void executeInternal(Map<?, ?> args) throws Exception {
-
-    File inputPdfFile = new File((String) args.get(ARG_INPUT_PDF_FILE));
-    float dpi = Float.parseFloat((String) args.get(ARG_DPI));
-    String outputPageSize = (String) args.get(ARG_OUTPUT_PAGE_SIZE);
-    File outputPdfFile = new File((String) args.get(ARG_OUTPUT_PDF_FILE));
-
-    convertToGrayscale(inputPdfFile, dpi, outputPageSize, outputPdfFile);
-  }
-
-  private static void convertToGrayscale(
+  public static void convertToGrayscale(
       File inputPdfFile, float dpi, String outputPageSize, File outputPdfFile)
       throws IOException, NoSuchFieldException, IllegalAccessException {
 

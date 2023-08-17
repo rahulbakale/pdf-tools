@@ -1,42 +1,17 @@
-package rahulb.pdftools;
+package rahulb.pdftools.core;
 
 import java.io.IOException;
 import java.nio.file.FileVisitOption;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Map;
 import java.util.stream.Stream;
 import org.apache.pdfbox.pdmodel.PDDocument;
 
-final class DecryptPdfs extends AbstractCommandHandler {
+public final class DecryptPdfs {
 
-  private static final String ARG_INPUT_PDFS_DIRECTORY = "input-pdfs-directory";
-  private static final String ARG_OUTPUT_PDFS_DIRECTORY = "output-pdfs-directory";
+  private DecryptPdfs() {}
 
-  DecryptPdfs() {}
-
-  @Override
-  void executeInternal(String... args) {
-
-    Map<String, String> argMap =
-        Map.of(
-            ARG_INPUT_PDFS_DIRECTORY, args[0],
-            ARG_OUTPUT_PDFS_DIRECTORY, args[1]);
-
-    executeInternal(argMap);
-  }
-
-  @Override
-  void executeInternal(Map<?, ?> args) {
-
-    String inputPdfsDir = (String) args.get(ARG_INPUT_PDFS_DIRECTORY);
-    String outputPdfsDir = (String) args.get(ARG_OUTPUT_PDFS_DIRECTORY);
-
-    decryptPdfs(Paths.get(inputPdfsDir), Paths.get(outputPdfsDir));
-  }
-
-  private static void decryptPdfs(Path inputPdfsDirPath, Path outputPdfsDirPath) {
+  public static void decryptPdfs(Path inputPdfsDirPath, Path outputPdfsDirPath) {
 
     String docOpenPassword =
         String.valueOf(

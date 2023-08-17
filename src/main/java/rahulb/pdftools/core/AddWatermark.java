@@ -1,4 +1,4 @@
-package rahulb.pdftools;
+package rahulb.pdftools.core;
 
 import java.awt.*;
 import java.io.File;
@@ -13,40 +13,11 @@ import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.apache.pdfbox.pdmodel.graphics.state.PDExtendedGraphicsState;
 import org.apache.pdfbox.util.Matrix;
 
-final class AddWatermark extends AbstractCommandHandler {
+public final class AddWatermark {
 
-  private static final String ARG_INPUT_PDF_FILE = "input-pdf-file";
-  private static final String ARG_WATERMARK_TEXT = "watermark-text";
-  private static final String ARG_WATERMARK_FONT_SIZE = "watermark-font-size";
-  private static final String ARG_OUTPUT_PDF_FILE = "output-pdf-file";
+  private AddWatermark() {}
 
-  AddWatermark() {}
-
-  @Override
-  void executeInternal(String... args) throws Exception {
-
-    Map<?, ?> argMap =
-        Map.of(
-            ARG_INPUT_PDF_FILE, args[0],
-            ARG_WATERMARK_TEXT, args[1],
-            ARG_WATERMARK_FONT_SIZE, args[2],
-            ARG_OUTPUT_PDF_FILE, args[3]);
-
-    executeInternal(argMap);
-  }
-
-  @Override
-  void executeInternal(Map<?, ?> args) throws Exception {
-
-    File inputPdfFile = new File((String) args.get(ARG_INPUT_PDF_FILE));
-    String watermarkText = (String) args.get(ARG_WATERMARK_TEXT);
-    int fontSize = Integer.parseInt((String) args.get(ARG_WATERMARK_FONT_SIZE));
-    File outputPdfFile = new File((String) args.get(ARG_OUTPUT_PDF_FILE));
-
-    addWatermark(inputPdfFile, watermarkText, fontSize, outputPdfFile);
-  }
-
-  private static void addWatermark(
+  public static void addWatermark(
       File inputPdfFile, String watermarkText, int fontSize, File outputPdfFile)
       throws IOException {
 

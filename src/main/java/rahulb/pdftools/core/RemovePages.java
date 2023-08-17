@@ -1,43 +1,20 @@
-package rahulb.pdftools;
+package rahulb.pdftools.core;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.*;
+import java.util.AbstractCollection;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.function.IntPredicate;
 import java.util.stream.IntStream;
 import org.apache.pdfbox.pdmodel.PDDocument;
 
-final class RemovePages extends AbstractCommandHandler {
+public final class RemovePages {
 
-  private static final String ARG_INPUT_PDF_FILE_PATH = "input-pdf-file";
-  private static final String ARG_PAGES_TO_REMOVE = "pages-to-remove";
-  private static final String ARG_OUTPUT_PDF_FILE_PATH = "output-pdf-file";
+  private RemovePages() {}
 
-  RemovePages() {}
-
-  @Override
-  void executeInternal(String... args) throws Exception {
-
-    Map<?, ?> argMap =
-        Map.of(
-            ARG_INPUT_PDF_FILE_PATH, args[0],
-            ARG_PAGES_TO_REMOVE, args[1],
-            ARG_OUTPUT_PDF_FILE_PATH, args[2]);
-
-    executeInternal(argMap);
-  }
-
-  @Override
-  void executeInternal(Map<?, ?> args) throws Exception {
-
-    File inputPdfFile = new File((String) args.get(ARG_INPUT_PDF_FILE_PATH));
-    String pagesToRemove = (String) args.get(ARG_PAGES_TO_REMOVE);
-    File outputPdfFile = new File((String) args.get(ARG_OUTPUT_PDF_FILE_PATH));
-
-    removePages(inputPdfFile, pagesToRemove, outputPdfFile);
-  }
-
-  private static void removePages(File inputPdfFile, String pagesToRemove, File outputPdfFile)
+  public static void removePages(File inputPdfFile, String pagesToRemove, File outputPdfFile)
       throws IOException {
 
     try (var document = PDDocument.load(inputPdfFile)) {

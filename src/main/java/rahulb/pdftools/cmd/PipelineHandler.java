@@ -1,4 +1,4 @@
-package rahulb.pdftools;
+package rahulb.pdftools.cmd;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
@@ -11,9 +11,9 @@ import java.util.List;
 import java.util.Map;
 import org.yaml.snakeyaml.Yaml;
 
-final class Pipeline extends AbstractCommandHandler {
+final class PipelineHandler extends AbstractCommandHandler {
 
-  Pipeline() {}
+  PipelineHandler() {}
 
   @Override
   void executeInternal(String... args) throws Exception {

@@ -1,4 +1,4 @@
-package rahulb.pdftools;
+package rahulb.pdftools.core;
 
 import java.io.IOException;
 import java.nio.file.Path;

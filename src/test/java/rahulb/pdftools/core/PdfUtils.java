@@ -1,4 +1,4 @@
-package rahulb.pdftools;
+package rahulb.pdftools.core;
 
 import de.redsix.pdfcompare.PdfComparator;
 import java.io.*;

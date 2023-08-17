@@ -1,22 +1,18 @@
-package rahulb.pdftools;
+package rahulb.pdftools.cmd;
 
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.stream.IntStream;
-import org.apache.pdfbox.pdmodel.PDDocument;
+import rahulb.pdftools.core.PdfToImage;
 
-final class PdfToImage extends AbstractCommandHandler {
+final class PdfToImageHandler extends AbstractCommandHandler {
 
   private static final String ARG_INPUT_PDF_FILE = "input-pdf-file";
   private static final String ARG_PAGE_NUMBERS = "page-numbers";
   private static final String ARG_DPI = "dpi";
   private static final String ARG_IMAGE_FORMAT = "image-format";
   private static final String ARG_OUTPUT_DIRECTORY = "output-directory";
-
-  PdfToImage() {}
 
   @Override
   void executeInternal(String... args) throws Exception {
@@ -42,31 +38,6 @@ final class PdfToImage extends AbstractCommandHandler {
     int dpi = Integer.parseInt((String) args.get(ARG_DPI));
     String imageFormat = (String) args.get(ARG_IMAGE_FORMAT);
 
-    pdfToImage(inputPdfFile, outputDir, pageNumbers, dpi, imageFormat);
-  }
-
-  private static void pdfToImage(
-      File inputPdfFile, File outputDir, IntStream pageNumbers, int dpi, String imageFormat)
-      throws IOException {
-
-    try (var document = PDDocument.load(inputPdfFile)) {
-      pdfToImage(inputPdfFile, outputDir, pageNumbers, dpi, imageFormat, document);
-    }
-  }
-
-  private static void pdfToImage(
-      File inputPdfFile,
-      File outputDir,
-      IntStream pageNumbers,
-      int dpi,
-      String imageFormat,
-      PDDocument document)
-      throws IOException {
-
-    Files.createDirectories(outputDir.toPath());
-
-    PdfPageImageWriter imageWriter = new PdfPageImageWriter(document);
-
-    imageWriter.writePages(pageNumbers, dpi, imageFormat, outputDir, inputPdfFile.getName());
+    PdfToImage.pdfToImage(inputPdfFile, outputDir, pageNumbers, dpi, imageFormat);
   }
 }

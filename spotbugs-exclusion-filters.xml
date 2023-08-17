@@ -3,39 +3,39 @@
         <Bug pattern="PATH_TRAVERSAL_IN"/>
         <Or>
             <And>
-                <Class name="rahulb.pdftools.AddWatermark"/>
+                <Class name="rahulb.pdftools.cmd.AddWatermarkHandler"/>
                 <Method name="executeInternal" params="java.util.Map"/>
             </And>
             <And>
-                <Class name="rahulb.pdftools.ConvertToGrayscale"/>
+                <Class name="rahulb.pdftools.cmd.ConvertToGrayscaleHandler"/>
                 <Method name="executeInternal" params="java.util.Map"/>
             </And>
             <And>
-                <Class name="rahulb.pdftools.DecryptPdfs"/>
+                <Class name="rahulb.pdftools.cmd.DecryptPdfsHandler"/>
                 <Method name="executeInternal" params="java.util.Map"/>
             </And>
             <And>
-                <Class name="rahulb.pdftools.EncryptPdf"/>
+                <Class name="rahulb.pdftools.cmd.EncryptPdfHandler"/>
                 <Method name="executeInternal" params="java.util.Map"/>
             </And>
             <And>
-                <Class name="rahulb.pdftools.ImagesToPdf"/>
+                <Class name="rahulb.pdftools.cmd.ImagesToPdfHandler"/>
                 <Method name="executeInternal" params="java.util.Map"/>
             </And>
             <And>
-                <Class name="rahulb.pdftools.PdfPageImageWriter"/>
+                <Class name="rahulb.pdftools.core.PdfPageImageWriter"/>
                 <Method name="createPageImage" params="org.apache.pdfbox.rendering.PDFRenderer,int,float,java.lang.String,java.io.File,java.lang.String"/>
             </And>
             <And>
-                <Class name="rahulb.pdftools.PdfToImage"/>
+                <Class name="rahulb.pdftools.cmd.PdfToImageHandler"/>
                 <Method name="executeInternal" params="java.util.Map"/>
             </And>
             <And>
-                <Class name="rahulb.pdftools.RemovePages"/>
+                <Class name="rahulb.pdftools.cmd.RemovePagesHandler"/>
                 <Method name="executeInternal" params="java.util.Map"/>
             </And>
             <And>
-                <Class name="rahulb.pdftools.Pipeline"/>
+                <Class name="rahulb.pdftools.cmd.PipelineHandler"/>
                 <Method name="executeInternal"/>
             </And>
         </Or>

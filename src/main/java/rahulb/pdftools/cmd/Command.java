@@ -1,59 +1,59 @@
-package rahulb.pdftools;
+package rahulb.pdftools.cmd;
 
 enum Command {
   EncryptPdf {
     @Override
     AbstractCommandHandler obtainCommandHandler() {
-      return new EncryptPdf();
+      return new EncryptPdfHandler();
     }
   },
 
   DecryptPdfs {
     @Override
     AbstractCommandHandler obtainCommandHandler() {
-      return new DecryptPdfs();
+      return new DecryptPdfsHandler();
     }
   },
 
   PdfToImage {
     @Override
     AbstractCommandHandler obtainCommandHandler() {
-      return new PdfToImage();
+      return new PdfToImageHandler();
     }
   },
 
   RemovePages {
     @Override
     AbstractCommandHandler obtainCommandHandler() {
-      return new RemovePages();
+      return new RemovePagesHandler();
     }
   },
 
   AddWatermark {
     @Override
     AbstractCommandHandler obtainCommandHandler() {
-      return new AddWatermark();
+      return new AddWatermarkHandler();
     }
   },
 
   ConvertToGrayscale {
     @Override
     AbstractCommandHandler obtainCommandHandler() {
-      return new ConvertToGrayscale();
+      return new ConvertToGrayscaleHandler();
     }
   },
 
   ImagesToPdf {
     @Override
     AbstractCommandHandler obtainCommandHandler() {
-      return new ImagesToPdf();
+      return new ImagesToPdfHandler();
     }
   },
 
   Pipeline {
     @Override
     AbstractCommandHandler obtainCommandHandler() {
-      return new Pipeline();
+      return new PipelineHandler();
     }
   };
 

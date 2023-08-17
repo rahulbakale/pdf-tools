@@ -13,7 +13,7 @@ import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 
-public final class ImagesToPdf {
+final class ImagesToPdf extends AbstractCommandHandler {
 
   private static final String ARG_INPUT_IMAGES_DIRECTORY = "input-images-directory";
   private static final String ARG_OUTPUT_PAGE_SIZE = "output-page-size";
@@ -29,9 +29,21 @@ public final class ImagesToPdf {
   /** User space units per millimeter. See org.apache.pdfbox.pdmodel.common.PDRectangle. */
   // private static final float POINTS_PER_MM = 1 / (10 * 2.54f) * POINTS_PER_INCH;
 
-  private ImagesToPdf() {}
+  ImagesToPdf() {}
 
-  static void imagesToPdf(String... args) throws IOException, ReflectiveOperationException {
+  @Override
+  void executeInternal(String... args) throws Exception {
+
+    imagesToPdf(args);
+  }
+
+  @Override
+  void executeInternal(Map<?, ?> args) throws Exception {
+
+    imagesToPdf(args);
+  }
+
+  private static void imagesToPdf(String... args) throws IOException, ReflectiveOperationException {
 
     Map<?, ?> argMap =
         Map.of(

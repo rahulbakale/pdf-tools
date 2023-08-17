@@ -13,16 +13,28 @@ import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.apache.pdfbox.pdmodel.graphics.state.PDExtendedGraphicsState;
 import org.apache.pdfbox.util.Matrix;
 
-final class AddWatermark {
+final class AddWatermark extends AbstractCommandHandler {
 
   private static final String ARG_INPUT_PDF_FILE = "input-pdf-file";
   private static final String ARG_WATERMARK_TEXT = "watermark-text";
   private static final String ARG_WATERMARK_FONT_SIZE = "watermark-font-size";
   private static final String ARG_OUTPUT_PDF_FILE = "output-pdf-file";
 
-  private AddWatermark() {}
+  AddWatermark() {}
 
-  static void addWatermark(String... args) throws IOException {
+  @Override
+  void executeInternal(String... args) throws Exception {
+
+    addWatermark(args);
+  }
+
+  @Override
+  void executeInternal(Map<?, ?> args) throws Exception {
+
+    addWatermark(args);
+  }
+
+  private static void addWatermark(String... args) throws IOException {
 
     Map<?, ?> argMap =
         Map.of(

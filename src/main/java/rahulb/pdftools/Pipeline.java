@@ -11,13 +11,21 @@ import java.util.List;
 import java.util.Map;
 import org.yaml.snakeyaml.Yaml;
 
-final class Pipeline {
+final class Pipeline extends AbstractCommandHandler {
 
-  private Pipeline() {}
+  Pipeline() {}
 
-  static void execute(String... args) throws Exception {
+  @Override
+  void executeInternal(String... args) throws Exception {
 
     executePipeline(Paths.get(args[0]));
+  }
+
+  @Override
+  void executeInternal(Map<?, ?> args) {
+
+    // Nested pipelines are not permitted for now.
+    throw new UnsupportedOperationException();
   }
 
   private static void executePipeline(Path pipelineSpecFile)
@@ -48,20 +56,19 @@ final class Pipeline {
 
         Map<?, ?> transformationArgs = (Map<?, ?>) transformationSpec.get("args");
 
-        switch (CommandName.valueOf(transformationType)) {
-          case EncryptPdf -> EncryptPdf.encryptPdf(transformationArgs);
-          case DecryptPdfs -> DecryptPdfs.decryptPdfs(transformationArgs);
-          case PdfToImage -> PdfToImage.pdfToImage(transformationArgs);
-          case RemovePages -> RemovePages.removePages(transformationArgs);
-          case AddWatermark -> AddWatermark.addWatermark(transformationArgs);
-          case ConvertToGrayscale -> ConvertToGrayscale.convertToGrayscale(transformationArgs);
-          case ImagesToPdf -> ImagesToPdf.imagesToPdf(transformationArgs);
+        Command transformation = Command.valueOf(transformationType);
 
-          default -> throw new RuntimeException(
+        if (transformation == Command.Pipeline) {
+
+          // Nested pipelines are not permitted for now.
+
+          throw new RuntimeException(
               String.format(
                   "Pipeline spec is invalid: Invalid transformation type '%s'",
                   transformationType));
         }
+
+        transformation.obtainCommandHandler().execute(transformationArgs);
       }
     }
   }

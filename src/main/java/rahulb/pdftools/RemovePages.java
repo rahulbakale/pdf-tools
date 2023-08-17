@@ -7,15 +7,27 @@ import java.util.function.IntPredicate;
 import java.util.stream.IntStream;
 import org.apache.pdfbox.pdmodel.PDDocument;
 
-final class RemovePages {
+final class RemovePages extends AbstractCommandHandler {
 
   private static final String ARG_INPUT_PDF_FILE_PATH = "input-pdf-file";
   private static final String ARG_PAGES_TO_REMOVE = "pages-to-remove";
   private static final String ARG_OUTPUT_PDF_FILE_PATH = "output-pdf-file";
 
-  private RemovePages() {}
+  RemovePages() {}
 
-  static void removePages(String... args) throws IOException {
+  @Override
+  void executeInternal(String... args) throws Exception {
+
+    removePages(args);
+  }
+
+  @Override
+  void executeInternal(Map<?, ?> args) throws Exception {
+
+    removePages(args);
+  }
+
+  private static void removePages(String... args) throws IOException {
 
     Map<?, ?> argMap =
         Map.of(

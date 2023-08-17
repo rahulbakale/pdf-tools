@@ -7,16 +7,28 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.encryption.AccessPermission;
 import org.apache.pdfbox.pdmodel.encryption.StandardProtectionPolicy;
 
-final class EncryptPdf {
+final class EncryptPdf extends AbstractCommandHandler {
 
   private static final String ARG_INPUT_PDF_FILE = "input-pdf-file";
   private static final String ARG_OUTPUT_PDF_FILE = "output-pdf-file";
 
-  private EncryptPdf() {}
+  EncryptPdf() {}
 
   // See https://pdfbox.apache.org/2.0/cookbook/encryption.html
 
-  static void encryptPdf(String... args) throws IOException {
+  @Override
+  void executeInternal(String... args) throws IOException {
+
+    encryptPdf(args);
+  }
+
+  @Override
+  void executeInternal(Map<?, ?> args) throws Exception {
+
+    encryptPdf(args);
+  }
+
+  private static void encryptPdf(String... args) throws IOException {
 
     Map<String, String> argMap =
         Map.of(

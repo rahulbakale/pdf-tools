@@ -13,16 +13,28 @@ import org.apache.pdfbox.rendering.ImageType;
 import org.apache.pdfbox.rendering.PDFRenderer;
 import org.apache.pdfbox.util.Matrix;
 
-final class ConvertToGrayscale {
+final class ConvertToGrayscale extends AbstractCommandHandler {
 
   private static final String ARG_INPUT_PDF_FILE = "input-pdf-file";
   private static final String ARG_DPI = "dpi";
   private static final String ARG_OUTPUT_PAGE_SIZE = "output-page-size";
   private static final String ARG_OUTPUT_PDF_FILE = "output-pdf-file";
 
-  private ConvertToGrayscale() {}
+  ConvertToGrayscale() {}
 
-  static void convertToGrayscale(String... args)
+  @Override
+  void executeInternal(String... args) throws Exception {
+
+    convertToGrayscale(args);
+  }
+
+  @Override
+  void executeInternal(Map<?, ?> args) throws Exception {
+
+    convertToGrayscale(args);
+  }
+
+  private static void convertToGrayscale(String... args)
       throws IOException, NoSuchFieldException, IllegalAccessException {
 
     Map<?, ?> argMap =

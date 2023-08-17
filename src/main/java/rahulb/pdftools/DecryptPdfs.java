@@ -9,14 +9,26 @@ import java.util.Map;
 import java.util.stream.Stream;
 import org.apache.pdfbox.pdmodel.PDDocument;
 
-final class DecryptPdfs {
+final class DecryptPdfs extends AbstractCommandHandler {
 
   private static final String ARG_INPUT_PDFS_DIRECTORY = "input-pdfs-directory";
   private static final String ARG_OUTPUT_PDFS_DIRECTORY = "output-pdfs-directory";
 
-  private DecryptPdfs() {}
+  DecryptPdfs() {}
 
-  static void decryptPdfs(String... args) {
+  @Override
+  void executeInternal(String... args) {
+
+    decryptPdfs(args);
+  }
+
+  @Override
+  void executeInternal(Map<?, ?> args) {
+
+    decryptPdfs(args);
+  }
+
+  private static void decryptPdfs(String... args) {
 
     Map<String, String> argMap =
         Map.of(

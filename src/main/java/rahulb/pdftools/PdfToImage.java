@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.stream.IntStream;
 import org.apache.pdfbox.pdmodel.PDDocument;
 
-public final class PdfToImage {
+final class PdfToImage extends AbstractCommandHandler {
 
   private static final String ARG_INPUT_PDF_FILE = "input-pdf-file";
   private static final String ARG_PAGE_NUMBERS = "page-numbers";
@@ -16,12 +16,21 @@ public final class PdfToImage {
   private static final String ARG_IMAGE_FORMAT = "image-format";
   private static final String ARG_OUTPUT_DIRECTORY = "output-directory";
 
-  public static void main(String[] args) throws IOException {
+  PdfToImage() {}
 
-    pdfToImage("/tmp/sample.pdf", "/tmp/", "1", "300", "jpeg");
+  @Override
+  void executeInternal(String... args) throws Exception {
+
+    pdfToImage(args);
   }
 
-  static void pdfToImage(String... args) throws IOException {
+  @Override
+  void executeInternal(Map<?, ?> args) throws Exception {
+
+    pdfToImage(args);
+  }
+
+  private static void pdfToImage(String... args) throws IOException {
 
     Map<?, ?> argMap =
         Map.of(

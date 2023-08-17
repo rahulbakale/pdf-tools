@@ -202,6 +202,33 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <!-- Use https://find-sec-bugs.github.io/ to find security bugs in source code -->
+                <groupId>com.github.spotbugs</groupId>
+                <artifactId>spotbugs-maven-plugin</artifactId>
+                <version>4.7.3.5</version>
+                <configuration>
+                    <effort>Max</effort>
+                    <threshold>medium</threshold>
+                    <failOnError>true</failOnError>
+                    <includeFilterFile>${project.basedir}/spotbugs-security-include.xml</includeFilterFile>
+                    <excludeFilterFile>${project.basedir}/spotbugs-security-exclude.xml</excludeFilterFile>
+                    <plugins>
+                        <plugin>
+                            <groupId>com.h3xstream.findsecbugs</groupId>
+                            <artifactId>findsecbugs-plugin</artifactId>
+                            <version>1.12.0</version>
+                        </plugin>
+                    </plugins>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 

@@ -2,6 +2,7 @@ package rahulb.pdftools;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.stream.IntStream;
@@ -60,10 +61,10 @@ public final class PdfToImage {
       IntStream pageNumbers,
       int dpi,
       String imageFormat,
-      PDDocument document) {
+      PDDocument document)
+      throws IOException {
 
-    //noinspection ResultOfMethodCallIgnored
-    outputDir.mkdirs();
+    Files.createDirectories(outputDir.toPath());
 
     PdfPageImageWriter imageWriter = new PdfPageImageWriter(document);
 

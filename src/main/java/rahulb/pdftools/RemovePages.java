@@ -42,10 +42,7 @@ final class RemovePages {
 
       removePages(document, pagesToRemove);
 
-      //noinspection ResultOfMethodCallIgnored
-      new File(outputPdfFilePath).getParentFile().mkdirs();
-
-      document.save(outputPdfFilePath);
+      Utils.saveDocument(document, new File(outputPdfFilePath));
     }
   }
 

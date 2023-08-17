@@ -1,6 +1,5 @@
 package rahulb.pdftools;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.FileVisitOption;
 import java.nio.file.Files;
@@ -67,7 +66,7 @@ final class DecryptPdfs {
 
       var outputPdfPath = getOutputPdfPath(inputPdfPath, inputPdfsDirPath, outputPdfsDirPath);
 
-      saveDocument(doc, outputPdfPath.toFile());
+      Utils.saveDocument(doc, outputPdfPath.toFile());
 
     } catch (IOException e) {
       throw new RuntimeException(e);
@@ -79,13 +78,5 @@ final class DecryptPdfs {
 
     var relativePath = inputPdfsDirPath.relativize(inputPdfPath);
     return outputPdfsDirPath.resolve(relativePath);
-  }
-
-  private static void saveDocument(PDDocument document, File outputFile) throws IOException {
-
-    //noinspection ResultOfMethodCallIgnored
-    outputFile.getParentFile().mkdirs();
-
-    document.save(outputFile);
   }
 }

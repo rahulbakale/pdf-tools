@@ -52,10 +52,7 @@ final class AddWatermark {
 
       addWatermark(watermarkText, fontSize, document);
 
-      //noinspection ResultOfMethodCallIgnored
-      outputPdfFile.getParentFile().mkdirs();
-
-      document.save(outputPdfFile);
+      Utils.saveDocument(document, outputPdfFile);
     }
   }
 

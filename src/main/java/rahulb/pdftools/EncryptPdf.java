@@ -40,10 +40,7 @@ final class EncryptPdf {
 
       encryptPdf(document);
 
-      //noinspection ResultOfMethodCallIgnored
-      outputPdfFile.getParentFile().mkdirs();
-
-      document.save(outputPdfFile);
+      Utils.saveDocument(document, outputPdfFile);
     }
   }
 

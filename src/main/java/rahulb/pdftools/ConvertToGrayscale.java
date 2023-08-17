@@ -55,10 +55,7 @@ final class ConvertToGrayscale {
 
       convertToGrayscale(dpi, outputPageSize, inDoc, outDoc);
 
-      //noinspection ResultOfMethodCallIgnored
-      outputPdfFile.getParentFile().mkdirs();
-
-      outDoc.save(outputPdfFile);
+      Utils.saveDocument(outDoc, outputPdfFile);
     }
   }
 

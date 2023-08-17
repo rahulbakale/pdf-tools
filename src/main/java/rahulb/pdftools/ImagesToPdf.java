@@ -79,10 +79,7 @@ public final class ImagesToPdf {
                         file, requiredPageSize, imagePosition, pageMargins, outDoc));
       }
 
-      //noinspection ResultOfMethodCallIgnored
-      outputPdfFile.getParentFile().mkdirs();
-
-      outDoc.save(outputPdfFile);
+      Utils.saveDocument(outDoc, outputPdfFile);
     }
   }
 

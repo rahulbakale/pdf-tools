@@ -25,18 +25,6 @@ final class ConvertToGrayscale extends AbstractCommandHandler {
   @Override
   void executeInternal(String... args) throws Exception {
 
-    convertToGrayscale(args);
-  }
-
-  @Override
-  void executeInternal(Map<?, ?> args) throws Exception {
-
-    convertToGrayscale(args);
-  }
-
-  private static void convertToGrayscale(String... args)
-      throws IOException, NoSuchFieldException, IllegalAccessException {
-
     Map<?, ?> argMap =
         Map.of(
             ARG_INPUT_PDF_FILE, args[0],
@@ -44,11 +32,11 @@ final class ConvertToGrayscale extends AbstractCommandHandler {
             ARG_OUTPUT_PAGE_SIZE, args[2],
             ARG_OUTPUT_PDF_FILE, args[3]);
 
-    convertToGrayscale(argMap);
+    executeInternal(argMap);
   }
 
-  static void convertToGrayscale(Map<?, ?> args)
-      throws IOException, NoSuchFieldException, IllegalAccessException {
+  @Override
+  void executeInternal(Map<?, ?> args) throws Exception {
 
     File inputPdfFile = new File((String) args.get(ARG_INPUT_PDF_FILE));
     float dpi = Float.parseFloat((String) args.get(ARG_DPI));

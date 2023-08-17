@@ -21,17 +21,6 @@ final class PdfToImage extends AbstractCommandHandler {
   @Override
   void executeInternal(String... args) throws Exception {
 
-    pdfToImage(args);
-  }
-
-  @Override
-  void executeInternal(Map<?, ?> args) throws Exception {
-
-    pdfToImage(args);
-  }
-
-  private static void pdfToImage(String... args) throws IOException {
-
     Map<?, ?> argMap =
         Map.of(
             ARG_INPUT_PDF_FILE, args[0],
@@ -40,10 +29,11 @@ final class PdfToImage extends AbstractCommandHandler {
             ARG_DPI, args[3],
             ARG_IMAGE_FORMAT, args[4]);
 
-    pdfToImage(argMap);
+    executeInternal(argMap);
   }
 
-  static void pdfToImage(Map<?, ?> args) throws IOException {
+  @Override
+  void executeInternal(Map<?, ?> args) throws Exception {
 
     File inputPdfFile = new File((String) args.get(ARG_INPUT_PDF_FILE));
     File outputDir = new File((String) args.get(ARG_OUTPUT_DIRECTORY));

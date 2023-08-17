@@ -34,17 +34,6 @@ final class ImagesToPdf extends AbstractCommandHandler {
   @Override
   void executeInternal(String... args) throws Exception {
 
-    imagesToPdf(args);
-  }
-
-  @Override
-  void executeInternal(Map<?, ?> args) throws Exception {
-
-    imagesToPdf(args);
-  }
-
-  private static void imagesToPdf(String... args) throws IOException, ReflectiveOperationException {
-
     Map<?, ?> argMap =
         Map.of(
             ARG_INPUT_IMAGES_DIRECTORY, args[0],
@@ -53,10 +42,11 @@ final class ImagesToPdf extends AbstractCommandHandler {
             ARG_PAGE_MARGINS, args[3],
             ARG_OUTPUT_PDF_FILE_PATH, args[4]);
 
-    imagesToPdf(argMap);
+    executeInternal(argMap);
   }
 
-  static void imagesToPdf(Map<?, ?> args) throws IOException, ReflectiveOperationException {
+  @Override
+  void executeInternal(Map<?, ?> args) throws Exception {
 
     File inputImagesDir = new File((String) args.get(ARG_INPUT_IMAGES_DIRECTORY));
     String outputPageSize = (String) args.get(ARG_OUTPUT_PAGE_SIZE);

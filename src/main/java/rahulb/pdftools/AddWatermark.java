@@ -25,17 +25,6 @@ final class AddWatermark extends AbstractCommandHandler {
   @Override
   void executeInternal(String... args) throws Exception {
 
-    addWatermark(args);
-  }
-
-  @Override
-  void executeInternal(Map<?, ?> args) throws Exception {
-
-    addWatermark(args);
-  }
-
-  private static void addWatermark(String... args) throws IOException {
-
     Map<?, ?> argMap =
         Map.of(
             ARG_INPUT_PDF_FILE, args[0],
@@ -43,10 +32,11 @@ final class AddWatermark extends AbstractCommandHandler {
             ARG_WATERMARK_FONT_SIZE, args[2],
             ARG_OUTPUT_PDF_FILE, args[3]);
 
-    addWatermark(argMap);
+    executeInternal(argMap);
   }
 
-  static void addWatermark(Map<?, ?> args) throws IOException {
+  @Override
+  void executeInternal(Map<?, ?> args) throws Exception {
 
     File inputPdfFile = new File((String) args.get(ARG_INPUT_PDF_FILE));
     String watermarkText = (String) args.get(ARG_WATERMARK_TEXT);

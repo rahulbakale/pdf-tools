@@ -4,23 +4,23 @@
         <Or>
             <And>
                 <Class name="rahulb.pdftools.AddWatermark"/>
-                <Method name="addWatermark" params="java.util.Map"/>
+                <Method name="executeInternal" params="java.util.Map"/>
             </And>
             <And>
                 <Class name="rahulb.pdftools.ConvertToGrayscale"/>
-                <Method name="convertToGrayscale" params="java.util.Map"/>
+                <Method name="executeInternal" params="java.util.Map"/>
             </And>
             <And>
                 <Class name="rahulb.pdftools.DecryptPdfs"/>
-                <Method name="decryptPdfs" params="java.util.Map"/>
+                <Method name="executeInternal" params="java.util.Map"/>
             </And>
             <And>
                 <Class name="rahulb.pdftools.EncryptPdf"/>
-                <Method name="encryptPdf" params="java.util.Map"/>
+                <Method name="executeInternal" params="java.util.Map"/>
             </And>
             <And>
                 <Class name="rahulb.pdftools.ImagesToPdf"/>
-                <Method name="imagesToPdf" params="java.util.Map"/>
+                <Method name="executeInternal" params="java.util.Map"/>
             </And>
             <And>
                 <Class name="rahulb.pdftools.PdfPageImageWriter"/>
@@ -28,7 +28,7 @@
             </And>
             <And>
                 <Class name="rahulb.pdftools.PdfToImage"/>
-                <Method name="pdfToImage" params="java.util.Map"/>
+                <Method name="executeInternal" params="java.util.Map"/>
             </And>
             <And>
                 <Class name="rahulb.pdftools.RemovePages"/>

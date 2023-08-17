@@ -19,26 +19,16 @@ final class DecryptPdfs extends AbstractCommandHandler {
   @Override
   void executeInternal(String... args) {
 
-    decryptPdfs(args);
-  }
-
-  @Override
-  void executeInternal(Map<?, ?> args) {
-
-    decryptPdfs(args);
-  }
-
-  private static void decryptPdfs(String... args) {
-
     Map<String, String> argMap =
         Map.of(
             ARG_INPUT_PDFS_DIRECTORY, args[0],
             ARG_OUTPUT_PDFS_DIRECTORY, args[1]);
 
-    decryptPdfs(argMap);
+    executeInternal(argMap);
   }
 
-  static void decryptPdfs(Map<?, ?> args) {
+  @Override
+  void executeInternal(Map<?, ?> args) {
 
     String inputPdfsDir = (String) args.get(ARG_INPUT_PDFS_DIRECTORY);
     String outputPdfsDir = (String) args.get(ARG_OUTPUT_PDFS_DIRECTORY);

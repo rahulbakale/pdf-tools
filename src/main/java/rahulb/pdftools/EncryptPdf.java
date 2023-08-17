@@ -17,28 +17,18 @@ final class EncryptPdf extends AbstractCommandHandler {
   // See https://pdfbox.apache.org/2.0/cookbook/encryption.html
 
   @Override
-  void executeInternal(String... args) throws IOException {
-
-    encryptPdf(args);
-  }
-
-  @Override
-  void executeInternal(Map<?, ?> args) throws Exception {
-
-    encryptPdf(args);
-  }
-
-  private static void encryptPdf(String... args) throws IOException {
+  void executeInternal(String... args) throws Exception {
 
     Map<String, String> argMap =
         Map.of(
             ARG_INPUT_PDF_FILE, args[0],
             ARG_OUTPUT_PDF_FILE, args[1]);
 
-    encryptPdf(argMap);
+    executeInternal(argMap);
   }
 
-  static void encryptPdf(Map<?, ?> args) throws IOException {
+  @Override
+  void executeInternal(Map<?, ?> args) throws Exception {
 
     String inputPdfFile = (String) args.get(ARG_INPUT_PDF_FILE);
     String outputPdfFile = (String) args.get(ARG_OUTPUT_PDF_FILE);

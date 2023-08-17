@@ -18,27 +18,17 @@ final class RemovePages extends AbstractCommandHandler {
   @Override
   void executeInternal(String... args) throws Exception {
 
-    removePages(args);
-  }
-
-  @Override
-  void executeInternal(Map<?, ?> args) throws Exception {
-
-    removePages(args);
-  }
-
-  private static void removePages(String... args) throws IOException {
-
     Map<?, ?> argMap =
         Map.of(
             ARG_INPUT_PDF_FILE_PATH, args[0],
             ARG_PAGES_TO_REMOVE, args[1],
             ARG_OUTPUT_PDF_FILE_PATH, args[2]);
 
-    removePages(argMap);
+    executeInternal(argMap);
   }
 
-  static void removePages(Map<?, ?> args) throws IOException {
+  @Override
+  void executeInternal(Map<?, ?> args) throws Exception {
 
     String inputPdfFilePath = (String) args.get(ARG_INPUT_PDF_FILE_PATH);
     String pagesToRemove = (String) args.get(ARG_PAGES_TO_REMOVE);

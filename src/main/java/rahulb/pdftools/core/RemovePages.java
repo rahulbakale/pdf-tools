@@ -17,17 +17,17 @@ public final class RemovePages {
   public static void removePages(File inputPdfFile, String pagesToRemove, File outputPdfFile)
       throws IOException {
 
+    IntPredicate shouldRemovePageNumber = getPageNumberToRemovePredicate(pagesToRemove);
+
     try (var document = PDDocument.load(inputPdfFile)) {
 
-      removePages(document, pagesToRemove);
+      removePages(document, shouldRemovePageNumber);
 
       Utils.saveDocument(document, outputPdfFile);
     }
   }
 
-  static void removePages(PDDocument document, String pagesToRemove) {
-
-    IntPredicate shouldRemovePageNumber = getPageNumberToRemovePredicate(pagesToRemove);
+  private static void removePages(PDDocument document, IntPredicate shouldRemovePageNumber) {
 
     int numberOfPages = document.getNumberOfPages();
 

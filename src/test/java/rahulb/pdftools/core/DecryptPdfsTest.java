@@ -20,7 +20,7 @@ class DecryptPdfsTest {
     Path outputPdfsDirPath = Paths.get("target/test/DecryptPdfs/output-1");
     Path expectedOutputPdfsDirPath = Paths.get("src/test/resources/DecryptPdfs/expected-output-1");
 
-    DecryptPdfs.decryptPdfs(inputPdfsDirPath, outputPdfsDirPath, "Password0#");
+    DecryptPdfs.decryptPdfs(inputPdfsDirPath, outputPdfsDirPath, "Password0#".toCharArray());
 
     Set<Path> inputDirContentsRelativePaths = getDirContentsRelativePaths(inputPdfsDirPath);
     Set<Path> outputDirContentsRelativePaths = getDirContentsRelativePaths(outputPdfsDirPath);

@@ -26,6 +26,9 @@ final class DecryptPdfsHandler extends AbstractCommandHandler {
     String inputPdfsDir = (String) args.get(ARG_INPUT_PDFS_DIRECTORY);
     String outputPdfsDir = (String) args.get(ARG_OUTPUT_PDFS_DIRECTORY);
 
-    DecryptPdfs.decryptPdfs(Paths.get(inputPdfsDir), Paths.get(outputPdfsDir));
+    char[] docOpenPassword =
+        System.console().readPassword("Enter the password required to open the document:");
+
+    DecryptPdfs.decryptPdfs(Paths.get(inputPdfsDir), Paths.get(outputPdfsDir), docOpenPassword);
   }
 }

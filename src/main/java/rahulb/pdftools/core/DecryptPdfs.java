@@ -11,23 +11,18 @@ public final class DecryptPdfs {
 
   private DecryptPdfs() {}
 
-  public static void decryptPdfs(Path inputPdfsDirPath, Path outputPdfsDirPath) {
-
-    String docOpenPassword =
-        String.valueOf(
-            System.console().readPassword("Enter the password required to open the document:"));
-
-    decryptPdfs(inputPdfsDirPath, outputPdfsDirPath, docOpenPassword);
-  }
-
-  static void decryptPdfs(Path inputPdfsDirPath, Path outputPdfsDirPath, String docOpenPassword) {
+  public static void decryptPdfs(
+      Path inputPdfsDirPath, Path outputPdfsDirPath, char[] docOpenPassword) {
 
     try (Stream<Path> inputDirContents =
         Files.walk(inputPdfsDirPath, FileVisitOption.FOLLOW_LINKS)) {
 
+      String docOpenPasswordStr = String.valueOf(docOpenPassword);
+
       inputDirContents
           .filter(path -> path.toFile().isFile())
-          .forEach(file -> decryptPdf(file, docOpenPassword, inputPdfsDirPath, outputPdfsDirPath));
+          .forEach(
+              file -> decryptPdf(file, docOpenPasswordStr, inputPdfsDirPath, outputPdfsDirPath));
 
     } catch (IOException e) {
       throw new RuntimeException(e);

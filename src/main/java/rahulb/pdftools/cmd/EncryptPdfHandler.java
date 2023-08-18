@@ -26,6 +26,18 @@ final class EncryptPdfHandler extends AbstractCommandHandler {
     String inputPdfFile = (String) args.get(ARG_INPUT_PDF_FILE);
     String outputPdfFile = (String) args.get(ARG_OUTPUT_PDF_FILE);
 
-    EncryptPdf.encryptPdf(new File(inputPdfFile), new File(outputPdfFile));
+    char[] docOpenPassword =
+        System.console().readPassword("Enter the password required to open the document:");
+
+    char[] permissionsChangePassword =
+        System.console()
+            .readPassword(
+                "Enter the password required to change the accessPermission of the document:");
+
+    EncryptPdf.encryptPdf(
+        new File(inputPdfFile),
+        docOpenPassword,
+        permissionsChangePassword,
+        new File(outputPdfFile));
   }
 }

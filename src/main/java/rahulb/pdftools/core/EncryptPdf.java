@@ -12,31 +12,33 @@ public final class EncryptPdf {
 
   // See https://pdfbox.apache.org/2.0/cookbook/encryption.html
 
-  public static void encryptPdf(File inputPdfFile, File outputPdfFile) throws IOException {
+  public static void encryptPdf(
+      File inputPdfFile,
+      char[] docOpenPassword,
+      char[] permissionsChangePassword,
+      File outputPdfFile)
+      throws IOException {
 
     try (var document = PDDocument.load(inputPdfFile)) {
 
-      encryptPdf(document);
+      encryptPdf(document, docOpenPassword, permissionsChangePassword);
 
       Utils.saveDocument(document, outputPdfFile);
     }
   }
 
-  private static void encryptPdf(PDDocument document) throws IOException {
+  private static void encryptPdf(
+      PDDocument document, char[] docOpenPassword, char[] permissionsChangePassword)
+      throws IOException {
 
-    StandardProtectionPolicy protectionPolicy = prepareProtectionPolicy();
+    StandardProtectionPolicy protectionPolicy =
+        prepareProtectionPolicy(docOpenPassword, permissionsChangePassword);
 
     document.protect(protectionPolicy);
   }
 
-  private static StandardProtectionPolicy prepareProtectionPolicy() {
-
-    var console = System.console();
-    char[] docOpenPassword =
-        console.readPassword("Enter the password required to open the document:");
-    char[] permissionsChangePassword =
-        console.readPassword(
-            "Enter the password required to change the accessPermission of the document:");
+  private static StandardProtectionPolicy prepareProtectionPolicy(
+      char[] docOpenPassword, char[] permissionsChangePassword) {
 
     var accessPermission = prepareAccessPermission();
     var protectionPolicy =

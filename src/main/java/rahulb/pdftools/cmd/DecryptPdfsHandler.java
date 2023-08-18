@@ -1,5 +1,6 @@
 package rahulb.pdftools.cmd;
 
+import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.Map;
 import rahulb.pdftools.core.DecryptPdfs;
@@ -10,7 +11,7 @@ final class DecryptPdfsHandler extends AbstractCommandHandler {
   private static final String ARG_OUTPUT_PDFS_DIRECTORY = "output-pdfs-directory";
 
   @Override
-  void executeInternal(String... args) {
+  void executeInternal(String... args) throws IOException {
 
     Map<String, String> argMap =
         Map.of(
@@ -21,7 +22,7 @@ final class DecryptPdfsHandler extends AbstractCommandHandler {
   }
 
   @Override
-  void executeInternal(Map<?, ?> args) {
+  void executeInternal(Map<?, ?> args) throws IOException {
 
     String inputPdfsDir = (String) args.get(ARG_INPUT_PDFS_DIRECTORY);
     String outputPdfsDir = (String) args.get(ARG_OUTPUT_PDFS_DIRECTORY);

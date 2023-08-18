@@ -12,7 +12,7 @@ public final class DecryptPdfs {
   private DecryptPdfs() {}
 
   public static void decryptPdfs(
-      Path inputPdfsDirPath, Path outputPdfsDirPath, char[] docOpenPassword) {
+      Path inputPdfsDirPath, Path outputPdfsDirPath, char[] docOpenPassword) throws IOException {
 
     try (Stream<Path> inputDirContents =
         Files.walk(inputPdfsDirPath, FileVisitOption.FOLLOW_LINKS)) {
@@ -23,9 +23,6 @@ public final class DecryptPdfs {
           .filter(path -> path.toFile().isFile())
           .forEach(
               file -> decryptPdf(file, docOpenPasswordStr, inputPdfsDirPath, outputPdfsDirPath));
-
-    } catch (IOException e) {
-      throw new RuntimeException(e);
     }
   }
 

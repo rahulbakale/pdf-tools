@@ -88,4 +88,28 @@ class ImagesToPdfTest {
         exception.getMessage(),
         "The error message is not as expected.");
   }
+
+  @Test
+  void test_imagesToPdf__exception_is_thrown_if_image_position_argument_is_invalid() {
+
+    Path inputImagesDirPath = Paths.get("src/test/resources/ImagesToPdf/input-4");
+    Path outputPdfFilePath = Paths.get("target/test/ImagesToPdf/output-4/output.pdf");
+    String imagePosition = "foo";
+
+    Exception exception =
+        Assertions.assertThrowsExactly(
+            IllegalArgumentException.class,
+            () ->
+                ImagesToPdf.imagesToPdf(
+                    inputImagesDirPath.toFile(),
+                    "A4",
+                    imagePosition,
+                    "standard",
+                    outputPdfFilePath.toFile()));
+
+    Assertions.assertEquals(
+        String.format("Invalid image position: '%s'", imagePosition),
+        exception.getMessage(),
+        "The error message is not as expected.");
+  }
 }

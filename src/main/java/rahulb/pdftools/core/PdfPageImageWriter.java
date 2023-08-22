@@ -3,7 +3,6 @@ package rahulb.pdftools.core;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.function.IntPredicate;
 import java.util.stream.IntStream;
 import javax.imageio.ImageIO;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -12,37 +11,10 @@ import org.apache.pdfbox.rendering.PDFRenderer;
 
 final class PdfPageImageWriter {
 
-  private final PDDocument document;
   private final PDFRenderer renderer;
 
   PdfPageImageWriter(PDDocument document) {
-    this.document = document;
     this.renderer = new PDFRenderer(document);
-  }
-
-  void writeAllPages(float dpi, String imageFormat, File outputDir, String outputFileNamePrefix) {
-    writePages(i -> true, dpi, imageFormat, outputDir, outputFileNamePrefix);
-  }
-
-  void writeFirstPage(float dpi, String imageFormat, File outputDir, String outputFileNamePrefix) {
-    IntStream pageNumbers = IntStream.of(1);
-    createPageImages(pageNumbers, dpi, imageFormat, outputDir, outputFileNamePrefix);
-  }
-
-  void writeLastPage(float dpi, String imageFormat, File outputDir, String outputFileNamePrefix) {
-    IntStream pageNumbers = IntStream.of(document.getNumberOfPages());
-    createPageImages(pageNumbers, dpi, imageFormat, outputDir, outputFileNamePrefix);
-  }
-
-  void writePages(
-      IntPredicate pageNumberPredicate,
-      float dpi,
-      String imageFormat,
-      File outputDir,
-      String outputFileNamePrefix) {
-    IntStream pageNumbers =
-        IntStream.rangeClosed(1, document.getNumberOfPages()).filter(pageNumberPredicate);
-    writePages(pageNumbers, dpi, imageFormat, outputDir, outputFileNamePrefix);
   }
 
   void writePages(

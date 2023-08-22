@@ -64,4 +64,28 @@ class ImagesToPdfTest {
             "The following PDFs are not equal: '%s', '%s'",
             expectedOutputPdfFilePath, outputPdfFilePath));
   }
+
+  @Test
+  void test_imagesToPdf__exception_is_thrown_if_pages_margins_argument_is_invalid() {
+
+    Path inputImagesDirPath = Paths.get("src/test/resources/ImagesToPdf/input-4");
+    Path outputPdfFilePath = Paths.get("target/test/ImagesToPdf/output-4/output.pdf");
+    String pageMargins = "foo";
+
+    Exception exception =
+        Assertions.assertThrowsExactly(
+            IllegalArgumentException.class,
+            () ->
+                ImagesToPdf.imagesToPdf(
+                    inputImagesDirPath.toFile(),
+                    "A4",
+                    "top-left",
+                    pageMargins,
+                    outputPdfFilePath.toFile()));
+
+    Assertions.assertEquals(
+        String.format("Invalid page margins: '%s'", pageMargins),
+        exception.getMessage(),
+        "The error message is not as expected.");
+  }
 }

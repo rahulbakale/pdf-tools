@@ -34,7 +34,7 @@ public class Main {
     executeCommandHandler(obtainCommandHandler(command), commandArgs);
   }
 
-  private static AbstractCommandHandler obtainCommandHandler(Command command) {
+  AbstractCommandHandler obtainCommandHandler(Command command) {
 
     return command.obtainCommandHandler();
   }

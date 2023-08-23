@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 import rahulb.pdftools.IncompleteTestException;
 
@@ -62,11 +63,38 @@ class MainTest {
     Mockito.doCallRealMethod()
         .when(mockMain)
         .executeCommand(Mockito.any(Command.class), Mockito.any(String[].class));
+    Mockito.doCallRealMethod().when(mockMain).obtainCommandHandler(Mockito.any(Command.class));
 
     mockMain.execute(new String[] {commandName, "foo", "bar"});
 
     Mockito.verify(mockMain)
         .executeCommandHandler(Mockito.any(expectedHandlerType), Mockito.any(String[].class));
+  }
+
+  @Test
+  void test_correct_arguments_are_passed_to_command_handler() {
+
+    String[] commandArgs = {"foo", "bar"};
+
+    Main mockMain = Mockito.mock(Main.class);
+    Mockito.doCallRealMethod()
+        .when(mockMain)
+        .executeCommand(Mockito.any(Command.class), Mockito.any(String[].class));
+    Mockito.doCallRealMethod()
+        .when(mockMain)
+        .executeCommandHandler(
+            Mockito.any(AbstractCommandHandler.class), Mockito.any(String[].class));
+
+    AbstractCommandHandler mockCommandHandler = Mockito.mock(AbstractCommandHandler.class);
+    Mockito.when(mockMain.obtainCommandHandler(Mockito.any(Command.class)))
+        .thenReturn(mockCommandHandler);
+
+    mockMain.executeCommand(Command.Pipeline, commandArgs);
+
+    ArgumentCaptor<String[]> commandArgsCaptor = ArgumentCaptor.forClass(String[].class);
+    Mockito.verify(mockCommandHandler).execute(commandArgsCaptor.capture());
+    String[] argsReceivedByCommandHandler = commandArgsCaptor.getAllValues().get(0);
+    Assertions.assertArrayEquals(commandArgs, argsReceivedByCommandHandler);
   }
 
   private static Stream<Arguments> provideArgumentsFor_test_correct_command_is_executed() {

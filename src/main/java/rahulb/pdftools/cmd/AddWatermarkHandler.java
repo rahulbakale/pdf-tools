@@ -2,7 +2,7 @@ package rahulb.pdftools.cmd;
 
 import java.io.File;
 import java.util.Map;
-import rahulb.pdftools.core.AddWatermark;
+import rahulb.pdftools.core.AddWatermarkService;
 
 final class AddWatermarkHandler extends AbstractCommandHandler {
 
@@ -10,6 +10,11 @@ final class AddWatermarkHandler extends AbstractCommandHandler {
   private static final String ARG_WATERMARK_TEXT = "watermark-text";
   private static final String ARG_WATERMARK_FONT_SIZE = "watermark-font-size";
   private static final String ARG_OUTPUT_PDF_FILE = "output-pdf-file";
+  private final AddWatermarkService service;
+
+  AddWatermarkHandler(AddWatermarkService service) {
+    this.service = service;
+  }
 
   @Override
   void executeInternal(String... args) throws Exception {
@@ -32,6 +37,6 @@ final class AddWatermarkHandler extends AbstractCommandHandler {
     int fontSize = Integer.parseInt((String) args.get(ARG_WATERMARK_FONT_SIZE));
     File outputPdfFile = new File((String) args.get(ARG_OUTPUT_PDF_FILE));
 
-    AddWatermark.addWatermark(inputPdfFile, watermarkText, fontSize, outputPdfFile);
+    service.addWatermark(inputPdfFile, watermarkText, fontSize, outputPdfFile);
   }
 }

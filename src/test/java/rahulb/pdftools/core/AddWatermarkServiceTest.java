@@ -6,7 +6,7 @@ import java.nio.file.Paths;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-class AddWatermarkTest {
+class AddWatermarkServiceTest {
 
   @Test
   void test_given_watermark_text_is_added_repetitively() throws IOException {
@@ -15,7 +15,8 @@ class AddWatermarkTest {
     Path outputPdfPath = Paths.get("target/test/AddWatermark/output-1.pdf");
     Path expectedOutputPdfPath = Paths.get("src/test/resources/AddWatermark/expected-output-1.pdf");
 
-    AddWatermark.addWatermark(inputPdfPath.toFile(), "CONFIDENTIAL", 20, outputPdfPath.toFile());
+    new AddWatermarkService()
+        .addWatermark(inputPdfPath.toFile(), "CONFIDENTIAL", 20, outputPdfPath.toFile());
 
     Assertions.assertTrue(
         PdfUtils.pdfEquals(expectedOutputPdfPath, outputPdfPath),

@@ -1,5 +1,7 @@
 package rahulb.pdftools.cmd;
 
+import rahulb.pdftools.core.AddWatermarkService;
+
 enum Command {
   EncryptPdf {
     @Override
@@ -32,7 +34,7 @@ enum Command {
   AddWatermark {
     @Override
     AbstractCommandHandler obtainCommandHandler() {
-      return new AddWatermarkHandler();
+      return new AddWatermarkHandler(new AddWatermarkService());
     }
   },
 

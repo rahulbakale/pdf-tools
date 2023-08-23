@@ -9,11 +9,11 @@ import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.apache.pdfbox.pdmodel.graphics.state.PDExtendedGraphicsState;
 import org.apache.pdfbox.util.Matrix;
 
-public final class AddWatermark {
+public final class AddWatermarkService {
 
-  private AddWatermark() {}
+  public AddWatermarkService() {}
 
-  public static void addWatermark(
+  public void addWatermark(
       File inputPdfFile, String watermarkText, int fontSize, File outputPdfFile)
       throws IOException {
 

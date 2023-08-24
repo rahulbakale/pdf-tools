@@ -6,13 +6,11 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.encryption.AccessPermission;
 import org.apache.pdfbox.pdmodel.encryption.StandardProtectionPolicy;
 
-public final class EncryptPdf {
-
-  private EncryptPdf() {}
+public final class EncryptPdfService {
 
   // See https://pdfbox.apache.org/2.0/cookbook/encryption.html
 
-  public static void encryptPdf(
+  public void encryptPdf(
       File inputPdfFile,
       char[] docOpenPassword,
       char[] permissionsChangePassword,

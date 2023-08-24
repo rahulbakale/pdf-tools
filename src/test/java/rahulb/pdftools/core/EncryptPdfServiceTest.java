@@ -8,7 +8,7 @@ import org.apache.pdfbox.pdmodel.encryption.InvalidPasswordException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-class EncryptPdfTest {
+class EncryptPdfServiceTest {
 
   @Test
   void test_document_is_encrypted_properly() throws IOException {
@@ -19,11 +19,12 @@ class EncryptPdfTest {
     String docOpenPassword = "Password0#";
     String permissionsChangePassword = "Password1#";
 
-    EncryptPdf.encryptPdf(
-        inputPdfPath.toFile(),
-        docOpenPassword.toCharArray(),
-        permissionsChangePassword.toCharArray(),
-        outputPdfPath.toFile());
+    new EncryptPdfService()
+        .encryptPdf(
+            inputPdfPath.toFile(),
+            docOpenPassword.toCharArray(),
+            permissionsChangePassword.toCharArray(),
+            outputPdfPath.toFile());
 
     assertPdfCantBeOpenedWithoutPassword(outputPdfPath);
     assertPdfCantBeOpenedWithWrongPassword(outputPdfPath, "WrongPassword0#");

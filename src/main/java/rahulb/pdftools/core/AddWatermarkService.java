@@ -11,8 +11,6 @@ import org.apache.pdfbox.util.Matrix;
 
 public final class AddWatermarkService {
 
-  public AddWatermarkService() {}
-
   public void addWatermark(
       File inputPdfFile, String watermarkText, int fontSize, File outputPdfFile)
       throws IOException {

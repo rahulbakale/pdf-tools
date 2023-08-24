@@ -1,9 +1,6 @@
 package rahulb.pdftools.cmd;
 
-import rahulb.pdftools.core.AddWatermarkService;
-import rahulb.pdftools.core.ConvertToGrayscaleService;
-import rahulb.pdftools.core.DecryptPdfsService;
-import rahulb.pdftools.core.EncryptPdfService;
+import rahulb.pdftools.core.*;
 
 enum Command {
   EncryptPdf {
@@ -30,7 +27,7 @@ enum Command {
   RemovePages {
     @Override
     AbstractCommandHandler obtainCommandHandler() {
-      return new RemovePagesHandler();
+      return new RemovePagesHandler(new RemovePagesService());
     }
   },
 

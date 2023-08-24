@@ -6,7 +6,7 @@ import java.nio.file.Paths;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-class RemovePagesTest {
+class RemovePagesServiceTest {
 
   @Test
   void test_removePages_simple_predicate() throws IOException {
@@ -15,7 +15,8 @@ class RemovePagesTest {
     Path outputPdfPath = Paths.get("target/test/RemovePages/output-1.pdf");
     Path expectedOutputPdfPath = Paths.get("src/test/resources/RemovePages/expected-output.pdf");
 
-    RemovePages.removePages(inputPdfPath.toFile(), "1,2,3,5,8,13", outputPdfPath.toFile());
+    new RemovePagesService()
+        .removePages(inputPdfPath.toFile(), "1,2,3,5,8,13", outputPdfPath.toFile());
 
     Assertions.assertTrue(
         PdfUtils.pdfEquals(expectedOutputPdfPath, outputPdfPath),
@@ -30,10 +31,11 @@ class RemovePagesTest {
     Path outputPdfPath = Paths.get("target/test/RemovePages/output-2.pdf");
     Path expectedOutputPdfPath = Paths.get("src/test/resources/RemovePages/expected-output.pdf");
 
-    RemovePages.removePages(
-        inputPdfPath.toFile(),
-        "keep:4,6,7,9,10,11,12,14,15,16,17,18,19,20",
-        outputPdfPath.toFile());
+    new RemovePagesService()
+        .removePages(
+            inputPdfPath.toFile(),
+            "keep:4,6,7,9,10,11,12,14,15,16,17,18,19,20",
+            outputPdfPath.toFile());
 
     Assertions.assertTrue(
         PdfUtils.pdfEquals(expectedOutputPdfPath, outputPdfPath),
@@ -47,7 +49,9 @@ class RemovePagesTest {
     Throwable thrownException =
         Assertions.assertThrowsExactly(
             IllegalArgumentException.class,
-            () -> RemovePages.removePages(null, /*irrelevant*/ "remove:2,3", null /*irrelevant*/));
+            () ->
+                new RemovePagesService()
+                    .removePages(null, /*irrelevant*/ "remove:2,3", null /*irrelevant*/));
 
     Assertions.assertEquals(
         String.format("Invalid predicate type: '%s'", "remove"), thrownException.getMessage());

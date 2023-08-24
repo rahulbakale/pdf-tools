@@ -10,11 +10,9 @@ import java.util.function.IntPredicate;
 import java.util.stream.IntStream;
 import org.apache.pdfbox.pdmodel.PDDocument;
 
-public final class RemovePages {
+public final class RemovePagesService {
 
-  private RemovePages() {}
-
-  public static void removePages(File inputPdfFile, String pagesToRemove, File outputPdfFile)
+  public void removePages(File inputPdfFile, String pagesToRemove, File outputPdfFile)
       throws IOException {
 
     IntPredicate shouldRemovePageNumber = getPageNumberToRemovePredicate(pagesToRemove);

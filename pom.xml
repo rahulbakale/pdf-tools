@@ -37,6 +37,7 @@
         <dependency>
             <groupId>org.apache.pdfbox</groupId>
             <artifactId>pdfbox</artifactId>
+            <!-- Can't upgrade to 3.x until de.redsix:pdfcompare is compatible with that version of PDFBox -->
             <version>2.0.29</version>
             <scope>compile</scope>
         </dependency>

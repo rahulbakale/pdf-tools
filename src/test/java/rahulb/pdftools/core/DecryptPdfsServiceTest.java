@@ -11,7 +11,7 @@ import java.util.stream.Stream;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-class DecryptPdfsTest {
+class DecryptPdfsServiceTest {
 
   @Test
   void test_decryptPdfs() throws IOException {
@@ -20,7 +20,8 @@ class DecryptPdfsTest {
     Path outputPdfsDirPath = Paths.get("target/test/DecryptPdfs/output-1");
     Path expectedOutputPdfsDirPath = Paths.get("src/test/resources/DecryptPdfs/expected-output-1");
 
-    DecryptPdfs.decryptPdfs(inputPdfsDirPath, outputPdfsDirPath, "Password0#".toCharArray());
+    new DecryptPdfsService()
+        .decryptPdfs(inputPdfsDirPath, outputPdfsDirPath, "Password0#".toCharArray());
 
     Set<Path> inputDirContentsRelativePaths = getDirContentsRelativePaths(inputPdfsDirPath);
     Set<Path> outputDirContentsRelativePaths = getDirContentsRelativePaths(outputPdfsDirPath);

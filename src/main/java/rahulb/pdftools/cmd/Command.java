@@ -2,6 +2,7 @@ package rahulb.pdftools.cmd;
 
 import rahulb.pdftools.core.AddWatermarkService;
 import rahulb.pdftools.core.ConvertToGrayscaleService;
+import rahulb.pdftools.core.DecryptPdfsService;
 
 enum Command {
   EncryptPdf {
@@ -14,7 +15,7 @@ enum Command {
   DecryptPdfs {
     @Override
     AbstractCommandHandler obtainCommandHandler() {
-      return new DecryptPdfsHandler();
+      return new DecryptPdfsHandler(new DecryptPdfsService());
     }
   },
 

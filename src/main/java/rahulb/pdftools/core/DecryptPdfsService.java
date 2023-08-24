@@ -7,12 +7,10 @@ import java.nio.file.Path;
 import java.util.stream.Stream;
 import org.apache.pdfbox.pdmodel.PDDocument;
 
-public final class DecryptPdfs {
+public final class DecryptPdfsService {
 
-  private DecryptPdfs() {}
-
-  public static void decryptPdfs(
-      Path inputPdfsDirPath, Path outputPdfsDirPath, char[] docOpenPassword) throws IOException {
+  public void decryptPdfs(Path inputPdfsDirPath, Path outputPdfsDirPath, char[] docOpenPassword)
+      throws IOException {
 
     try (Stream<Path> inputDirContents =
         Files.walk(inputPdfsDirPath, FileVisitOption.FOLLOW_LINKS)) {

@@ -48,7 +48,7 @@ enum Command {
   ImagesToPdf {
     @Override
     AbstractCommandHandler obtainCommandHandler() {
-      return new ImagesToPdfHandler();
+      return new ImagesToPdfHandler(new ImagesToPdfService());
     }
   },
 

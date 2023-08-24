@@ -6,7 +6,7 @@ import java.nio.file.Paths;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-class ImagesToPdfTest {
+class ImagesToPdfServiceTest {
 
   @Test
   void test_imagesToPdf__page_size_A4__image_position_center__page_margins_none()
@@ -17,8 +17,9 @@ class ImagesToPdfTest {
     Path expectedOutputPdfFilePath =
         Paths.get("src/test/resources/ImagesToPdf/expected-output-1/output.pdf");
 
-    ImagesToPdf.imagesToPdf(
-        inputImagesDirPath.toFile(), "A4", "center", "none", outputPdfFilePath.toFile());
+    new ImagesToPdfService()
+        .imagesToPdf(
+            inputImagesDirPath.toFile(), "A4", "center", "none", outputPdfFilePath.toFile());
 
     Assertions.assertTrue(
         PdfUtils.pdfEquals(expectedOutputPdfFilePath, outputPdfFilePath),
@@ -36,8 +37,9 @@ class ImagesToPdfTest {
     Path expectedOutputPdfFilePath =
         Paths.get("src/test/resources/ImagesToPdf/expected-output-2/output.pdf");
 
-    ImagesToPdf.imagesToPdf(
-        inputImagesDirPath.toFile(), "LEGAL", "top-left", "none", outputPdfFilePath.toFile());
+    new ImagesToPdfService()
+        .imagesToPdf(
+            inputImagesDirPath.toFile(), "LEGAL", "top-left", "none", outputPdfFilePath.toFile());
 
     Assertions.assertTrue(
         PdfUtils.pdfEquals(expectedOutputPdfFilePath, outputPdfFilePath),
@@ -55,8 +57,13 @@ class ImagesToPdfTest {
     Path expectedOutputPdfFilePath =
         Paths.get("src/test/resources/ImagesToPdf/expected-output-3/output.pdf");
 
-    ImagesToPdf.imagesToPdf(
-        inputImagesDirPath.toFile(), "LEGAL", "top-left", "standard", outputPdfFilePath.toFile());
+    new ImagesToPdfService()
+        .imagesToPdf(
+            inputImagesDirPath.toFile(),
+            "LEGAL",
+            "top-left",
+            "standard",
+            outputPdfFilePath.toFile());
 
     Assertions.assertTrue(
         PdfUtils.pdfEquals(expectedOutputPdfFilePath, outputPdfFilePath),
@@ -76,12 +83,13 @@ class ImagesToPdfTest {
         Assertions.assertThrowsExactly(
             IllegalArgumentException.class,
             () ->
-                ImagesToPdf.imagesToPdf(
-                    inputImagesDirPath.toFile(),
-                    "A4",
-                    "top-left",
-                    pageMargins,
-                    outputPdfFilePath.toFile()));
+                new ImagesToPdfService()
+                    .imagesToPdf(
+                        inputImagesDirPath.toFile(),
+                        "A4",
+                        "top-left",
+                        pageMargins,
+                        outputPdfFilePath.toFile()));
 
     Assertions.assertEquals(
         String.format("Invalid page margins: '%s'", pageMargins),
@@ -100,12 +108,13 @@ class ImagesToPdfTest {
         Assertions.assertThrowsExactly(
             IllegalArgumentException.class,
             () ->
-                ImagesToPdf.imagesToPdf(
-                    inputImagesDirPath.toFile(),
-                    "A4",
-                    imagePosition,
-                    "standard",
-                    outputPdfFilePath.toFile()));
+                new ImagesToPdfService()
+                    .imagesToPdf(
+                        inputImagesDirPath.toFile(),
+                        "A4",
+                        imagePosition,
+                        "standard",
+                        outputPdfFilePath.toFile()));
 
     Assertions.assertEquals(
         String.format("Invalid image position: '%s'", imagePosition),

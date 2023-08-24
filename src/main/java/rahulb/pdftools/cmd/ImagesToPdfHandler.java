@@ -2,7 +2,7 @@ package rahulb.pdftools.cmd;
 
 import java.io.File;
 import java.util.Map;
-import rahulb.pdftools.core.ImagesToPdf;
+import rahulb.pdftools.core.ImagesToPdfService;
 
 final class ImagesToPdfHandler extends AbstractCommandHandler {
 
@@ -11,6 +11,11 @@ final class ImagesToPdfHandler extends AbstractCommandHandler {
   private static final String ARG_IMAGE_POSITION = "image-position";
   private static final String ARG_PAGE_MARGINS = "page-margins";
   private static final String ARG_OUTPUT_PDF_FILE_PATH = "output-pdf-file";
+  private final ImagesToPdfService service;
+
+  ImagesToPdfHandler(ImagesToPdfService service) {
+    this.service = service;
+  }
 
   @Override
   void executeInternal(String... args) throws Exception {
@@ -35,7 +40,6 @@ final class ImagesToPdfHandler extends AbstractCommandHandler {
     String pageMargins = (String) args.get(ARG_PAGE_MARGINS);
     File outputPdfFile = new File((String) args.get(ARG_OUTPUT_PDF_FILE_PATH));
 
-    ImagesToPdf.imagesToPdf(
-        inputImagesDir, outputPageSize, imagePosition, pageMargins, outputPdfFile);
+    service.imagesToPdf(inputImagesDir, outputPageSize, imagePosition, pageMargins, outputPdfFile);
   }
 }

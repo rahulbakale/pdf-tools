@@ -12,7 +12,7 @@ import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 
-public final class ImagesToPdf {
+public final class ImagesToPdfService {
 
   /** User space units per inch. See org.apache.pdfbox.pdmodel.common.PDRectangle. */
   private static final float POINTS_PER_INCH = 72;
@@ -20,9 +20,7 @@ public final class ImagesToPdf {
   /** User space units per millimeter. See org.apache.pdfbox.pdmodel.common.PDRectangle. */
   // private static final float POINTS_PER_MM = 1 / (10 * 2.54f) * POINTS_PER_INCH;
 
-  private ImagesToPdf() {}
-
-  public static void imagesToPdf(
+  public void imagesToPdf(
       File inputImagesDir,
       String outputPageSize,
       String imagePosition,

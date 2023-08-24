@@ -120,6 +120,34 @@ class PipelineHandlerTest {
   }
 
   @Test
+  void test_exception_is_thrown_when_no_transformations_spec_is_null() {
+
+    String pipelineSpec = "transformations: ~";
+
+    Exception exception =
+        Assertions.assertThrowsExactly(
+            RuntimeException.class,
+            () -> new PipelineHandler().executePipeline(new StringReader(pipelineSpec)));
+
+    Assertions.assertEquals(
+        "Pipeline spec is invalid: no transformations specified", exception.getMessage());
+  }
+
+  @Test
+  void test_exception_is_thrown_when_no_transformations_spec_is_empty() {
+
+    String pipelineSpec = "transformations: []";
+
+    Exception exception =
+        Assertions.assertThrowsExactly(
+            RuntimeException.class,
+            () -> new PipelineHandler().executePipeline(new StringReader(pipelineSpec)));
+
+    Assertions.assertEquals(
+        "Pipeline spec is invalid: no transformations specified", exception.getMessage());
+  }
+
+  @Test
   void test_exception_is_thrown_if_transformation_type_is_not_specified_in_pipeline() {
 
     String pipelineSpec =
@@ -154,5 +182,49 @@ class PipelineHandlerTest {
     Assertions.assertEquals(
         "Pipeline spec is invalid: transformation type is not specified for transformation number '2'",
         exception.getMessage());
+  }
+
+  @Test
+  void test_exception_is_thrown_if_invalid_transformation_type_specified_in_pipeline() {
+
+    String pipelineSpec =
+        """
+                                    transformations:
+                                      - type: EncryptPdf
+                                      - type: Foo
+                                      - type: DecryptPdfs
+                            """;
+
+    Exception exception =
+        Assertions.assertThrowsExactly(
+            RuntimeException.class,
+            () -> new PipelineHandler().executePipeline(new StringReader(pipelineSpec)));
+
+    Assertions.assertEquals(
+        "Pipeline spec is invalid: Invalid transformation type 'Foo'", exception.getMessage());
+  }
+
+  @Test
+  void test_exception_is_thrown_in_case_of_nested_pipelines() {
+
+    String pipelineSpec =
+        """
+                                    transformations:
+                                      - type: EncryptPdf
+
+                                      - type: Pipeline
+                                        args:
+                                          spec: /foo/inner-pipeline.yaml
+
+                                      - type: DecryptPdfs
+                            """;
+
+    Exception exception =
+        Assertions.assertThrowsExactly(
+            RuntimeException.class,
+            () -> new PipelineHandler().executePipeline(new StringReader(pipelineSpec)));
+
+    Assertions.assertEquals(
+        "Pipeline spec is invalid: Invalid transformation type 'Pipeline'", exception.getMessage());
   }
 }

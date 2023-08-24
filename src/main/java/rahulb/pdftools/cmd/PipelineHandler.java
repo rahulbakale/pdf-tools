@@ -65,7 +65,14 @@ final class PipelineHandler extends AbstractCommandHandler {
                 (i + 1)));
       }
 
-      Command transformation = Command.valueOf(transformationType);
+      Command transformation;
+      try {
+        transformation = Command.valueOf(transformationType);
+      } catch (IllegalArgumentException e) {
+        throw new RuntimeException(
+            String.format(
+                "Pipeline spec is invalid: Invalid transformation type '%s'", transformationType));
+      }
 
       if (transformation == Command.Pipeline) {
 

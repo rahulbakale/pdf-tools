@@ -2,7 +2,7 @@ package rahulb.pdftools.cmd;
 
 import java.io.File;
 import java.util.Map;
-import rahulb.pdftools.core.ConvertToGrayscale;
+import rahulb.pdftools.core.ConvertToGrayscaleService;
 
 final class ConvertToGrayscaleHandler extends AbstractCommandHandler {
 
@@ -10,6 +10,11 @@ final class ConvertToGrayscaleHandler extends AbstractCommandHandler {
   private static final String ARG_DPI = "dpi";
   private static final String ARG_OUTPUT_PAGE_SIZE = "output-page-size";
   private static final String ARG_OUTPUT_PDF_FILE = "output-pdf-file";
+  private final ConvertToGrayscaleService service;
+
+  ConvertToGrayscaleHandler(ConvertToGrayscaleService service) {
+    this.service = service;
+  }
 
   @Override
   void executeInternal(String... args) throws Exception {
@@ -32,6 +37,6 @@ final class ConvertToGrayscaleHandler extends AbstractCommandHandler {
     String outputPageSize = (String) args.get(ARG_OUTPUT_PAGE_SIZE);
     File outputPdfFile = new File((String) args.get(ARG_OUTPUT_PDF_FILE));
 
-    ConvertToGrayscale.convertToGrayscale(inputPdfFile, dpi, outputPageSize, outputPdfFile);
+    service.convertToGrayscale(inputPdfFile, dpi, outputPageSize, outputPdfFile);
   }
 }

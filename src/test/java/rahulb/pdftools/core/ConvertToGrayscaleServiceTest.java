@@ -6,7 +6,7 @@ import java.nio.file.Paths;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-class ConvertToGrayscaleTest {
+class ConvertToGrayscaleServiceTest {
 
   @Test
   void test_conversion_to_grayscale_is_proper()
@@ -17,8 +17,8 @@ class ConvertToGrayscaleTest {
     Path expectedOutputPdfPath =
         Paths.get("src/test/resources/ConvertToGrayscale/expected-output-1.pdf");
 
-    ConvertToGrayscale.convertToGrayscale(
-        inputPdfPath.toFile(), 300.0f, "A4", outputPdfPath.toFile());
+    new ConvertToGrayscaleService()
+        .convertToGrayscale(inputPdfPath.toFile(), 300.0f, "A4", outputPdfPath.toFile());
 
     Assertions.assertTrue(
         PdfUtils.pdfEquals(expectedOutputPdfPath, outputPdfPath),

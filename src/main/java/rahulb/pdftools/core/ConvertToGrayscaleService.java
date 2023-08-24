@@ -12,11 +12,9 @@ import org.apache.pdfbox.rendering.ImageType;
 import org.apache.pdfbox.rendering.PDFRenderer;
 import org.apache.pdfbox.util.Matrix;
 
-public final class ConvertToGrayscale {
+public final class ConvertToGrayscaleService {
 
-  private ConvertToGrayscale() {}
-
-  public static void convertToGrayscale(
+  public void convertToGrayscale(
       File inputPdfFile, float dpi, String outputPageSize, File outputPdfFile)
       throws IOException, NoSuchFieldException, IllegalAccessException {
 

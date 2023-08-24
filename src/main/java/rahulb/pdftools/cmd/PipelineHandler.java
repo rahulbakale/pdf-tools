@@ -28,7 +28,7 @@ final class PipelineHandler extends AbstractCommandHandler {
     throw new UnsupportedOperationException();
   }
 
-  private static void executePipeline(Path pipelineSpecFile) throws IOException {
+  private void executePipeline(Path pipelineSpecFile) throws IOException {
 
     try (Reader reader = Files.newBufferedReader(pipelineSpecFile, UTF_8)) {
 
@@ -67,8 +67,13 @@ final class PipelineHandler extends AbstractCommandHandler {
                   transformationType));
         }
 
-        transformation.obtainCommandHandler().execute(transformationArgs);
+        getCommandHandler(transformation).execute(transformationArgs);
       }
     }
+  }
+
+  AbstractCommandHandler getCommandHandler(Command transformation) {
+
+    return transformation.obtainCommandHandler();
   }
 }

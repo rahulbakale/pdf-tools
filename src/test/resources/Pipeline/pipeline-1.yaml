@@ -1,0 +1,46 @@
+transformations:
+  - type: ImagesToPdf
+    args:
+      input-images-directory: '/tmp/images'
+      output-page-size: 'A4'
+      image-position: 'top-left'
+      page-margins: 'standard'
+      output-pdf-file: '/tmp/intermediate.pdf'
+
+  - type: RemovePages
+    args:
+      input-pdf-file: '/tmp/input.pdf'
+      pages-to-remove: '1,3'
+      output-pdf-file: '/tmp/intermediate.pdf'
+
+  - type: ConvertToGrayscale
+    args:
+      input-pdf-file: '/tmp/intermediate.pdf'
+      dpi: '200.0'
+      output-page-size: 'LEGAL'
+      output-pdf-file: '/tmp/intermediate.pdf'
+
+  - type: AddWatermark
+    args:
+      input-pdf-file: '/tmp/intermediate.pdf'
+      watermark-text : 'DUPLICATE'
+      watermark-font-size: '40'
+      output-pdf-file: '/tmp/intermediate.pdf'
+
+  - type: EncryptPdf
+    args:
+      input-pdf-file: '/tmp/intermediate.pdf'
+      output-pdf-file: '/tmp/encrypted/output.pdf'
+
+  - type: DecryptPdfs
+    args:
+      input-pdfs-directory: '/tmp/encrypted'
+      output-pdfs-directory: '/tmp/decrypted'
+
+  - type: PdfToImage
+    args:
+      input-pdf-file: '/tmp/decrypted'
+      output-directory: '/tmp/images-2'
+      page-numbers: '1'
+      dpi: '300'
+      image-format: 'JPEG'

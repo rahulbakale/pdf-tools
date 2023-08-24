@@ -3,7 +3,7 @@ package rahulb.pdftools.core;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.stream.IntStream;
+import java.util.List;
 import javax.imageio.ImageIO;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.rendering.ImageType;
@@ -18,7 +18,7 @@ final class PdfPageImageWriter {
   }
 
   void writePages(
-      IntStream pageNumbers,
+      List<Integer> pageNumbers,
       float dpi,
       String imageFormat,
       File outputDir,
@@ -27,7 +27,7 @@ final class PdfPageImageWriter {
   }
 
   private void createPageImages(
-      IntStream pageNumbers,
+      List<Integer> pageNumbers,
       float dpi,
       String imageFormat,
       File outputDir,

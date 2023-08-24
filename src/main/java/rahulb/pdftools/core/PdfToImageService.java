@@ -3,15 +3,13 @@ package rahulb.pdftools.core;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.util.stream.IntStream;
+import java.util.List;
 import org.apache.pdfbox.pdmodel.PDDocument;
 
-public final class PdfToImage {
+public final class PdfToImageService {
 
-  private PdfToImage() {}
-
-  public static void pdfToImage(
-      File inputPdfFile, File outputDir, IntStream pageNumbers, int dpi, String imageFormat)
+  public void pdfToImage(
+      File inputPdfFile, File outputDir, List<Integer> pageNumbers, int dpi, String imageFormat)
       throws IOException {
 
     try (var document = PDDocument.load(inputPdfFile)) {
@@ -22,7 +20,7 @@ public final class PdfToImage {
   private static void pdfToImage(
       File inputPdfFile,
       File outputDir,
-      IntStream pageNumbers,
+      List<Integer> pageNumbers,
       int dpi,
       String imageFormat,
       PDDocument document)

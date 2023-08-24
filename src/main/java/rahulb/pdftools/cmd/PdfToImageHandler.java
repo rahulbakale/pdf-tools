@@ -2,9 +2,9 @@ package rahulb.pdftools.cmd;
 
 import java.io.File;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
-import java.util.stream.IntStream;
-import rahulb.pdftools.core.PdfToImage;
+import rahulb.pdftools.core.PdfToImageService;
 
 final class PdfToImageHandler extends AbstractCommandHandler {
 
@@ -13,6 +13,11 @@ final class PdfToImageHandler extends AbstractCommandHandler {
   private static final String ARG_DPI = "dpi";
   private static final String ARG_IMAGE_FORMAT = "image-format";
   private static final String ARG_OUTPUT_DIRECTORY = "output-directory";
+  private final PdfToImageService service;
+
+  PdfToImageHandler(PdfToImageService service) {
+    this.service = service;
+  }
 
   @Override
   void executeInternal(String... args) throws Exception {
@@ -33,11 +38,13 @@ final class PdfToImageHandler extends AbstractCommandHandler {
 
     File inputPdfFile = new File((String) args.get(ARG_INPUT_PDF_FILE));
     File outputDir = new File((String) args.get(ARG_OUTPUT_DIRECTORY));
-    IntStream pageNumbers =
-        Arrays.stream(((String) args.get(ARG_PAGE_NUMBERS)).split(",")).mapToInt(Integer::parseInt);
+    List<Integer> pageNumbers =
+        Arrays.stream(((String) args.get(ARG_PAGE_NUMBERS)).split(","))
+            .map(Integer::parseInt)
+            .toList();
     int dpi = Integer.parseInt((String) args.get(ARG_DPI));
     String imageFormat = (String) args.get(ARG_IMAGE_FORMAT);
 
-    PdfToImage.pdfToImage(inputPdfFile, outputDir, pageNumbers, dpi, imageFormat);
+    service.pdfToImage(inputPdfFile, outputDir, pageNumbers, dpi, imageFormat);
   }
 }

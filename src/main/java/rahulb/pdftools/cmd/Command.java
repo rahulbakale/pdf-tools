@@ -20,7 +20,7 @@ enum Command {
   PdfToImage {
     @Override
     AbstractCommandHandler obtainCommandHandler() {
-      return new PdfToImageHandler();
+      return new PdfToImageHandler(new PdfToImageService());
     }
   },
 

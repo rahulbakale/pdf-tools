@@ -8,9 +8,9 @@ import java.math.MathContext;
 import java.math.RoundingMode;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 import javax.imageio.ImageIO;
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.Imaging;
@@ -19,7 +19,7 @@ import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-class PdfToImageTest {
+class PdfToImageServiceTest {
 
   /** User space units per inch. See org.apache.pdfbox.pdmodel.common.PDRectangle. */
   private static final float POINTS_PER_INCH = 72;
@@ -32,22 +32,23 @@ class PdfToImageTest {
     Path expectedOutputDirPath = Paths.get("src/test/resources/PdfToImage/expected-output-1");
 
     String expectedImageFormat = "JPEG";
-    int[] pageNumbers = {1, 3};
+    List<Integer> pageNumbers = List.of(1, 3);
     int expectedImageDPI = 300;
 
-    PdfToImage.pdfToImage(
-        inputPdfPath.toFile(),
-        outputDirPath.toFile(),
-        IntStream.of(pageNumbers),
-        expectedImageDPI,
-        expectedImageFormat);
+    new PdfToImageService()
+        .pdfToImage(
+            inputPdfPath.toFile(),
+            outputDirPath.toFile(),
+            pageNumbers,
+            expectedImageDPI,
+            expectedImageFormat);
 
     Set<Path> outputDirContentPaths = FileUtils.getDirContentPaths(outputDirPath);
 
     // Verify that the output directory contains exactly the expected files.
     Assertions.assertEquals(
-        IntStream.of(pageNumbers)
-            .mapToObj(
+        pageNumbers.stream()
+            .map(
                 pageNum ->
                     String.format(
                         "%s.%d.%s", inputPdfPath.getFileName(), pageNum, expectedImageFormat))

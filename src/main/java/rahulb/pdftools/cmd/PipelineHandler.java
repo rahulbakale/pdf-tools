@@ -31,44 +31,64 @@ final class PipelineHandler extends AbstractCommandHandler {
   private void executePipeline(Path pipelineSpecFile) throws IOException {
 
     try (Reader reader = Files.newBufferedReader(pipelineSpecFile, UTF_8)) {
+      executePipeline(reader);
+    }
+  }
 
-      Yaml yaml = new Yaml();
-      Map<String, Object> pipelineSpec = yaml.load(reader);
+  void executePipeline(Reader pipelineSpecReader) {
 
-      List<Map<?, ?>> transformationsSpec = (List<Map<?, ?>>) pipelineSpec.get("transformations");
+    Yaml yaml = new Yaml();
+    Map<String, Object> pipelineSpec = yaml.load(pipelineSpecReader);
 
-      if (transformationsSpec == null || transformationsSpec.isEmpty()) {
-        throw new RuntimeException("Pipeline spec is invalid: no transformations specified");
+    List<Map<?, ?>> transformationsSpec = (List<Map<?, ?>>) pipelineSpec.get("transformations");
+
+    validateTransformationsSpec(transformationsSpec);
+
+    executeTransformations(transformationsSpec);
+  }
+
+  private static void validateTransformationsSpec(List<Map<?, ?>> transformationsSpec) {
+
+    if (transformationsSpec == null || transformationsSpec.isEmpty()) {
+      throw new RuntimeException("Pipeline spec is invalid: no transformations specified");
+    }
+
+    for (int i = 0; i < transformationsSpec.size(); i++) {
+      Map<?, ?> transformationSpec = transformationsSpec.get(i);
+
+      String transformationType = (String) transformationSpec.get("type");
+
+      if (transformationType == null) {
+        throw new RuntimeException(
+            String.format(
+                "Pipeline spec is invalid: transformation type is not specified for transformation number '%d'",
+                (i + 1)));
       }
 
-      for (int i = 0; i < transformationsSpec.size(); i++) {
-        Map<?, ?> transformationSpec = transformationsSpec.get(i);
+      Command transformation = Command.valueOf(transformationType);
 
-        String transformationType = (String) transformationSpec.get("type");
+      if (transformation == Command.Pipeline) {
 
-        if (transformationType == null) {
-          throw new RuntimeException(
-              String.format(
-                  "Pipeline spec is invalid: transformation type is not specified for transformation number '%d'",
-                  (i + 1)));
-        }
+        // Nested pipelines are not permitted for now.
 
-        Map<?, ?> transformationArgs = (Map<?, ?>) transformationSpec.get("args");
-
-        Command transformation = Command.valueOf(transformationType);
-
-        if (transformation == Command.Pipeline) {
-
-          // Nested pipelines are not permitted for now.
-
-          throw new RuntimeException(
-              String.format(
-                  "Pipeline spec is invalid: Invalid transformation type '%s'",
-                  transformationType));
-        }
-
-        getCommandHandler(transformation).execute(transformationArgs);
+        throw new RuntimeException(
+            String.format(
+                "Pipeline spec is invalid: Invalid transformation type '%s'", transformationType));
       }
+    }
+  }
+
+  private void executeTransformations(List<Map<?, ?>> transformationsSpec) {
+
+    for (Map<?, ?> transformationSpec : transformationsSpec) {
+
+      String transformationType = (String) transformationSpec.get("type");
+      Command transformation = Command.valueOf(transformationType);
+      AbstractCommandHandler commandHandler = getCommandHandler(transformation);
+
+      Map<?, ?> transformationArgs = (Map<?, ?>) transformationSpec.get("args");
+
+      commandHandler.execute(transformationArgs);
     }
   }
 

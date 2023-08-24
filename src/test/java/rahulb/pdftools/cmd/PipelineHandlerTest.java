@@ -1,6 +1,9 @@
 package rahulb.pdftools.cmd;
 
+import java.io.Reader;
+import java.io.StringReader;
 import java.util.Map;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.InOrder;
 import org.mockito.Mockito;
@@ -23,6 +26,7 @@ class PipelineHandlerTest {
     PipelineHandler pipelineHandler = Mockito.mock(PipelineHandler.class);
 
     Mockito.doCallRealMethod().when(pipelineHandler).executeInternal(Mockito.any(String[].class));
+    Mockito.doCallRealMethod().when(pipelineHandler).executePipeline(Mockito.any(Reader.class));
 
     Mockito.when(pipelineHandler.getCommandHandler(Mockito.any(Command.class)))
         .thenAnswer(
@@ -113,5 +117,42 @@ class PipelineHandlerTest {
                 "image-format", "JPEG"));
 
     orderVerifier.verifyNoMoreInteractions();
+  }
+
+  @Test
+  void test_exception_is_thrown_if_transformation_type_is_not_specified_in_pipeline() {
+
+    String pipelineSpec =
+        """
+                                transformations:
+                                  - type: ImagesToPdf
+                                    args:
+                                      input-images-directory: '/tmp/images'
+                                      output-page-size: 'A4'
+                                      image-position: 'top-left'
+                                      page-margins: 'standard'
+                                      output-pdf-file: '/tmp/intermediate.pdf'
+
+                                  - args:
+                                      foo: one
+                                      bar: two
+
+                                  - type: ImagesToPdf
+                                    args:
+                                      input-images-directory: '/tmp/images'
+                                      output-page-size: 'A4'
+                                      image-position: 'top-left'
+                                      page-margins: 'standard'
+                                      output-pdf-file: '/tmp/intermediate.pdf'
+                        """;
+
+    Exception exception =
+        Assertions.assertThrowsExactly(
+            RuntimeException.class,
+            () -> new PipelineHandler().executePipeline(new StringReader(pipelineSpec)));
+
+    Assertions.assertEquals(
+        "Pipeline spec is invalid: transformation type is not specified for transformation number '2'",
+        exception.getMessage());
   }
 }

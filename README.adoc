@@ -8,6 +8,7 @@
 :toc:
 
 :blank: pass:[ +]
+:hide-docker:
 
 `pdf-tools` is a command-line application capable of doing the following things:
 
@@ -34,6 +35,7 @@ This will generate two distribution archives:
 . `target/pdf-tools-0.1.0-linux.zip`
 
 
+ifndef::hide-docker[]
 === Build Docker image
 [discrete]
 ==== Prerequisites
@@ -54,6 +56,7 @@ sudo service docker start
 ----
 mvn -Pdocker verify
 ----
+endif::[]
 
 
 == Software Bill of Materials (SBOM)
@@ -103,6 +106,7 @@ pdf-tools-0.1.0\bin\pdf-tools.bat^
 <1> Command name
 <2> Command arguments - input PDF file, output PDF file
 
+ifndef::hide-docker[]
 [discrete]
 ==== Using Docker container
 [source,sh]
@@ -116,6 +120,7 @@ docker run -it \
 <1> Container image name
 <2> Command name
 <3> Command arguments - input PDF file, output PDF file
+endif::[]
 
 [#readme-usage-decrypt-pdf-docs]
 === Decrypt (remove password protection) PDF documents
@@ -143,6 +148,7 @@ pdf-tools-0.1.0\bin\pdf-tools.bat^
 <1> Command name
 <2> Command arguments - input (encrypted) PDFs directory, output (decrypted) PDFs directory
 
+ifndef::hide-docker[]
 [discrete]
 ==== Using Docker container
 [source,sh]
@@ -156,6 +162,7 @@ docker run -it \
 <1> Container image name
 <2> Command name
 <3> Command arguments - input (encrypted) PDFs directory, output (decrypted) PDFs directory
+endif::[]
 
 [#readme-usage-convert-pdf-to-images]
 === Convert PDF pages to images
@@ -183,6 +190,7 @@ pdf-tools-0.1.0\bin\pdf-tools.bat^
 <1> Command name
 <2> Command arguments - input PDF file, output directory, page numbers, DPI, image format.
 
+ifndef::hide-docker[]
 [discrete]
 ==== Using Docker container
 [source,sh]
@@ -196,6 +204,7 @@ docker run -it \
 <1> Container image name
 <2> Command name
 <3> Command arguments - input PDF file, output directory, page numbers, DPI, image format.
+endif::[]
 
 [#readme-usage-remove-pdf-pages]
 === Remove pages from a PDF document
@@ -223,6 +232,7 @@ pdf-tools-0.1.0\bin\pdf-tools.bat^
 <1> Command name
 <2> Command arguments - input PDF file, page numbers to remove, output PDF file
 
+ifndef::hide-docker[]
 [discrete]
 ==== Using Docker container
 [source,sh]
@@ -236,6 +246,7 @@ docker run -it \
 <1> Container image name
 <2> Command name
 <3> Command arguments - input PDF file, page numbers to remove, output PDF file
+endif::[]
 
 [#readme-usage-add-watermark-to-pdf]
 === Add a watermark to PDF pages
@@ -263,6 +274,7 @@ pdf-tools-0.1.0\bin\pdf-tools.bat^
 <1> Command name
 <2> Command arguments - input PDF file, watermark text, font size, output PDF file
 
+ifndef::hide-docker[]
 [discrete]
 ==== Using Docker container
 [source,sh]
@@ -276,6 +288,7 @@ docker run -it \
 <1> Container image name
 <2> Command name
 <3> Command arguments - input PDF file, watermark text, font size, output PDF file
+endif::[]
 
 [#readme-usage-convert-pdf-to-grayscale]
 === Convert a colored PDF document to grayscale
@@ -303,6 +316,7 @@ pdf-tools-0.1.0\bin\pdf-tools.bat^
 <1> Command name
 <2> Command arguments - input PDF file, image DPI, output page size, output PDF file
 
+ifndef::hide-docker[]
 [discrete]
 ==== Using Docker container
 [source,sh]
@@ -316,6 +330,7 @@ docker run -it \
 <1> Container image name
 <2> Command name
 <3> Command arguments - input PDF file, image DPI, output page size, output PDF file
+endif::[]
 
 [#readme-usage-create-pdf-from-images]
 === Create a PDF document from images
@@ -343,6 +358,7 @@ pdf-tools-0.1.0\bin\pdf-tools.bat^
 <1> Command name
 <2> Command arguments - input images directory, output page size, image position, page margins, output PDF file
 
+ifndef::hide-docker[]
 [discrete]
 ==== Using Docker container
 [source,sh]
@@ -356,6 +372,7 @@ docker run -it \
 <1> Container image name
 <2> Command name
 <3> Command arguments - input images directory, output page size, image position, page margins, output PDF file
+endif::[]
 
 [#readme-usage-run-transformation-pipeline]
 === Run a PDF transformation pipeline
@@ -472,6 +489,7 @@ pdf-tools-0.1.0/bin/pdf-tools.sh \
 <1> Command name
 <2> Command arguments - pipeline specification file
 
+ifndef::hide-docker[]
 [discrete]
 ==== Using Docker container
 [source,sh]
@@ -527,3 +545,4 @@ docker run -it \
 <1> Container image name
 <2> Command name
 <3> Command arguments - pipeline specification file
+endif::[]

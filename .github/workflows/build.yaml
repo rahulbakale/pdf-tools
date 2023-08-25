@@ -24,7 +24,13 @@ jobs:
         run: mvn clean verify
 
       - name: Copy artifacts to staging
-        run: mkdir staging && cp target/pdf-tools-0.1.0-linux.zip target/pdf-tools-0.1.0-windows.zip staging/ && cp target/sbom/cyclonedx.json staging/sbom-cyclonedx.json
+        run: |
+          mkdir staging
+          cp target/pdf-tools-0.1.0-linux.zip staging/ 
+          cp target/pdf-tools-0.1.0-windows.zip staging/
+          cp target/sbom staging/
+          cp target/site staging/
+          cp target/surefire-reports staging/
 
       - name: Upload artifacts from staging
         uses: actions/upload-artifact@v3

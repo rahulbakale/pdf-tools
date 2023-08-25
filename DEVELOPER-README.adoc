@@ -1,13 +1,44 @@
 = Developer README
 :experimental:
 :icons: font
-:revdate: 2023-08-11
+:revdate: 2023-08-25
 :sectnums:
 :sectnumlevels: 5
 :toclevels: 5
 :toc:
 
 :blank: pass:[ +]
+:hide-docker:
+
+== How to build this project?
+=== Build Java program distribution
+[source,cmd]
+----
+mvn clean verify
+----
+
+ifndef::hide-docker[]
+=== Build Docker image
+[discrete]
+==== Prerequisites
+. Install https://docs.docker.com/[Docker].
+
+. Start Docker Engine.
++
+[source,cmd]
+----
+sudo service docker start
+----
+
+[discrete]
+==== Build
+. Run Maven build.
++
+[source,cmd]
+----
+mvn -Pdocker verify
+----
+endif::[]
 
 == How to upgrade dependency versions?
 . Determine which dependencies have newer versions available.

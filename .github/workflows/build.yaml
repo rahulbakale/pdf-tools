@@ -29,6 +29,7 @@ jobs:
           cp target/pdf-tools-0.1.0-linux.zip staging/ 
           cp target/pdf-tools-0.1.0-windows.zip staging/
           cp -r target/sbom staging/
+          cp -r target/dependency-check-cve staging
           cp -r target/site staging/
           cp -r target/surefire-reports staging/
 

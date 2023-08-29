@@ -7,6 +7,24 @@
 :toclevels: 5
 :toc:
 
+image:https://img.shields.io/github/actions/workflow/status/rahulbakale/pdf-tools/build.yaml[GitHub Workflow Status (with event)]
+image:https://img.shields.io/github/license/rahulbakale/pdf-tools[GitHub]
+// image:https://img.shields.io/github/languages/count/rahulbakale/pdf-tools[GitHub language count]
+// image:https://img.shields.io/github/repo-size/rahulbakale/pdf-tools[GitHub repo size]
+image:https://img.shields.io/github/v/release/rahulbakale/pdf-tools[GitHub release (with filter)]
+image:https://img.shields.io/github/release-date/rahulbakale/pdf-tools[GitHub Release Date - Published_At]
+image:https://img.shields.io/github/commit-activity/t/rahulbakale/pdf-tools[GitHub commit activity (branch)]
+image:https://img.shields.io/github/issues/rahulbakale/pdf-tools[GitHub issues]
+// image:https://img.shields.io/github/issues-closed/rahulbakale/pdf-tools[GitHub closed issues]
+// image:https://img.shields.io/github/issues-pr/rahulbakale/pdf-tools[GitHub pull requests]
+// image:https://img.shields.io/github/issues-pr-closed/rahulbakale/pdf-tools[GitHub closed pull requests]
+image:https://img.shields.io/github/downloads/rahulbakale/pdf-tools/total[GitHub all releases]
+image:https://img.shields.io/github/forks/rahulbakale/pdf-tools[GitHub forks]
+image:https://img.shields.io/github/stars/rahulbakale/pdf-tools[GitHub Repo stars]
+image:https://img.shields.io/github/contributors/rahulbakale/pdf-tools[GitHub contributors]
+image:https://img.shields.io/github/watchers/rahulbakale/pdf-tools[GitHub watchers]
+
+
 `pdf-tools` is a command-line application capable creating, transforming, reading, encrypting and decrypting PDF files.
 
 == Documentation

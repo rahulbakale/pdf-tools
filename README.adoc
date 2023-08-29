@@ -1,7 +1,7 @@
 = pdf-tools
 :experimental:
 :icons: font
-:revdate: 2023-08-25
+:revdate: 2023-08-29
 :sectnums:
 :sectnumlevels: 5
 :toclevels: 5
@@ -105,18 +105,26 @@ endif::[]
 [source,sh]
 ----
 pdf-tools-${RELEASE_VERSION}/bin/pdf-tools.sh DecryptPdfs \
-    "/tmp/encrypyed-pdfs-dir" "/tmp/decrypyed-pdfs-dir"#<1>
+    "/tmp/encrypyed-pdfs-dir" "/tmp/decrypyed-pdfs-dir"
 ----
-<1> Command arguments - input (encrypted) PDFs directory, output (decrypted) PDFs directory
+
+where,
+
+* `/tmp/encrypyed-pdfs-dir` is the input (encrypted) PDFs directory
+* `/tmp/decrypyed-pdfs-dir` is the output (decrypted) PDFs directory
 
 [discrete]
 ===== Windows
 [source,cmd]
 ----
 pdf-tools-%RELEASE_VERSION%\bin\pdf-tools.bat DecryptPdfs^
-    "%TEMP%\encrypyed-pdfs-dir" "%TEMP%\decrypyed-pdfs-dir"#<1>
+    "%TEMP%\encrypyed-pdfs-dir" "%TEMP%\decrypyed-pdfs-dir"
 ----
-<1> Command arguments - input (encrypted) PDFs directory, output (decrypted) PDFs directory
+
+where,
+
+* `%TEMP%\encrypyed-pdfs-dir` is the input (encrypted) PDFs directory
+* `%TEMP%\decrypyed-pdfs-dir` is the output (decrypted) PDFs directory
 
 ifndef::hide-docker[]
 [discrete]
@@ -126,9 +134,13 @@ ifndef::hide-docker[]
 docker run -it \
     -v "/tmp/foo:/tmp/bar" \
     pdf-tools DecryptPdfs \
-    "/tmp/bar/encrypyed-pdfs" "/tmp/bar/decrypyed-pdfs"#<1>
+    "/tmp/bar/encrypyed-pdfs" "/tmp/bar/decrypyed-pdfs"
 ----
-<1> Command arguments - input (encrypted) PDFs directory, output (decrypted) PDFs directory
+
+where,
+
+* `/tmp/bar/encrypyed-pdfs` is the input (encrypted) PDFs directory
+* `/tmp/bar/decrypyed-pdfs` is the output (decrypted) PDFs directory
 endif::[]
 
 [#readme-usage-convert-pdf-to-images]
@@ -140,18 +152,32 @@ endif::[]
 [source,sh]
 ----
 pdf-tools-${RELEASE_VERSION}/bin/pdf-tools.sh PdfToImage \
-    "/tmp/input.pdf" "/tmp/" "1,2,3" 300 "jpeg" #<1>
+    "/tmp/input.pdf" "/tmp/" "1,2,3" 300 "jpeg"
 ----
-<1> Command arguments - input PDF file, output directory, page numbers, DPI, image format.
+
+where,
+
+* `/tmp/input.pdf` is the input PDF file
+* `/tmp/` is the output directory
+* `1,2,3` are the page numbers
+* `300` is the DPI
+* `jpeg` is the image format
 
 [discrete]
 ===== Windows
 [source,cmd]
 ----
 pdf-tools-%RELEASE_VERSION%\bin\pdf-tools.bat PdfToImage^
-    "%TEMP%\input.pdf" "%TEMP%" "1,2,3" 300 "jpeg" #<1>
+    "%TEMP%\input.pdf" "%TEMP%" "1,2,3" 300 "jpeg"
 ----
-<1> Command arguments - input PDF file, output directory, page numbers, DPI, image format.
+
+where,
+
+* `%TEMP%\input.pdf` is the input PDF file
+* `%TEMP%` is the output directory
+* `1,2,3` are the page numbers
+* `300` is the DPI
+* `jpeg` is the image format
 
 ifndef::hide-docker[]
 [discrete]
@@ -161,9 +187,16 @@ ifndef::hide-docker[]
 docker run -it \
     -v "/tmp/foo:/tmp/bar" \
     pdf-tools PdfToImage \
-    "/tmp/bar/input.pdf" "/tmp/bar/" "1,2,3" 300 "jpeg" #<1>
+    "/tmp/bar/input.pdf" "/tmp/bar/" "1,2,3" 300 "jpeg"
 ----
-<1> Command arguments - input PDF file, output directory, page numbers, DPI, image format.
+
+where,
+
+* `/tmp/bar/input.pdf` is the input PDF file
+* `/tmp/bar/` is the output directory
+* `1,2,3` are the page numbers
+* `300` is the DPI
+* `jpeg` is the image format
 endif::[]
 
 [#readme-usage-remove-pdf-pages]
@@ -175,18 +208,28 @@ endif::[]
 [source,sh]
 ----
 pdf-tools-${RELEASE_VERSION}/bin/pdf-tools.sh RemovePages \
-    "/tmp/input.pdf" "1,3" "/tmp/output.pdf" #<1>
+    "/tmp/input.pdf" "1,3" "/tmp/output.pdf"
 ----
-<1> Command arguments - input PDF file, page numbers to remove, output PDF file
+
+where,
+
+* `/tmp/input.pdf` is the input PDF file
+* `1,3` are the page numbers to remove
+* `/tmp/output.pdf` is the output PDF file
 
 [discrete]
 ===== Windows
 [source,cmd]
 ----
 pdf-tools-%RELEASE_VERSION%\bin\pdf-tools.bat RemovePages^
-    "%TEMP%\input.pdf" "1,3" "%TEMP%\output.pdf" #<1>
+    "%TEMP%\input.pdf" "1,3" "%TEMP%\output.pdf"
 ----
-<1> Command arguments - input PDF file, page numbers to remove, output PDF file
+
+where,
+
+* `%TEMP%\input.pdf` is the input PDF file
+* `1,3` are the page numbers to remove
+* `%TEMP%\output.pdf` is the output PDF file
 
 ifndef::hide-docker[]
 [discrete]
@@ -196,9 +239,14 @@ ifndef::hide-docker[]
 docker run -it \
     -v "/tmp/foo:/tmp/bar" \
     pdf-tools RemovePages \
-    "/tmp/bar/input.pdf" "1,3" "/tmp/bar/output.pdf" #<1>
+    "/tmp/bar/input.pdf" "1,3" "/tmp/bar/output.pdf"
 ----
-<1> Command arguments - input PDF file, page numbers to remove, output PDF file
+
+where,
+
+* `/tmp/bar/input.pdf` is the input PDF file
+* `1,3` are the page numbers to remove
+* `/tmp/bar/output.pdf` is the output PDF file
 endif::[]
 
 [#readme-usage-add-watermark-to-pdf]
@@ -210,18 +258,30 @@ endif::[]
 [source,sh]
 ----
 pdf-tools-${RELEASE_VERSION}/bin/pdf-tools.sh AddWatermark \
-    "/tmp/input.pdf" "DUPLICATE" 40 "/tmp/output.pdf" #<1>
+    "/tmp/input.pdf" "DUPLICATE" 40 "/tmp/output.pdf"
 ----
-<1> Command arguments - input PDF file, watermark text, font size, output PDF file
+
+where,
+
+* `/tmp/input.pdf` is the input PDF file
+* `DUPLICATE` is the watermark text
+* `40` is the font size
+* `/tmp/output.pdf` is the output PDF file
 
 [discrete]
 ===== Windows
 [source,cmd]
 ----
 pdf-tools-%RELEASE_VERSION%\bin\pdf-tools.bat AddWatermark^
-    "%TEMP%\input.pdf" "DUPLICATE" 40 "%TEMP%\output.pdf" #<1>
+    "%TEMP%\input.pdf" "DUPLICATE" 40 "%TEMP%\output.pdf"
 ----
-<1> Command arguments - input PDF file, watermark text, font size, output PDF file
+
+where,
+
+* `%TEMP%\input.pdf` is the input PDF file
+* `DUPLICATE` is the watermark text
+* `40` is the font size
+* `%TEMP%\output.pdf` is the output PDF file
 
 ifndef::hide-docker[]
 [discrete]
@@ -231,9 +291,15 @@ ifndef::hide-docker[]
 docker run -it \
     -v "/tmp/foo:/tmp/bar" \
     pdf-tools AddWatermark \
-    "/tmp/bar/input.pdf" "DUPLICATE" 40 "/tmp/bar/output.pdf" #<1>
+    "/tmp/bar/input.pdf" "DUPLICATE" 40 "/tmp/bar/output.pdf"
 ----
-<1> Command arguments - input PDF file, watermark text, font size, output PDF file
+
+where,
+
+* `/tmp/bar/input.pdf` is the input PDF file
+* `DUPLICATE` is the watermark text
+* `40` is the font size
+* `/tmp/bar/output.pdf` is the output PDF file
 endif::[]
 
 [#readme-usage-convert-pdf-to-grayscale]
@@ -245,18 +311,30 @@ endif::[]
 [source,sh]
 ----
 pdf-tools-${RELEASE_VERSION}/bin/pdf-tools.sh ConvertToGrayscale \
-    "/tmp/input.pdf" 200 "LEGAL" "/tmp/output.pdf" #<1>
+    "/tmp/input.pdf" 200 "LEGAL" "/tmp/output.pdf"
 ----
-<1> Command arguments - input PDF file, image DPI, output page size, output PDF file
+
+where,
+
+* `/tmp/input.pdf` is the input PDF file
+* `200` is the image DPI
+* `LEGAL` is the output page size
+* `/tmp/output.pdf` is the output PDF file
 
 [discrete]
 ===== Windows
 [source,cmd]
 ----
 pdf-tools-%RELEASE_VERSION%\bin\pdf-tools.bat ConvertToGrayscale^
-    "%TEMP%\input.pdf" 200 "LEGAL" "%TEMP%\output.pdf" #<1>
+    "%TEMP%\input.pdf" 200 "LEGAL" "%TEMP%\output.pdf"
 ----
-<1> Command arguments - input PDF file, image DPI, output page size, output PDF file
+
+where,
+
+* `%TEMP%\input.pdf` is the input PDF file
+* `200` is the image DPI
+* `LEGAL` is the output page size
+* `%TEMP%\output.pdf` is the output PDF file
 
 ifndef::hide-docker[]
 [discrete]
@@ -266,9 +344,15 @@ ifndef::hide-docker[]
 docker run -it \
     -v "/tmp/foo:/tmp/bar" \
     pdf-tools ConvertToGrayscale \
-    "/tmp/bar/input.pdf" 200 "LEGAL" "/tmp/bar/output.pdf" #<1>
+    "/tmp/bar/input.pdf" 200 "LEGAL" "/tmp/bar/output.pdf"
 ----
-<1> Command arguments - input PDF file, image DPI, output page size, output PDF file
+
+where,
+
+* `/tmp/bar/input.pdf` is the input PDF file
+* `200` is the image DPI
+* `LEGAL` is the output page size
+* `/tmp/bar/output.pdf` is the output PDF file
 endif::[]
 
 [#readme-usage-create-pdf-from-images]
@@ -280,18 +364,33 @@ endif::[]
 [source,sh]
 ----
 pdf-tools-${RELEASE_VERSION}/bin/pdf-tools.sh ImagesToPdf \
-    "/tmp/images/" "A4" "top-left" "standard" "/tmp/output.pdf"#<1>
+    "/tmp/images/" "A4" "top-left" "standard" "/tmp/output.pdf"
 ----
-<1> Command arguments - input images directory, output page size, image position, page margins, output PDF file
+
+where,
+
+* `/tmp/images/` is the input images directory
+* `A4` is the output page size
+* `top-left` is the image position
+* `standard` is the page margins
+* `/tmp/output.pdf` is the output PDF file
 
 [discrete]
 ===== Windows
 [source,cmd]
 ----
 pdf-tools-%RELEASE_VERSION%\bin\pdf-tools.bat ImagesToPdf^
-    "%TEMP%\images" "A4" "top-left" "standard" "%TEMP%\output.pdf"#<1>
+    "%TEMP%\images" "A4" "top-left" "standard" "%TEMP%\output.pdf"
 ----
-<1> Command arguments - input images directory, output page size, image position, page margins, output PDF file
+
+where,
+
+* `%TEMP%\images` is the input images directory
+* `A4` is the output page size
+* `top-left` is the image position
+* `standard` is the page margins
+* `%TEMP%\output.pdf` is the output PDF file
+
 
 ifndef::hide-docker[]
 [discrete]
@@ -301,9 +400,16 @@ ifndef::hide-docker[]
 docker run -it \
     -v "/tmp/foo:/tmp/bar" \
     pdf-tools ImagesToPdf \
-    "/tmp/bar/images/" "A4" "top-left" "standard" "/tmp/bar/output.pdf" #<1>
+    "/tmp/bar/images/" "A4" "top-left" "standard" "/tmp/bar/output.pdf"
 ----
-<1> Command arguments - input images directory, output page size, image position, page margins, output PDF file
+
+where,
+
+* `/tmp/bar/images/` is the input images directory
+* `A4` is the output page size
+* `top-left` is the image position
+* `standard` is the page margins
+* `/tmp/bar/output.pdf` is the output PDF file
 endif::[]
 
 [#readme-usage-run-transformation-pipeline]
@@ -362,9 +468,12 @@ Run the pipeline.
 [source,cmd]
 ----
 pdf-tools-%RELEASE_VERSION%\bin\pdf-tools.bat Pipeline^
-    "C:\Users\foo\AppData\Local\Temp\pdf-transformation-pipeline.yaml"#<1>
+    "C:\Users\foo\AppData\Local\Temp\pdf-transformation-pipeline.yaml"
 ----
-<1> Command arguments - pipeline specification file
+
+where,
+
+* `C:\Users\foo\AppData\Local\Temp\pdf-transformation-pipeline.yaml` is the pipeline specification file
 
 [discrete]
 ===== Linux
@@ -413,9 +522,12 @@ transformations:
 EOF
 
 pdf-tools-${RELEASE_VERSION}/bin/pdf-tools.sh Pipeline \
-    "/tmp/pdf-transformation-pipeline.yaml"#<1>
+    "/tmp/pdf-transformation-pipeline.yaml"
 ----
-<1> Command arguments - pipeline specification file
+
+where,
+
+* `/tmp/pdf-transformation-pipeline.yaml` is the pipeline specification file
 
 ifndef::hide-docker[]
 [discrete]
@@ -467,7 +579,10 @@ EOF
 docker run -it \
     -v "/tmp/foo:/tmp/bar" \
     pdf-tools Pipeline \
-    "/tmp/bar/pdf-transformation-pipeline.yaml"#<1>
+    "/tmp/bar/pdf-transformation-pipeline.yaml"
 ----
-<1> Command arguments - pipeline specification file
+
+where,
+
+* `/tmp/bar/pdf-transformation-pipeline.yaml` is the pipeline specification file
 endif::[]

@@ -23,11 +23,17 @@ jobs:
       - name: Build with Maven
         run: mvn clean verify
 
+      - name: Get project version
+        id: get_project_version
+        run: |
+          VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
+          echo "::set-output name=version::$VERSION"
+
       - name: Copy artifacts to staging
         run: |
           mkdir staging
-          cp target/pdf-tools-0.1.0-linux.zip staging/ 
-          cp target/pdf-tools-0.1.0-windows.zip staging/
+          cp target/pdf-tools-${{ steps.get_project_version.outputs.version }}-linux.zip staging/ 
+          cp target/pdf-tools-${{ steps.get_project_version.outputs.version }}-windows.zip staging/
           cp -r target/sbom staging/
           cp -r target/dependency-check-cve staging
           cp -r target/site staging/

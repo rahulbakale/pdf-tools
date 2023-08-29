@@ -10,6 +10,6 @@
 `pdf-tools` is a command-line application capable creating, transforming, reading, encrypting and decrypting PDF files.
 
 == Documentation
-See xref:../docs/USER-GUIDE.adoc[User Guide].
+See xref:docs/USER-GUIDE.adoc[User Guide].
 
-See xref:../docs/DEVELOPMENT-GUIDE.adoc[Development Guide].
+See xref:docs/DEVELOPMENT-GUIDE.adoc[Development Guide].

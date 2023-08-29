@@ -22,10 +22,6 @@
 . <<readme-usage-run-transformation-pipeline>>
 
 
-== Software Bill of Materials (SBOM)
-See release asset `+pdf-tools-${RELEASE_VERSION}-sbom-cyclonedx.json+`.
-
-
 == Installation
 === Using Java program distribution
 [discrete]
@@ -586,3 +582,7 @@ where,
 
 * `/tmp/bar/pdf-transformation-pipeline.yaml` is the pipeline specification file
 endif::[]
+
+
+== Software Bill of Materials (SBOM)
+See release asset `+pdf-tools-${RELEASE_VERSION}-sbom-cyclonedx.json+`.

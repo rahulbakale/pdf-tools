@@ -26,18 +26,16 @@
 === Using Java program distribution
 [discrete]
 ==== Windows
-Download and unzip `+pdf-tools-%RELEASE_VERSION%-windows.zip+` from release assets.
+Download and unzip `+pdf-tools-%RELEASE_VERSION%-bin-windows.zip+` from https://github.com/rahulbakale/pdf-tools/releases[release] assets.
 
 [discrete]
 ==== Linux
-Download `+pdf-tools-${RELEASE_VERSION}-linux.zip+` from release assets.
+Download and unzip `+pdf-tools-${RELEASE_VERSION}-bin-linux.zip+` from https://github.com/rahulbakale/pdf-tools/releases[release] assets.
 
 Then, do the following:
 
 [source,sh]
 ----
-unzip target/pdf-tools-${RELEASE_VERSION}-linux.zip
-
 chmod u+x pdf-tools-${RELEASE_VERSION}/bin/pdf-tools.sh
 ----
 
